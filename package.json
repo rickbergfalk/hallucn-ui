@@ -1,12 +1,12 @@
 {
-  "name": "ui",
+  "name": "planks",
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
   "type": "module",
   "author": {
-    "name": "shadcn",
-    "url": "https://twitter.com/shadcn"
+    "name": "Rick Bergfalk",
+    "url": "https://github.com/rickbergfalk"
   },
   "workspaces": [
     "apps/*",
@@ -18,11 +18,11 @@
     "registry": "turbo run registry",
     "registry:capture": "pnpm --filter=v4 registry:capture",
     "dev": "turbo run dev --parallel",
-    "shadcn:dev": "turbo --filter=shadcn dev",
-    "shadcn": "pnpm --filter=shadcn start:dev",
-    "shadcn:prod": "pnpm --filter=shadcn start:prod",
-    "shadcn:build": "pnpm --filter=shadcn build",
-    "shadcn:test": "pnpm --filter=shadcn test",
+    "planks:dev": "turbo --filter=planks dev",
+    "planks": "pnpm --filter=planks start:dev",
+    "planks:prod": "pnpm --filter=planks start:prod",
+    "planks:build": "pnpm --filter=planks build",
+    "planks:test": "pnpm --filter=planks test",
     "v4:dev": "pnpm --filter=v4 dev",
     "v4:build": "pnpm --filter=v4 build",
     "lint": "turbo run lint",
@@ -34,9 +34,9 @@
     "sync:templates": "./scripts/sync-templates.sh \"templates/*\"",
     "check": "turbo lint typecheck format:check",
     "release": "changeset version",
-    "pub:beta": "cd packages/shadcn && pnpm pub:beta",
-    "pub:release": "cd packages/shadcn && pnpm pub:release",
-    "test:dev": "turbo run test --filter=!shadcn-ui --force",
+    "pub:beta": "cd packages/planks && pnpm pub:beta",
+    "pub:release": "cd packages/planks && pnpm pub:release",
+    "test:dev": "turbo run test --filter=!planks --force",
     "test": "start-server-and-test v4:dev http://localhost:4000 test:dev",
     "validate:registries": "pnpm --filter=v4 validate:registries"
   },
