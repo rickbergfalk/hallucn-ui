@@ -88,9 +88,7 @@ export class PlankButton extends LitElement {
     }
   }
 
-  updated(changedProperties: Map<string, unknown>) {
-    super.updated(changedProperties)
-
+  willUpdate(changedProperties: Map<string, unknown>) {
     // Update tabindex when disabled changes
     if (changedProperties.has("disabled")) {
       if (this.disabled) {
@@ -102,13 +100,12 @@ export class PlankButton extends LitElement {
       }
     }
 
-    // Apply classes directly to the custom element
+    // Style the element itself
     // Note: disabled: variants don't work on custom elements, so we add them explicitly
-    const classes = cn(
+    this.className = cn(
       buttonVariants({ variant: this.variant, size: this.size }),
       this.disabled && "pointer-events-none opacity-50"
     )
-    this.className = classes
 
     // Set data attributes
     this.dataset.slot = "button"
@@ -117,8 +114,8 @@ export class PlankButton extends LitElement {
   }
 
   render() {
-    // No template - content is just the children (light DOM)
-    return html`<slot></slot>`
+    // Light DOM: children stay in place naturally
+    return html``
   }
 }
 

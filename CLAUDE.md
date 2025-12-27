@@ -78,20 +78,60 @@ Web components should:
 - Fire custom events (e.g., `open-change`) instead of callback props
 - Preserve `data-slot` attributes for styling consistency
 
-**Two implementation patterns:**
+**Critical: `<slot>` does NOT work in Light DOM!**
 
-1. **Components with inner elements** (button, input, label, badge):
-   - Render a native/wrapper element inside with `<slot>` for content
-   - Example: `render() { return html\`<button class=${classes}><slot></slot></button>\` }`
+In Lit's light DOM mode (`createRenderRoot() { return this }`), the native `<slot>` element does NOT project children. Children stay as siblings of rendered content, not inside it. This breaks semantic structure if you need content inside a native element.
 
-2. **Multi-part container components** (card, alert):
-   - Style the custom element itself via `willUpdate()`, render nothing
-   - Children compose naturally without wrapper interference
-   - Example: `willUpdate() { this.className = cn(...) }` + `render() { return html\`\` }`
+**Three implementation patterns:**
+
+| Pattern | When to use | Examples |
+|---------|-------------|----------|
+| **Self-styled** | Purely presentational, no semantic element required | badge, card, separator, skeleton |
+| **Inner native element** | Wraps a form control that needs native behavior | input, textarea |
+| **Manual child distribution** | Needs native semantic element with children inside | label |
+
+**1. Self-styled components** (badge, card, separator, skeleton, button)
+```typescript
+willUpdate() {
+  this.className = cn("...")  // Style the element itself
+  this.dataset.slot = "component"
+}
+render() {
+  return html``  // Render nothing, children stay in place
+}
+```
+
+**2. Inner native element** (input, textarea)
+```typescript
+render() {
+  return html`<input class=${classes} .value=${this.value} />`
+}
+```
+
+**3. Manual child distribution** (label)
+- Required when children must be INSIDE a native semantic element
+- Move children in `firstUpdated()` after Lit renders the target element
+```typescript
+firstUpdated() {
+  const label = this.querySelector("label")
+  const children = [...this.childNodes].filter(n => n !== label && n.nodeType !== Node.COMMENT_NODE)
+  children.forEach(child => label?.appendChild(child))
+}
+render() {
+  return html`<label for=${this.for}></label>`
+}
+```
+
+**How to decide which pattern:**
+1. Does React render a native semantic element (`<label>`, `<input>`, `<button>`)?
+2. Must children be INSIDE that element for accessibility?
+   - Yes → Use **manual child distribution**
+   - No (element has no children, or children can be siblings) → Use **self-styled** or **inner native element**
 
 **Gotchas:**
-- `disabled:` Tailwind variants don't work on custom elements - add `opacity-50 pointer-events-none` explicitly when disabled
-- Custom elements are `display: inline` by default - add `block` class when the React equivalent is a block-level element
+- `disabled:` Tailwind variants don't work on custom elements - add `opacity-50 pointer-events-none` explicitly
+- Custom elements are `display: inline` by default - add `block` class when needed
+- Use `willUpdate()` not `updated()` when setting `this.className` to avoid infinite update loops
 
 ## API Mapping
 
@@ -101,18 +141,56 @@ Web components should:
 | `disabled={true}` | `disabled` boolean attribute |
 | `onClick={fn}` | `@click` / `addEventListener('click', fn)` |
 | `onOpenChange={fn}` | `@open-change` / custom event |
-| `children` | `<slot></slot>` |
+| `children` | Children stay in place (no slot projection in light DOM) |
 | `className="..."` | `class="..."` |
 | `asChild` | Not supported (see Deferred section) |
 
+## Testing Requirements
+
+### Test Categories
+
+1. **Behavioral tests** (`tests/web-components/*.test.ts`)
+   - Property/attribute handling
+   - Event firing
+   - State management
+
+2. **Visual tests** (`tests/web-components/*.visual.test.ts`)
+   - Screenshot comparison against React baselines
+   - Pixel-perfect verification
+
+3. **Semantic structure tests** (`tests/web-components/semantic-structure.test.ts`)
+   - Verify native semantic elements exist where required
+   - Verify text content is INSIDE semantic elements (catches slot bugs)
+   - Verify ARIA roles and attributes
+
+### Adding Semantic Tests for New Components
+
+When converting a new component, add a test to `semantic-structure.test.ts`:
+
+```typescript
+describe("plank-newcomponent", () => {
+  it("must contain native <element> with content inside", async () => {
+    container.innerHTML = `<plank-newcomponent>Test Content</plank-newcomponent>`
+    await customElements.whenDefined("plank-newcomponent")
+    const element = container.querySelector("plank-newcomponent")!
+    await (element as any).updateComplete
+
+    // If component needs a native semantic element:
+    const nativeEl = element.querySelector("element")
+    expect(nativeEl, "Must contain native <element>").toBeTruthy()
+    expect(nativeEl?.textContent).toContain("Test Content")
+  })
+})
+```
+
 ## Conversion Workflow
 
-See `CONVERSION-STRATEGY.md` for the full test-driven approach:
-
 1. Write behavioral + visual tests for React component
-2. Create equivalent test stubs for web component (all failing)
-3. Implement Lit component until tests pass
-4. Compare visual snapshots
+2. **Add semantic structure test** if component uses native semantic elements
+3. Create equivalent test stubs for web component (all failing)
+4. Implement Lit component until tests pass
+5. Compare visual snapshots
+6. Verify semantic structure test passes
 
 ## Conversion Progress
 

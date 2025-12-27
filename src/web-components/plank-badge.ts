@@ -31,6 +31,10 @@ type BadgeVariant = VariantProps<typeof badgeVariants>["variant"]
  * PlankBadge - a badge web component that mirrors shadcn/ui Badge
  *
  * Uses light DOM so Tailwind classes apply directly.
+ *
+ * Pattern: Self-styled (purely presentational)
+ * - Styles the custom element itself
+ * - Children stay in place naturally (no slot needed in light DOM)
  */
 @customElement("plank-badge")
 export class PlankBadge extends LitElement {
@@ -42,17 +46,15 @@ export class PlankBadge extends LitElement {
     return this
   }
 
-  updated() {
-    // Apply classes directly to the custom element
-    const classes = cn(badgeVariants({ variant: this.variant }))
-    this.className = classes
-
-    // Set data attributes
+  willUpdate() {
+    // Style the element itself
+    this.className = cn(badgeVariants({ variant: this.variant }))
     this.dataset.slot = "badge"
   }
 
   render() {
-    return html`<slot></slot>`
+    // Light DOM: children stay in place naturally
+    return html``
   }
 }
 
