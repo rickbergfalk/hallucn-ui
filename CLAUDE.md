@@ -112,7 +112,7 @@ See `CONVERSION-STRATEGY.md` for the full test-driven approach:
 - [x] label
 
 ### Tier 2 - Simple styled elements (no Radix, no state)
-- [ ] input
+- [x] input
 - [ ] textarea
 - [ ] card (multi-part)
 - [ ] alert
