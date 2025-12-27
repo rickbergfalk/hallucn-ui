@@ -8,17 +8,24 @@ Planks is a hard fork of shadcn/ui with a different goal: to provide the same be
 
 Like the [Ship of Theseus](https://en.wikipedia.org/wiki/Ship_of_Theseus), we're replacing each React component plank by plank until we have something entirely new.
 
+## Structure
+
+```
+planks/
+├── src/
+│   ├── components/    # 55 UI components (React, to be converted)
+│   ├── hooks/         # React hooks
+│   └── lib/           # Utilities (cn, etc.)
+├── reference/
+│   ├── examples/      # Component usage examples
+│   └── blocks/        # Pre-composed UI patterns
+├── LICENSE.md
+└── README.md
+```
+
 ## Status
 
-This project is in early development. We're actively replacing React components with web components.
-
-## Documentation
-
-*Coming soon*
-
-## Contributing
-
-Please read the [contributing guide](/CONTRIBUTING.md).
+This project is in early development. The React components are here as reference - the goal is to convert them to web components.
 
 ## License
 
