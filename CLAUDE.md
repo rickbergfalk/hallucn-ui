@@ -80,6 +80,7 @@ Web components should:
 - Preserve `data-slot` attributes for styling consistency
 - **Gotcha**: `disabled:` Tailwind variants don't work on custom elements - add `opacity-50 pointer-events-none` explicitly when disabled
 - **Gotcha**: Custom elements are `display: inline` by default - add `block` class when the React equivalent is a block-level element
+- **Pattern for multi-part containers** (e.g., Card): Use `willUpdate()` to apply classes directly to the element itself, with `render() { return html`` }`. This avoids wrapper divs and lets children compose naturally.
 
 ## API Mapping
 
@@ -114,7 +115,7 @@ See `CONVERSION-STRATEGY.md` for the full test-driven approach:
 ### Tier 2 - Simple styled elements (no Radix, no state)
 - [x] input
 - [x] textarea
-- [ ] card (multi-part)
+- [x] card (multi-part)
 - [ ] alert
 - [ ] kbd
 - [ ] progress
