@@ -34,6 +34,7 @@ The test CSS (`tests/styles.css`) contains the complete theme definition that ma
 ```bash
 npm test             # Run tests in watch mode (Vitest browser mode)
 npm run test:run     # Run tests once
+npm run test:ui      # Open Vitest UI in browser
 npm run typecheck    # Type-check the codebase
 ```
 

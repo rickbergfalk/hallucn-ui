@@ -16,6 +16,7 @@
   "scripts": {
     "test": "vitest",
     "test:run": "vitest run",
+    "test:ui": "vitest --ui",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -37,6 +38,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitest/browser": "^4.0.16",
     "@vitest/browser-playwright": "^4.0.16",
+    "@vitest/ui": "^4.0.16",
     "pixelmatch": "^7.1.0",
     "playwright": "^1.57.0",
     "pngjs": "^7.0.0",
