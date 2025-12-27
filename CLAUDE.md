@@ -75,12 +75,23 @@ The React components use:
 Web components should:
 - Use Lit's `@property` decorators for reactive attributes
 - Emit the same Tailwind classes as React equivalents
-- Use `<slot>` for content projection (replaces `children`)
 - Fire custom events (e.g., `open-change`) instead of callback props
 - Preserve `data-slot` attributes for styling consistency
-- **Gotcha**: `disabled:` Tailwind variants don't work on custom elements - add `opacity-50 pointer-events-none` explicitly when disabled
-- **Gotcha**: Custom elements are `display: inline` by default - add `block` class when the React equivalent is a block-level element
-- **Pattern for multi-part containers** (e.g., Card): Use `willUpdate()` to apply classes directly to the element itself, with `render() { return html`` }`. This avoids wrapper divs and lets children compose naturally.
+
+**Two implementation patterns:**
+
+1. **Components with inner elements** (button, input, label, badge):
+   - Render a native/wrapper element inside with `<slot>` for content
+   - Example: `render() { return html\`<button class=${classes}><slot></slot></button>\` }`
+
+2. **Multi-part container components** (card, alert):
+   - Style the custom element itself via `willUpdate()`, render nothing
+   - Children compose naturally without wrapper interference
+   - Example: `willUpdate() { this.className = cn(...) }` + `render() { return html\`\` }`
+
+**Gotchas:**
+- `disabled:` Tailwind variants don't work on custom elements - add `opacity-50 pointer-events-none` explicitly when disabled
+- Custom elements are `display: inline` by default - add `block` class when the React equivalent is a block-level element
 
 ## API Mapping
 
