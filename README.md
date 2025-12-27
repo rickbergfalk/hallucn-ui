@@ -2,35 +2,47 @@
 
 A web components library built plank by plank. Forked from [shadcn/ui](https://github.com/shadcn-ui/ui) and gradually transforming into framework-agnostic web components.
 
-## About
-
-Planks is a hard fork of shadcn/ui with a different goal: to provide the same beautifully designed components as web components that work anywhere - React, Vue, Svelte, vanilla JS, or any framework.
-
 Like the [Ship of Theseus](https://en.wikipedia.org/wiki/Ship_of_Theseus), we're replacing each React component plank by plank until we have something entirely new.
+
+## Tech Choices
+
+| Choice | Why |
+|--------|-----|
+| **Lit** | Lightweight, fast, great DX with decorators and reactive properties |
+| **Light DOM** | Tailwind classes apply directly - no shadow DOM styling headaches |
+| **Tailwind required** | Components emit Tailwind classes; consumers provide Tailwind in their build |
+| **Test-driven** | React components are the spec; visual snapshot tests ensure pixel parity |
 
 ## Structure
 
 ```
-planks/
-├── src/
-│   ├── components/    # 55 UI components (React, to be converted)
-│   ├── hooks/         # React hooks
-│   └── lib/           # Utilities (cn, etc.)
-├── reference/
-│   ├── examples/      # Component usage examples
-│   └── blocks/        # Pre-composed UI patterns
-├── LICENSE.md
-└── README.md
+src/
+├── components/        # React components (READ-ONLY reference)
+├── web-components/    # Lit web component implementations
+└── lib/utils.ts       # Utilities (cn function)
+
+tests/
+├── react/             # React component tests (generate baselines)
+└── web-components/    # Web component tests (compare against baselines)
 ```
 
-## Status
+## Progress
 
-This project is in early development. The React components are here as reference - the goal is to convert them to web components.
+See [CLAUDE.md](./CLAUDE.md#conversion-progress) for the full checklist.
+
+## Development
+
+```bash
+npm install
+npm test              # Run tests in watch mode
+npm run test:ui       # Open Vitest UI
+npm run test:run      # Run tests once
+```
 
 ## License
 
-Licensed under the [MIT license](/LICENSE.md).
+Licensed under the [MIT license](./LICENSE.md).
 
 ## Acknowledgments
 
-This project is a fork of [shadcn/ui](https://github.com/shadcn-ui/ui) by [Shadab Ahmed](https://twitter.com/shadcn). We're grateful for the excellent foundation.
+This project is a fork of [shadcn/ui](https://github.com/shadcn-ui/ui) by [shadcn](https://twitter.com/shadcn).
