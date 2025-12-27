@@ -102,9 +102,65 @@ See `CONVERSION-STRATEGY.md` for the full test-driven approach:
 3. Implement Lit component until tests pass
 4. Compare visual snapshots
 
-## Starting Order
+## Conversion Progress
 
-Begin with simple leaf components:
-1. button, badge, separator, skeleton, label
-2. Then components with state/interaction
-3. Finally compound components (Dialog, Sheet, etc.)
+### Tier 1 - Simple leaf components ✅
+- [x] button
+- [x] badge
+- [x] separator
+- [x] skeleton
+- [x] label
+
+### Tier 2 - Simple styled elements (no Radix, no state)
+- [ ] input
+- [ ] textarea
+- [ ] card (multi-part)
+- [ ] alert
+- [ ] kbd
+- [ ] progress
+- [ ] aspect-ratio
+
+### Tier 3 - Components with state
+- [ ] switch
+- [ ] checkbox
+- [ ] toggle
+- [ ] avatar (multi-part)
+
+### Tier 4 - Multi-part with state
+- [ ] collapsible
+- [ ] accordion
+- [ ] tabs
+- [ ] radio-group
+- [ ] toggle-group
+- [ ] slider
+
+### Tier 5 - Positioned/Portal components
+- [ ] tooltip
+- [ ] popover
+- [ ] dropdown-menu
+- [ ] context-menu
+- [ ] dialog
+- [ ] alert-dialog
+- [ ] sheet
+- [ ] drawer
+- [ ] hover-card
+- [ ] select
+- [ ] combobox
+- [ ] command
+
+### Tier 6 - Complex compositions
+- [ ] table
+- [ ] calendar
+- [ ] carousel
+- [ ] form
+- [ ] pagination
+- [ ] breadcrumb
+- [ ] navigation-menu
+- [ ] menubar
+- [ ] sidebar
+- [ ] resizable
+- [ ] scroll-area
+- [ ] input-group
+- [ ] input-otp
+- [ ] sonner
+- [ ] chart
