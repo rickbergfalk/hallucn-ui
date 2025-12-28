@@ -16,7 +16,6 @@ Planks is a hard fork of shadcn/ui with a different goal: converting React compo
 - **Element prefix**: `plank-` (e.g., `<plank-button>`, class `PlankButton`)
 - **Test-driven conversion** - write tests for React component first, then implement web component to pass equivalent tests
 - **React components are READ-ONLY** - never modify `src/components/`, they serve as the specification
-- **No automatic commits** - NEVER run `git commit`. Always let the human review and commit changes.
 
 ## Styling
 
@@ -217,6 +216,11 @@ describe("plank-newcomponent", () => {
     - Run `npm run format` to fix any Prettier issues
     - Run `npm run lint` to verify no ESLint errors
     - Run `npm run typecheck` to verify TypeScript compiles
+
+11. **Commit and push**
+    - Update CLAUDE.md to mark component as complete
+    - Commit all changes with descriptive message
+    - Push to remote
 
 ## Conversion Progress
 
