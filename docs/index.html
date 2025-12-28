@@ -283,6 +283,30 @@
             </plank-avatar>
           </div>
         </a>
+
+        <!-- Collapsible -->
+        <a
+          href="./components/collapsible.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Collapsible</h3>
+          <p class="text-sm text-muted-foreground mb-4">
+            Expandable/collapsible panel.
+          </p>
+          <plank-collapsible class="flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm">Click to toggle</span>
+              <plank-collapsible-trigger>
+                <plank-button variant="ghost" size="sm">Toggle</plank-button>
+              </plank-collapsible-trigger>
+            </div>
+            <plank-collapsible-content>
+              <div class="rounded-md border px-3 py-2 text-sm">
+                Hidden content
+              </div>
+            </plank-collapsible-content>
+          </plank-collapsible>
+        </a>
       </div>
     </main>
 

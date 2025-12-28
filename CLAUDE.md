@@ -247,7 +247,7 @@ describe("plank-newcomponent", () => {
 - [x] avatar (multi-part)
 
 ### Tier 4 - Multi-part with state
-- [ ] collapsible
+- [x] collapsible
 - [ ] accordion
 - [ ] tabs
 - [ ] radio-group

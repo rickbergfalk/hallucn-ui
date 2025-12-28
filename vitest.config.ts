@@ -13,6 +13,7 @@ export default defineConfig({
     include: [
       "@radix-ui/react-checkbox",
       "@radix-ui/react-avatar",
+      "@radix-ui/react-collapsible",
       "lucide-react",
     ],
   },
