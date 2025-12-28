@@ -240,7 +240,7 @@ describe("plank-newcomponent", () => {
 - [x] switch
 - [x] checkbox
 - [x] toggle
-- [ ] avatar (multi-part)
+- [x] avatar (multi-part)
 
 ### Tier 4 - Multi-part with state
 - [ ] collapsible

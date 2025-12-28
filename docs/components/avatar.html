@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avatar - Planks</title>
+    <script type="module" src="../src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <!-- Header -->
+    <header class="border-b">
+      <div class="container mx-auto px-4 py-4 flex items-center gap-4">
+        <a href="../" class="text-2xl font-bold">Planks</a>
+        <span class="text-muted-foreground">/</span>
+        <span>Avatar</span>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 class="text-4xl font-bold mb-4">Avatar</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        An image element with a fallback for representing the user.
+      </p>
+
+      <!-- Basic Usage -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Basic Usage</h2>
+        <div class="flex flex-wrap items-center gap-4 mb-4">
+          <plank-avatar>
+            <plank-avatar-image
+              src="https://github.com/shadcn.png"
+              alt="@shadcn"
+            ></plank-avatar-image>
+            <plank-avatar-fallback>CN</plank-avatar-fallback>
+          </plank-avatar>
+        </div>
+        <pre><code>&lt;plank-avatar&gt;
+  &lt;plank-avatar-image src="..." alt="@username"&gt;&lt;/plank-avatar-image&gt;
+  &lt;plank-avatar-fallback&gt;CN&lt;/plank-avatar-fallback&gt;
+&lt;/plank-avatar&gt;</code></pre>
+      </section>
+
+      <!-- Fallback Only -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Fallback Only</h2>
+        <div class="flex flex-wrap items-center gap-6 mb-4">
+          <div class="flex items-center gap-2">
+            <plank-avatar>
+              <plank-avatar-fallback>CN</plank-avatar-fallback>
+            </plank-avatar>
+            <span class="text-sm text-muted-foreground">Initials</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <plank-avatar>
+              <plank-avatar-fallback>AB</plank-avatar-fallback>
+            </plank-avatar>
+            <span class="text-sm text-muted-foreground">Initials</span>
+          </div>
+        </div>
+        <pre><code>&lt;plank-avatar&gt;
+  &lt;plank-avatar-fallback&gt;CN&lt;/plank-avatar-fallback&gt;
+&lt;/plank-avatar&gt;</code></pre>
+      </section>
+
+      <!-- Custom Shapes -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Custom Shapes</h2>
+        <div class="flex flex-wrap items-center gap-6 mb-4">
+          <div class="flex items-center gap-2">
+            <plank-avatar>
+              <plank-avatar-fallback>CN</plank-avatar-fallback>
+            </plank-avatar>
+            <span class="text-sm text-muted-foreground">Circle (default)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <plank-avatar class="rounded-lg">
+              <plank-avatar-fallback>ER</plank-avatar-fallback>
+            </plank-avatar>
+            <span class="text-sm text-muted-foreground">Rounded</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <plank-avatar class="rounded-none">
+              <plank-avatar-fallback>SQ</plank-avatar-fallback>
+            </plank-avatar>
+            <span class="text-sm text-muted-foreground">Square</span>
+          </div>
+        </div>
+        <pre><code>&lt;plank-avatar&gt;...&lt;/plank-avatar&gt;
+&lt;plank-avatar class="rounded-lg"&gt;...&lt;/plank-avatar&gt;
+&lt;plank-avatar class="rounded-none"&gt;...&lt;/plank-avatar&gt;</code></pre>
+      </section>
+
+      <!-- Stacked Avatars -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Stacked Avatars</h2>
+        <div class="flex flex-wrap items-center gap-4 mb-4">
+          <div class="flex -space-x-2">
+            <plank-avatar class="ring-2 ring-background">
+              <plank-avatar-fallback>A</plank-avatar-fallback>
+            </plank-avatar>
+            <plank-avatar class="ring-2 ring-background">
+              <plank-avatar-fallback>B</plank-avatar-fallback>
+            </plank-avatar>
+            <plank-avatar class="ring-2 ring-background">
+              <plank-avatar-fallback>C</plank-avatar-fallback>
+            </plank-avatar>
+          </div>
+        </div>
+        <pre><code>&lt;div class="flex -space-x-2"&gt;
+  &lt;plank-avatar class="ring-2 ring-background"&gt;...&lt;/plank-avatar&gt;
+  &lt;plank-avatar class="ring-2 ring-background"&gt;...&lt;/plank-avatar&gt;
+  &lt;plank-avatar class="ring-2 ring-background"&gt;...&lt;/plank-avatar&gt;
+&lt;/div&gt;</code></pre>
+      </section>
+
+      <!-- API -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">API</h2>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-avatar</h3>
+        <p class="text-muted-foreground mb-4">
+          The container component. Contains the image and fallback.
+        </p>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-avatar-image</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Property</th>
+                <th class="text-left py-2 pr-4">Type</th>
+                <th class="text-left py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">src</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  string
+                </td>
+                <td class="py-2">The image source URL</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">alt</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  string
+                </td>
+                <td class="py-2">Alternative text for the image</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-avatar-fallback</h3>
+        <p class="text-muted-foreground">
+          Displays fallback content (typically initials) when the image is not
+          available. Children are rendered as the fallback content.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

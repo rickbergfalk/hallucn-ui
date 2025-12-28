@@ -10,7 +10,11 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["@radix-ui/react-checkbox", "lucide-react"],
+    include: [
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-avatar",
+      "lucide-react",
+    ],
   },
   test: {
     browser: {
