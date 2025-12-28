@@ -22,17 +22,16 @@ export default defineConfig({
             testFileName,
             arg,
             browserName,
-            platform,
             ext,
           }) => {
             // For web component tests, use React screenshots as baseline
             if (testFileDirectory.includes("web-components")) {
               // Extract component name from test file (e.g., "button.visual.test.ts" -> "button")
               const componentName = testFileName.replace(".visual.test.ts", "")
-              return `tests/react/__screenshots__/${componentName}.visual.test.tsx/${arg}-${browserName}-${platform}${ext}`
+              return `tests/react/__screenshots__/${componentName}.visual.test.tsx/${arg}-${browserName}${ext}`
             }
-            // Default path for React tests
-            return `${testFileDirectory}/__screenshots__/${testFileName}/${arg}-${browserName}-${platform}${ext}`
+            // Default path for React tests (platform-agnostic for CI compatibility)
+            return `${testFileDirectory}/__screenshots__/${testFileName}/${arg}-${browserName}${ext}`
           },
         },
       },
