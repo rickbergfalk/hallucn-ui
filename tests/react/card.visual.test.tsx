@@ -45,7 +45,9 @@ describe("Card (React) - Visual", () => {
         </Card>
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("card-no-footer")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "card-no-footer"
+    )
   })
 
   it("card with only content", async () => {
@@ -58,6 +60,8 @@ describe("Card (React) - Visual", () => {
         </Card>
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("card-content-only")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "card-content-only"
+    )
   })
 })

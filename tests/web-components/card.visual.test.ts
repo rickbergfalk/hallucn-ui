@@ -30,7 +30,9 @@ describe("PlankCard (Web Component) - Visual", () => {
       "plank-card-content",
       "plank-card-footer",
     ]
-    await Promise.all(cardElements.map((el) => customElements.whenDefined(el).catch(() => {})))
+    await Promise.all(
+      cardElements.map((el) => customElements.whenDefined(el).catch(() => {}))
+    )
     const elements = container.querySelectorAll(
       "plank-card, plank-card-header, plank-card-title, plank-card-description, plank-card-content, plank-card-footer"
     )
@@ -73,7 +75,9 @@ describe("PlankCard (Web Component) - Visual", () => {
         </plank-card>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("card-no-footer")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "card-no-footer"
+    )
   })
 
   it("card with only content matches React", async () => {
@@ -86,6 +90,8 @@ describe("PlankCard (Web Component) - Visual", () => {
         </plank-card>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("card-content-only")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "card-content-only"
+    )
   })
 })

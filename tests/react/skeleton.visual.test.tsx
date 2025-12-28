@@ -10,7 +10,9 @@ describe("Skeleton (React) - Visual", () => {
         <Skeleton className="h-4 w-48" />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("skeleton-text")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "skeleton-text"
+    )
   })
 
   it("avatar skeleton", async () => {
@@ -19,7 +21,9 @@ describe("Skeleton (React) - Visual", () => {
         <Skeleton className="h-12 w-12 rounded-full" />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("skeleton-avatar")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "skeleton-avatar"
+    )
   })
 
   it("card skeleton", async () => {
@@ -34,6 +38,8 @@ describe("Skeleton (React) - Visual", () => {
         </div>
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("skeleton-card")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "skeleton-card"
+    )
   })
 })

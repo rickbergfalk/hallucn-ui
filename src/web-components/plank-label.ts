@@ -47,7 +47,7 @@ export class PlankLabel extends LitElement {
     }
 
     // Move them into the label
-    originalChildren.forEach(child => label.appendChild(child))
+    originalChildren.forEach((child) => label.appendChild(child))
   }
 
   render() {

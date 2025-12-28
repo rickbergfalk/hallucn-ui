@@ -17,7 +17,14 @@ export default defineConfig({
       expect: {
         toMatchScreenshot: {
           // Web component tests compare against React baselines
-          resolveScreenshotPath: ({ testFileDirectory, testFileName, arg, browserName, platform, ext }) => {
+          resolveScreenshotPath: ({
+            testFileDirectory,
+            testFileName,
+            arg,
+            browserName,
+            platform,
+            ext,
+          }) => {
             // For web component tests, use React screenshots as baseline
             if (testFileDirectory.includes("web-components")) {
               // Extract component name from test file (e.g., "button.visual.test.ts" -> "button")

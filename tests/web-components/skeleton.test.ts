@@ -36,7 +36,9 @@ describe("PlankSkeleton (Web Component)", () => {
   })
 
   it("preserves custom classes", async () => {
-    const skeleton = await renderAndWait(`<plank-skeleton class="h-4 w-32"></plank-skeleton>`)
+    const skeleton = await renderAndWait(
+      `<plank-skeleton class="h-4 w-32"></plank-skeleton>`
+    )
     expect(skeleton.classList.contains("h-4")).toBe(true)
     expect(skeleton.classList.contains("w-32")).toBe(true)
     // Also has base classes

@@ -10,7 +10,9 @@ describe("Input (React) - Visual", () => {
         <Input placeholder="Enter text..." />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("input-default")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-default"
+    )
   })
 
   it("disabled input", async () => {
@@ -19,7 +21,9 @@ describe("Input (React) - Visual", () => {
         <Input placeholder="Disabled" disabled />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("input-disabled")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-disabled"
+    )
   })
 
   it("input with value", async () => {
@@ -28,6 +32,8 @@ describe("Input (React) - Visual", () => {
         <Input defaultValue="Hello world" />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("input-with-value")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-with-value"
+    )
   })
 })

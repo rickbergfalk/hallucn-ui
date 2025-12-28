@@ -76,10 +76,9 @@ export default tseslint.config(
 
       // a11y rules - warn only since these are reference files
       ...Object.fromEntries(
-        Object.entries(jsxA11y.configs.recommended.rules).map(([key, value]) => [
-          key,
-          value === "error" ? "warn" : value,
-        ])
+        Object.entries(jsxA11y.configs.recommended.rules).map(
+          ([key, value]) => [key, value === "error" ? "warn" : value]
+        )
       ),
 
       // Relax TypeScript rules for reference files

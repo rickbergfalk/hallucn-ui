@@ -10,16 +10,33 @@ describe("Label (React) - Visual", () => {
         <Label>Email address</Label>
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("label-default")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "label-default"
+    )
   })
 
   it("label with input", async () => {
     render(
-      <div data-testid="container" style={{ padding: "8px", display: "flex", flexDirection: "column", gap: "4px" }}>
+      <div
+        data-testid="container"
+        style={{
+          padding: "8px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "4px",
+        }}
+      >
         <Label htmlFor="email">Email</Label>
-        <input id="email" type="email" placeholder="Enter email" className="border rounded px-2 py-1 text-sm" />
+        <input
+          id="email"
+          type="email"
+          placeholder="Enter email"
+          className="border rounded px-2 py-1 text-sm"
+        />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("label-with-input")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "label-with-input"
+    )
   })
 })

@@ -33,13 +33,20 @@ export class PlankInput extends LitElement {
   private _handleInput(e: Event) {
     const input = e.target as HTMLInputElement
     this.value = input.value
-    this.dispatchEvent(new CustomEvent("input", { detail: { value: this.value }, bubbles: true }))
+    this.dispatchEvent(
+      new CustomEvent("input", { detail: { value: this.value }, bubbles: true })
+    )
   }
 
   private _handleChange(e: Event) {
     const input = e.target as HTMLInputElement
     this.value = input.value
-    this.dispatchEvent(new CustomEvent("change", { detail: { value: this.value }, bubbles: true }))
+    this.dispatchEvent(
+      new CustomEvent("change", {
+        detail: { value: this.value },
+        bubbles: true,
+      })
+    )
   }
 
   updated() {

@@ -31,20 +31,32 @@ describe("PlankTextarea (Web Component)", () => {
   })
 
   it("supports placeholder", async () => {
-    const textareaEl = await renderAndWait(`<plank-textarea placeholder="Enter message"></plank-textarea>`)
-    const nativeTextarea = textareaEl.querySelector("textarea") as HTMLTextAreaElement
+    const textareaEl = await renderAndWait(
+      `<plank-textarea placeholder="Enter message"></plank-textarea>`
+    )
+    const nativeTextarea = textareaEl.querySelector(
+      "textarea"
+    ) as HTMLTextAreaElement
     expect(nativeTextarea.placeholder).toBe("Enter message")
   })
 
   it("can be disabled", async () => {
-    const textareaEl = await renderAndWait(`<plank-textarea disabled></plank-textarea>`)
-    const nativeTextarea = textareaEl.querySelector("textarea") as HTMLTextAreaElement
+    const textareaEl = await renderAndWait(
+      `<plank-textarea disabled></plank-textarea>`
+    )
+    const nativeTextarea = textareaEl.querySelector(
+      "textarea"
+    ) as HTMLTextAreaElement
     expect(nativeTextarea.disabled).toBe(true)
   })
 
   it("supports rows attribute", async () => {
-    const textareaEl = await renderAndWait(`<plank-textarea rows="5"></plank-textarea>`)
-    const nativeTextarea = textareaEl.querySelector("textarea") as HTMLTextAreaElement
+    const textareaEl = await renderAndWait(
+      `<plank-textarea rows="5"></plank-textarea>`
+    )
+    const nativeTextarea = textareaEl.querySelector(
+      "textarea"
+    ) as HTMLTextAreaElement
     expect(nativeTextarea.rows).toBe(5)
   })
 
@@ -52,7 +64,9 @@ describe("PlankTextarea (Web Component)", () => {
     const textareaEl = await renderAndWait(`<plank-textarea></plank-textarea>`)
     textareaEl.value = "test value"
     await textareaEl.updateComplete
-    const nativeTextarea = textareaEl.querySelector("textarea") as HTMLTextAreaElement
+    const nativeTextarea = textareaEl.querySelector(
+      "textarea"
+    ) as HTMLTextAreaElement
     expect(nativeTextarea.value).toBe("test value")
   })
 })

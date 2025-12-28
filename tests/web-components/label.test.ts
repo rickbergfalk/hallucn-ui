@@ -39,7 +39,9 @@ describe("PlankLabel (Web Component)", () => {
   })
 
   it("supports for attribute", async () => {
-    const labelEl = await renderAndWait(`<plank-label for="email-input">Email</plank-label>`)
+    const labelEl = await renderAndWait(
+      `<plank-label for="email-input">Email</plank-label>`
+    )
     const nativeLabel = labelEl.querySelector("label")
     expect(nativeLabel?.htmlFor).toBe("email-input")
   })

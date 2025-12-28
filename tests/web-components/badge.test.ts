@@ -26,19 +26,25 @@ describe("PlankBadge (Web Component)", () => {
   })
 
   it("renders with secondary variant", async () => {
-    const badge = await renderAndWait(`<plank-badge variant="secondary">Secondary</plank-badge>`)
+    const badge = await renderAndWait(
+      `<plank-badge variant="secondary">Secondary</plank-badge>`
+    )
     expect(badge).toBeDefined()
     expect(badge.textContent).toBe("Secondary")
   })
 
   it("renders with destructive variant", async () => {
-    const badge = await renderAndWait(`<plank-badge variant="destructive">Error</plank-badge>`)
+    const badge = await renderAndWait(
+      `<plank-badge variant="destructive">Error</plank-badge>`
+    )
     expect(badge).toBeDefined()
     expect(badge.textContent).toBe("Error")
   })
 
   it("renders with outline variant", async () => {
-    const badge = await renderAndWait(`<plank-badge variant="outline">Outline</plank-badge>`)
+    const badge = await renderAndWait(
+      `<plank-badge variant="outline">Outline</plank-badge>`
+    )
     expect(badge).toBeDefined()
     expect(badge.textContent).toBe("Outline")
   })

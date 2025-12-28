@@ -33,7 +33,9 @@ describe("PlankLabel (Web Component) - Visual", () => {
         <plank-label>Email address</plank-label>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("label-default")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "label-default"
+    )
   })
 
   it("label with input matches React", async () => {
@@ -43,6 +45,8 @@ describe("PlankLabel (Web Component) - Visual", () => {
         <input id="email" type="email" placeholder="Enter email" class="border rounded px-2 py-1 text-sm" />
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("label-with-input")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "label-with-input"
+    )
   })
 })

@@ -32,17 +32,25 @@ describe("PlankButton (Web Component) - Visual", () => {
   })
 
   it("destructive variant matches React", async () => {
-    await renderAndWait(`<plank-button variant="destructive">Delete</plank-button>`)
-    await expect(page.getByRole("button")).toMatchScreenshot("button-destructive")
+    await renderAndWait(
+      `<plank-button variant="destructive">Delete</plank-button>`
+    )
+    await expect(page.getByRole("button")).toMatchScreenshot(
+      "button-destructive"
+    )
   })
 
   it("outline variant matches React", async () => {
-    await renderAndWait(`<plank-button variant="outline">Outline</plank-button>`)
+    await renderAndWait(
+      `<plank-button variant="outline">Outline</plank-button>`
+    )
     await expect(page.getByRole("button")).toMatchScreenshot("button-outline")
   })
 
   it("secondary variant matches React", async () => {
-    await renderAndWait(`<plank-button variant="secondary">Secondary</plank-button>`)
+    await renderAndWait(
+      `<plank-button variant="secondary">Secondary</plank-button>`
+    )
     await expect(page.getByRole("button")).toMatchScreenshot("button-secondary")
   })
 

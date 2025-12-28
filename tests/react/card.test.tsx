@@ -54,7 +54,11 @@ describe("Card (React)", () => {
   })
 
   it("Card applies custom className", () => {
-    render(<Card className="custom-class" data-testid="card">Content</Card>)
+    render(
+      <Card className="custom-class" data-testid="card">
+        Content
+      </Card>
+    )
     const card = screen.getByTestId("card")
     expect(card.classList.contains("custom-class")).toBe(true)
   })

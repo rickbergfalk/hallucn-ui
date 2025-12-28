@@ -32,7 +32,9 @@ describe("PlankSeparator (Web Component) - Visual", () => {
         <plank-separator></plank-separator>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("separator-horizontal")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "separator-horizontal"
+    )
   })
 
   it("vertical separator matches React", async () => {
@@ -41,6 +43,8 @@ describe("PlankSeparator (Web Component) - Visual", () => {
         <plank-separator orientation="vertical"></plank-separator>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("separator-vertical")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "separator-vertical"
+    )
   })
 })

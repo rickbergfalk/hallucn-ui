@@ -33,7 +33,9 @@ describe("PlankInput (Web Component) - Visual", () => {
         <plank-input placeholder="Enter text..."></plank-input>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("input-default")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-default"
+    )
   })
 
   it("disabled input matches React", async () => {
@@ -42,7 +44,9 @@ describe("PlankInput (Web Component) - Visual", () => {
         <plank-input placeholder="Disabled" disabled></plank-input>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("input-disabled")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-disabled"
+    )
   })
 
   it("input with value matches React", async () => {
@@ -51,6 +55,8 @@ describe("PlankInput (Web Component) - Visual", () => {
         <plank-input value="Hello world"></plank-input>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("input-with-value")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-with-value"
+    )
   })
 })

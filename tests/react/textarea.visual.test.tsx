@@ -10,7 +10,9 @@ describe("Textarea (React) - Visual", () => {
         <Textarea placeholder="Type your message here..." />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("textarea-default")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "textarea-default"
+    )
   })
 
   it("disabled textarea", async () => {
@@ -19,7 +21,9 @@ describe("Textarea (React) - Visual", () => {
         <Textarea placeholder="Disabled" disabled />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("textarea-disabled")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "textarea-disabled"
+    )
   })
 
   it("textarea with value", async () => {
@@ -28,7 +32,9 @@ describe("Textarea (React) - Visual", () => {
         <Textarea defaultValue="This is some sample text in the textarea." />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("textarea-with-value")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "textarea-with-value"
+    )
   })
 
   it("textarea with rows", async () => {
@@ -37,6 +43,8 @@ describe("Textarea (React) - Visual", () => {
         <Textarea rows={6} placeholder="6 rows..." />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("textarea-rows")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "textarea-rows"
+    )
   })
 })

@@ -31,13 +31,17 @@ describe("PlankInput (Web Component)", () => {
   })
 
   it("supports type attribute", async () => {
-    const inputEl = await renderAndWait(`<plank-input type="email"></plank-input>`)
+    const inputEl = await renderAndWait(
+      `<plank-input type="email"></plank-input>`
+    )
     const nativeInput = inputEl.querySelector("input") as HTMLInputElement
     expect(nativeInput.type).toBe("email")
   })
 
   it("supports placeholder", async () => {
-    const inputEl = await renderAndWait(`<plank-input placeholder="Enter text"></plank-input>`)
+    const inputEl = await renderAndWait(
+      `<plank-input placeholder="Enter text"></plank-input>`
+    )
     const nativeInput = inputEl.querySelector("input") as HTMLInputElement
     expect(nativeInput.placeholder).toBe("Enter text")
   })

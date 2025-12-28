@@ -37,7 +37,10 @@ export class PlankSeparator extends LitElement {
   updated(changedProperties: Map<string, unknown>) {
     super.updated(changedProperties)
 
-    if (changedProperties.has("decorative") || changedProperties.has("orientation")) {
+    if (
+      changedProperties.has("decorative") ||
+      changedProperties.has("orientation")
+    ) {
       this._updateRole()
     }
 

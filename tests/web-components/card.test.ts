@@ -38,7 +38,9 @@ describe("PlankCard (Web Component)", () => {
   })
 
   it("CardDescription renders with data-slot attribute", async () => {
-    await renderAndWait(`<plank-card-description>Description</plank-card-description>`)
+    await renderAndWait(
+      `<plank-card-description>Description</plank-card-description>`
+    )
     const desc = container.querySelector("plank-card-description")
     expect(desc?.dataset.slot).toBe("card-description")
   })

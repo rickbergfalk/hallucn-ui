@@ -45,7 +45,10 @@ describe("Semantic Structure", () => {
       // Must have button role or be a button element
       const hasButtonRole = element.getAttribute("role") === "button"
       const hasButtonElement = element.querySelector("button") !== null
-      expect(hasButtonRole || hasButtonElement, "Must have role='button' or contain <button>").toBe(true)
+      expect(
+        hasButtonRole || hasButtonElement,
+        "Must have role='button' or contain <button>"
+      ).toBe(true)
 
       // Text must be accessible
       expect(element.textContent).toContain(testContent)
@@ -136,7 +139,10 @@ describe("Semantic Structure", () => {
       await (element as any).updateComplete
 
       const textareaElement = element.querySelector("textarea")
-      expect(textareaElement, "Must contain a native <textarea> element").toBeTruthy()
+      expect(
+        textareaElement,
+        "Must contain a native <textarea> element"
+      ).toBeTruthy()
       expect(textareaElement?.placeholder).toBe("Enter message")
     })
 
@@ -148,7 +154,10 @@ describe("Semantic Structure", () => {
       await (element as any).updateComplete
 
       const textareaElement = element.querySelector("textarea")
-      expect(textareaElement?.disabled, "Native textarea must be disabled").toBe(true)
+      expect(
+        textareaElement?.disabled,
+        "Native textarea must be disabled"
+      ).toBe(true)
     })
   })
 

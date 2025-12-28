@@ -33,7 +33,9 @@ describe("PlankSkeleton (Web Component) - Visual", () => {
         <plank-skeleton class="h-4 w-48"></plank-skeleton>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("skeleton-text")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "skeleton-text"
+    )
   })
 
   it("avatar skeleton matches React", async () => {
@@ -42,7 +44,9 @@ describe("PlankSkeleton (Web Component) - Visual", () => {
         <plank-skeleton class="h-12 w-12 rounded-full"></plank-skeleton>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("skeleton-avatar")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "skeleton-avatar"
+    )
   })
 
   it("card skeleton matches React", async () => {
@@ -57,6 +61,8 @@ describe("PlankSkeleton (Web Component) - Visual", () => {
         </div>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("skeleton-card")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "skeleton-card"
+    )
   })
 })

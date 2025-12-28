@@ -33,19 +33,27 @@ describe("PlankBadge (Web Component) - Visual", () => {
   })
 
   it("secondary variant matches React", async () => {
-    const badge = await renderAndWait(`<plank-badge variant="secondary">Secondary</plank-badge>`)
+    const badge = await renderAndWait(
+      `<plank-badge variant="secondary">Secondary</plank-badge>`
+    )
     badge.setAttribute("data-testid", "badge")
     await expect(page.getByTestId("badge")).toMatchScreenshot("badge-secondary")
   })
 
   it("destructive variant matches React", async () => {
-    const badge = await renderAndWait(`<plank-badge variant="destructive">Destructive</plank-badge>`)
+    const badge = await renderAndWait(
+      `<plank-badge variant="destructive">Destructive</plank-badge>`
+    )
     badge.setAttribute("data-testid", "badge")
-    await expect(page.getByTestId("badge")).toMatchScreenshot("badge-destructive")
+    await expect(page.getByTestId("badge")).toMatchScreenshot(
+      "badge-destructive"
+    )
   })
 
   it("outline variant matches React", async () => {
-    const badge = await renderAndWait(`<plank-badge variant="outline">Outline</plank-badge>`)
+    const badge = await renderAndWait(
+      `<plank-badge variant="outline">Outline</plank-badge>`
+    )
     badge.setAttribute("data-testid", "badge")
     await expect(page.getByTestId("badge")).toMatchScreenshot("badge-outline")
   })

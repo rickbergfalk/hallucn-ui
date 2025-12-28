@@ -26,7 +26,9 @@ describe("PlankSeparator (Web Component)", () => {
   })
 
   it("renders with vertical orientation", async () => {
-    const sep = await renderAndWait(`<plank-separator orientation="vertical"></plank-separator>`)
+    const sep = await renderAndWait(
+      `<plank-separator orientation="vertical"></plank-separator>`
+    )
     expect(sep.dataset.orientation).toBe("vertical")
   })
 
@@ -36,7 +38,9 @@ describe("PlankSeparator (Web Component)", () => {
   })
 
   it("has separator role when not decorative", async () => {
-    const sep = await renderAndWait(`<plank-separator decorative="false"></plank-separator>`)
+    const sep = await renderAndWait(
+      `<plank-separator decorative="false"></plank-separator>`
+    )
     // Need to set the property since boolean attributes work differently
     sep.decorative = false
     await sep.updateComplete
@@ -50,7 +54,9 @@ describe("PlankSeparator (Web Component)", () => {
   })
 
   it("applies vertical classes", async () => {
-    const sep = await renderAndWait(`<plank-separator orientation="vertical"></plank-separator>`)
+    const sep = await renderAndWait(
+      `<plank-separator orientation="vertical"></plank-separator>`
+    )
     expect(sep.classList.contains("h-full")).toBe(true)
     expect(sep.classList.contains("w-px")).toBe(true)
   })

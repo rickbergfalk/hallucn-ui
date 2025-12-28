@@ -33,7 +33,9 @@ describe("PlankTextarea (Web Component) - Visual", () => {
         <plank-textarea placeholder="Type your message here..."></plank-textarea>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("textarea-default")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "textarea-default"
+    )
   })
 
   it("disabled textarea matches React", async () => {
@@ -42,7 +44,9 @@ describe("PlankTextarea (Web Component) - Visual", () => {
         <plank-textarea placeholder="Disabled" disabled></plank-textarea>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("textarea-disabled")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "textarea-disabled"
+    )
   })
 
   it("textarea with value matches React", async () => {
@@ -51,7 +55,9 @@ describe("PlankTextarea (Web Component) - Visual", () => {
         <plank-textarea value="This is some sample text in the textarea."></plank-textarea>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("textarea-with-value")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "textarea-with-value"
+    )
   })
 
   it("textarea with rows matches React", async () => {
@@ -60,6 +66,8 @@ describe("PlankTextarea (Web Component) - Visual", () => {
         <plank-textarea rows="6" placeholder="6 rows..."></plank-textarea>
       </div>
     `)
-    await expect(page.getByTestId("container")).toMatchScreenshot("textarea-rows")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "textarea-rows"
+    )
   })
 })

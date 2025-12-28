@@ -10,15 +10,22 @@ describe("Separator (React) - Visual", () => {
         <Separator />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("separator-horizontal")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "separator-horizontal"
+    )
   })
 
   it("vertical separator", async () => {
     render(
-      <div data-testid="container" style={{ height: "100px", display: "flex", padding: "8px" }}>
+      <div
+        data-testid="container"
+        style={{ height: "100px", display: "flex", padding: "8px" }}
+      >
         <Separator orientation="vertical" />
       </div>
     )
-    await expect(page.getByTestId("container")).toMatchScreenshot("separator-vertical")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "separator-vertical"
+    )
   })
 })
