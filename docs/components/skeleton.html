@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skeleton - Planks</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <header class="border-b">
+      <div class="container mx-auto px-4 py-4 flex items-center gap-4">
+        <a href="/" class="text-2xl font-bold">Planks</a>
+        <span class="text-muted-foreground">/</span>
+        <span>Skeleton</span>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 class="text-4xl font-bold mb-4">Skeleton</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        Use to show a placeholder while content is loading.
+      </p>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Text Lines</h2>
+        <div class="space-y-2 mb-4">
+          <plank-skeleton class="h-4 w-64"></plank-skeleton>
+          <plank-skeleton class="h-4 w-48"></plank-skeleton>
+          <plank-skeleton class="h-4 w-56"></plank-skeleton>
+        </div>
+        <pre><code>&lt;plank-skeleton class="h-4 w-64"&gt;&lt;/plank-skeleton&gt;
+&lt;plank-skeleton class="h-4 w-48"&gt;&lt;/plank-skeleton&gt;
+&lt;plank-skeleton class="h-4 w-56"&gt;&lt;/plank-skeleton&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Avatar with Text</h2>
+        <div class="flex items-center gap-4 mb-4">
+          <plank-skeleton class="h-12 w-12 rounded-full"></plank-skeleton>
+          <div class="space-y-2">
+            <plank-skeleton class="h-4 w-32"></plank-skeleton>
+            <plank-skeleton class="h-4 w-24"></plank-skeleton>
+          </div>
+        </div>
+        <pre><code>&lt;div class="flex items-center gap-4"&gt;
+  &lt;plank-skeleton class="h-12 w-12 rounded-full"&gt;&lt;/plank-skeleton&gt;
+  &lt;div class="space-y-2"&gt;
+    &lt;plank-skeleton class="h-4 w-32"&gt;&lt;/plank-skeleton&gt;
+    &lt;plank-skeleton class="h-4 w-24"&gt;&lt;/plank-skeleton&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Card Skeleton</h2>
+        <div class="max-w-sm mb-4">
+          <plank-card>
+            <plank-card-header>
+              <plank-skeleton class="h-6 w-32 mb-2"></plank-skeleton>
+              <plank-skeleton class="h-4 w-48"></plank-skeleton>
+            </plank-card-header>
+            <plank-card-content>
+              <plank-skeleton class="h-32 w-full"></plank-skeleton>
+            </plank-card-content>
+          </plank-card>
+        </div>
+        <pre><code>&lt;plank-card&gt;
+  &lt;plank-card-header&gt;
+    &lt;plank-skeleton class="h-6 w-32 mb-2"&gt;&lt;/plank-skeleton&gt;
+    &lt;plank-skeleton class="h-4 w-48"&gt;&lt;/plank-skeleton&gt;
+  &lt;/plank-card-header&gt;
+  &lt;plank-card-content&gt;
+    &lt;plank-skeleton class="h-32 w-full"&gt;&lt;/plank-skeleton&gt;
+  &lt;/plank-card-content&gt;
+&lt;/plank-card&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Usage</h2>
+        <p class="text-muted-foreground">
+          The skeleton component is styled using Tailwind classes. Use utility
+          classes like
+          <code class="bg-muted px-1 rounded">h-4</code>,
+          <code class="bg-muted px-1 rounded">w-32</code>, and
+          <code class="bg-muted px-1 rounded">rounded-full</code> to control
+          size and shape.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

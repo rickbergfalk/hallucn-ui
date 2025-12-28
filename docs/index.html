@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planks - Web Components</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <!-- Header -->
+    <header class="border-b">
+      <div
+        class="container mx-auto px-4 py-4 flex items-center justify-between"
+      >
+        <h1 class="text-2xl font-bold">Planks</h1>
+        <nav class="flex gap-4">
+          <a
+            href="https://github.com/rickbergfalk/planks"
+            class="text-muted-foreground hover:text-foreground"
+          >
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mx-auto px-4 py-8">
+      <div class="max-w-3xl">
+        <h2 class="text-4xl font-bold mb-4">Web Components</h2>
+        <p class="text-xl text-muted-foreground mb-8">
+          shadcn/ui components rebuilt as framework-agnostic web components
+          using Lit. Use them in React, Vue, Svelte, vanilla JS, or anywhere
+          HTML works.
+        </p>
+      </div>
+
+      <!-- Component Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <!-- Button -->
+        <a
+          href="/components/button.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Button</h3>
+          <p class="text-sm text-muted-foreground mb-4">
+            Buttons with multiple variants and sizes.
+          </p>
+          <div class="flex gap-2">
+            <plank-button size="sm">Button</plank-button>
+            <plank-button variant="outline" size="sm">Outline</plank-button>
+          </div>
+        </a>
+
+        <!-- Badge -->
+        <a
+          href="/components/badge.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Badge</h3>
+          <p class="text-sm text-muted-foreground mb-4">
+            Small status indicators.
+          </p>
+          <div class="flex gap-2">
+            <plank-badge>Default</plank-badge>
+            <plank-badge variant="secondary">Secondary</plank-badge>
+          </div>
+        </a>
+
+        <!-- Input -->
+        <a
+          href="/components/input.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Input</h3>
+          <p class="text-sm text-muted-foreground mb-4">Text input field.</p>
+          <plank-input placeholder="Enter text..." class="w-full"></plank-input>
+        </a>
+
+        <!-- Textarea -->
+        <a
+          href="/components/textarea.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Textarea</h3>
+          <p class="text-sm text-muted-foreground mb-4">
+            Multi-line text input.
+          </p>
+          <plank-textarea
+            placeholder="Enter text..."
+            rows="2"
+            class="w-full"
+          ></plank-textarea>
+        </a>
+
+        <!-- Label -->
+        <a
+          href="/components/label.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Label</h3>
+          <p class="text-sm text-muted-foreground mb-4">
+            Accessible form labels.
+          </p>
+          <div class="flex flex-col gap-2">
+            <plank-label for="demo">Email</plank-label>
+            <plank-input
+              id="demo"
+              type="email"
+              placeholder="email@example.com"
+              class="w-full"
+            ></plank-input>
+          </div>
+        </a>
+
+        <!-- Card -->
+        <a
+          href="/components/card.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Card</h3>
+          <p class="text-sm text-muted-foreground mb-4">
+            Container for content.
+          </p>
+          <plank-card class="w-full">
+            <plank-card-header>
+              <plank-card-title>Title</plank-card-title>
+            </plank-card-header>
+            <plank-card-content>Content</plank-card-content>
+          </plank-card>
+        </a>
+
+        <!-- Separator -->
+        <a
+          href="/components/separator.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Separator</h3>
+          <p class="text-sm text-muted-foreground mb-4">Visual divider.</p>
+          <div class="py-2">
+            <plank-separator></plank-separator>
+          </div>
+        </a>
+
+        <!-- Skeleton -->
+        <a
+          href="/components/skeleton.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Skeleton</h3>
+          <p class="text-sm text-muted-foreground mb-4">Loading placeholder.</p>
+          <div class="flex items-center gap-4">
+            <plank-skeleton class="h-12 w-12 rounded-full"></plank-skeleton>
+            <div class="space-y-2">
+              <plank-skeleton class="h-4 w-32"></plank-skeleton>
+              <plank-skeleton class="h-4 w-24"></plank-skeleton>
+            </div>
+          </div>
+        </a>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t mt-16">
+      <div
+        class="container mx-auto px-4 py-8 text-center text-muted-foreground"
+      >
+        <p>Built with Lit. Styled with Tailwind.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input - Planks</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <header class="border-b">
+      <div class="container mx-auto px-4 py-4 flex items-center gap-4">
+        <a href="/" class="text-2xl font-bold">Planks</a>
+        <span class="text-muted-foreground">/</span>
+        <span>Input</span>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 class="text-4xl font-bold mb-4">Input</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        Displays a form input field.
+      </p>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Default</h2>
+        <div class="max-w-sm mb-4">
+          <plank-input placeholder="Enter text..."></plank-input>
+        </div>
+        <pre><code>&lt;plank-input placeholder="Enter text..."&gt;&lt;/plank-input&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">With Label</h2>
+        <div class="max-w-sm mb-4 flex flex-col gap-2">
+          <plank-label for="email">Email</plank-label>
+          <plank-input
+            id="email"
+            type="email"
+            placeholder="email@example.com"
+          ></plank-input>
+        </div>
+        <pre><code>&lt;plank-label for="email"&gt;Email&lt;/plank-label&gt;
+&lt;plank-input id="email" type="email" placeholder="email@example.com"&gt;&lt;/plank-input&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Disabled</h2>
+        <div class="max-w-sm mb-4">
+          <plank-input placeholder="Disabled input" disabled></plank-input>
+        </div>
+        <pre><code>&lt;plank-input placeholder="Disabled input" disabled&gt;&lt;/plank-input&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">API</h2>
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b">
+              <th class="text-left py-2 pr-4">Property</th>
+              <th class="text-left py-2 pr-4">Type</th>
+              <th class="text-left py-2 pr-4">Default</th>
+              <th class="text-left py-2">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">type</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">string</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">"text"</td>
+              <td class="py-2">Input type (text, email, password, etc.)</td>
+            </tr>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">placeholder</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">string</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">""</td>
+              <td class="py-2">Placeholder text</td>
+            </tr>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">value</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">string</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">""</td>
+              <td class="py-2">Input value</td>
+            </tr>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">disabled</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">boolean</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">false</td>
+              <td class="py-2">Disables the input</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

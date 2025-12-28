@@ -103,6 +103,7 @@ export default tseslint.config(
       "node_modules/**",
       "reference/**",
       "dist/**",
+      "docs/dist/**",
       // Files with @ts-nocheck have type issues we're ignoring
       "src/components/chart.tsx",
       "src/components/resizable.tsx",
