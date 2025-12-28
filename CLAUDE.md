@@ -221,7 +221,7 @@ describe("plank-newcomponent", () => {
 - [ ] aspect-ratio
 
 ### Tier 3 - Components with state
-- [ ] switch
+- [x] switch
 - [ ] checkbox
 - [ ] toggle
 - [ ] avatar (multi-part)

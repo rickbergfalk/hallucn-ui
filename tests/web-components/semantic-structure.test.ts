@@ -5,6 +5,7 @@ import "@/web-components/plank-label"
 import "@/web-components/plank-input"
 import "@/web-components/plank-textarea"
 import "@/web-components/plank-separator"
+import "@/web-components/plank-switch"
 
 /**
  * Semantic Structure Tests
@@ -182,6 +183,45 @@ describe("Semantic Structure", () => {
       await (element as any).updateComplete
 
       expect(element.getAttribute("role")).toBe("separator")
+    })
+  })
+
+  describe("plank-switch", () => {
+    it("must have role=switch and aria-checked", async () => {
+      container.innerHTML = `<plank-switch></plank-switch>`
+
+      await customElements.whenDefined("plank-switch")
+      const element = container.querySelector("plank-switch")!
+      await (element as any).updateComplete
+
+      expect(element.getAttribute("role")).toBe("switch")
+      expect(element.getAttribute("aria-checked")).toBe("false")
+    })
+
+    it("must have thumb element with correct data-state", async () => {
+      container.innerHTML = `<plank-switch></plank-switch>`
+
+      await customElements.whenDefined("plank-switch")
+      const element = container.querySelector("plank-switch")!
+      await (element as any).updateComplete
+
+      const thumb = element.querySelector('[data-slot="switch-thumb"]')
+      expect(thumb, "Must contain a thumb element").toBeTruthy()
+      expect(thumb?.getAttribute("data-state")).toBe("unchecked")
+    })
+
+    it("checked state updates aria-checked and data-state", async () => {
+      container.innerHTML = `<plank-switch checked></plank-switch>`
+
+      await customElements.whenDefined("plank-switch")
+      const element = container.querySelector("plank-switch")!
+      await (element as any).updateComplete
+
+      expect(element.getAttribute("aria-checked")).toBe("true")
+      expect(element.getAttribute("data-state")).toBe("checked")
+
+      const thumb = element.querySelector('[data-slot="switch-thumb"]')
+      expect(thumb?.getAttribute("data-state")).toBe("checked")
     })
   })
 })
