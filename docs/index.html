@@ -307,6 +307,25 @@
             </plank-collapsible-content>
           </plank-collapsible>
         </a>
+
+        <!-- Accordion -->
+        <a
+          href="./components/accordion.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Accordion</h3>
+          <p class="text-sm text-muted-foreground mb-4">
+            Vertically stacked expandable items.
+          </p>
+          <plank-accordion collapsible class="w-full">
+            <plank-accordion-item value="demo">
+              <plank-accordion-trigger>Click to expand</plank-accordion-trigger>
+              <plank-accordion-content>
+                <span class="text-sm">Hidden content</span>
+              </plank-accordion-content>
+            </plank-accordion-item>
+          </plank-accordion>
+        </a>
       </div>
     </main>
 
