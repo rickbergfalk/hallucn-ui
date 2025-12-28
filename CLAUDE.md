@@ -239,7 +239,7 @@ describe("plank-newcomponent", () => {
 ### Tier 3 - Components with state
 - [x] switch
 - [x] checkbox
-- [ ] toggle
+- [x] toggle
 - [ ] avatar (multi-part)
 
 ### Tier 4 - Multi-part with state

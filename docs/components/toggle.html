@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toggle - Planks</title>
+    <script type="module" src="../src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <!-- Header -->
+    <header class="border-b">
+      <div class="container mx-auto px-4 py-4 flex items-center gap-4">
+        <a href="../" class="text-2xl font-bold">Planks</a>
+        <span class="text-muted-foreground">/</span>
+        <span>Toggle</span>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 class="text-4xl font-bold mb-4">Toggle</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        A two-state button that can be either on or off.
+      </p>
+
+      <!-- Basic Usage -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Basic Usage</h2>
+        <div class="flex flex-wrap items-center gap-4 mb-4">
+          <plank-toggle aria-label="Toggle bold">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"
+              />
+            </svg>
+          </plank-toggle>
+        </div>
+        <pre><code>&lt;plank-toggle aria-label="Toggle bold"&gt;
+  &lt;svg&gt;...&lt;/svg&gt;
+&lt;/plank-toggle&gt;</code></pre>
+      </section>
+
+      <!-- States -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">States</h2>
+        <div class="flex flex-wrap items-center gap-6 mb-4">
+          <div class="flex items-center gap-2">
+            <plank-toggle aria-label="Toggle">B</plank-toggle>
+            <span class="text-sm text-muted-foreground">Off</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <plank-toggle pressed aria-label="Toggle">B</plank-toggle>
+            <span class="text-sm text-muted-foreground">On</span>
+          </div>
+        </div>
+        <pre><code>&lt;plank-toggle aria-label="Toggle"&gt;B&lt;/plank-toggle&gt;
+&lt;plank-toggle pressed aria-label="Toggle"&gt;B&lt;/plank-toggle&gt;</code></pre>
+      </section>
+
+      <!-- Variants -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Variants</h2>
+        <div class="flex flex-wrap items-center gap-6 mb-4">
+          <div class="flex items-center gap-2">
+            <plank-toggle aria-label="Toggle">B</plank-toggle>
+            <span class="text-sm text-muted-foreground">Default</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <plank-toggle variant="outline" aria-label="Toggle">B</plank-toggle>
+            <span class="text-sm text-muted-foreground">Outline</span>
+          </div>
+        </div>
+        <pre><code>&lt;plank-toggle&gt;B&lt;/plank-toggle&gt;
+&lt;plank-toggle variant="outline"&gt;B&lt;/plank-toggle&gt;</code></pre>
+      </section>
+
+      <!-- Sizes -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Sizes</h2>
+        <div class="flex flex-wrap items-center gap-6 mb-4">
+          <div class="flex items-center gap-2">
+            <plank-toggle size="sm" aria-label="Toggle">B</plank-toggle>
+            <span class="text-sm text-muted-foreground">Small</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <plank-toggle aria-label="Toggle">B</plank-toggle>
+            <span class="text-sm text-muted-foreground">Default</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <plank-toggle size="lg" aria-label="Toggle">B</plank-toggle>
+            <span class="text-sm text-muted-foreground">Large</span>
+          </div>
+        </div>
+        <pre><code>&lt;plank-toggle size="sm"&gt;B&lt;/plank-toggle&gt;
+&lt;plank-toggle&gt;B&lt;/plank-toggle&gt;
+&lt;plank-toggle size="lg"&gt;B&lt;/plank-toggle&gt;</code></pre>
+      </section>
+
+      <!-- Disabled -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Disabled</h2>
+        <div class="flex flex-wrap items-center gap-6 mb-4">
+          <div class="flex items-center gap-2">
+            <plank-toggle disabled aria-label="Toggle">B</plank-toggle>
+            <span class="text-sm text-muted-foreground">Disabled</span>
+          </div>
+        </div>
+        <pre><code>&lt;plank-toggle disabled&gt;B&lt;/plank-toggle&gt;</code></pre>
+      </section>
+
+      <!-- With Text -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">With Text</h2>
+        <div class="flex flex-wrap items-center gap-4 mb-4">
+          <plank-toggle aria-label="Toggle italic">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="19" x2="10" y1="4" y2="4" />
+              <line x1="14" x2="5" y1="20" y2="20" />
+              <line x1="15" x2="9" y1="4" y2="20" />
+            </svg>
+            Italic
+          </plank-toggle>
+        </div>
+        <pre><code>&lt;plank-toggle aria-label="Toggle italic"&gt;
+  &lt;svg&gt;...&lt;/svg&gt;
+  Italic
+&lt;/plank-toggle&gt;</code></pre>
+      </section>
+
+      <!-- API -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">API</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Property</th>
+                <th class="text-left py-2 pr-4">Type</th>
+                <th class="text-left py-2 pr-4">Default</th>
+                <th class="text-left py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">pressed</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  boolean
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">false</td>
+                <td class="py-2">The controlled pressed state of the toggle</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">variant</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "default" | "outline"
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "default"
+                </td>
+                <td class="py-2">The visual variant of the toggle</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">size</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "sm" | "default" | "lg"
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "default"
+                </td>
+                <td class="py-2">The size of the toggle</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">disabled</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  boolean
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">false</td>
+                <td class="py-2">Disables the toggle</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">Events</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Event</th>
+                <th class="text-left py-2 pr-4">Detail</th>
+                <th class="text-left py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">pressed-change</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  boolean
+                </td>
+                <td class="py-2">Fired when the toggle state changes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
