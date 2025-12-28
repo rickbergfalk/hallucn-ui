@@ -65,8 +65,9 @@ export class PlankSwitch extends LitElement {
       this._input.checked = this.checked
     }
 
-    // Set up label association - find labels that reference our id
-    this._setupLabelAssociation()
+    // Set up label association - delay to allow other components to render
+    // (plank-label needs to render its inner <label> first)
+    requestAnimationFrame(() => this._setupLabelAssociation())
   }
 
   private _setupLabelAssociation() {
@@ -80,7 +81,7 @@ export class PlankSwitch extends LitElement {
     })
   }
 
-  private _handleLabelClick = (e: MouseEvent) => {
+  private _handleLabelClick = (e: Event) => {
     e.preventDefault()
     if (!this.disabled) {
       this._toggle()

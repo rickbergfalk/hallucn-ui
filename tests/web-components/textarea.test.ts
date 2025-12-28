@@ -2,6 +2,9 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest"
 import "@/web-components/plank-textarea"
 import type { PlankTextarea } from "@/web-components/plank-textarea"
 
+// Helper to wait for next animation frame (label association is deferred)
+const nextFrame = () => new Promise((r) => requestAnimationFrame(r))
+
 describe("PlankTextarea (Web Component)", () => {
   let container: HTMLDivElement
 
@@ -84,6 +87,7 @@ describe("PlankTextarea (Web Component)", () => {
       "plank-textarea"
     ) as PlankTextarea
     await textareaEl.updateComplete
+    await nextFrame() // Wait for label association to be set up
 
     const label = container.querySelector("label")!
     const nativeTextarea = textareaEl.querySelector(

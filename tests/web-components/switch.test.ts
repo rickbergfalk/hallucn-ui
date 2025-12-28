@@ -2,6 +2,9 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest"
 import "@/web-components/plank-switch"
 import type { PlankSwitch } from "@/web-components/plank-switch"
 
+// Helper to wait for next animation frame (label association is deferred)
+const nextFrame = () => new Promise((r) => requestAnimationFrame(r))
+
 describe("PlankSwitch (Web Component)", () => {
   let container: HTMLDivElement
 
@@ -186,6 +189,7 @@ describe("PlankSwitch (Web Component)", () => {
     await customElements.whenDefined("plank-switch")
     const switchEl = container.querySelector("plank-switch") as PlankSwitch
     await switchEl.updateComplete
+    await nextFrame() // Wait for label association to be set up
 
     expect(switchEl.checked).toBe(false)
 
@@ -204,6 +208,7 @@ describe("PlankSwitch (Web Component)", () => {
     await customElements.whenDefined("plank-switch")
     const switchEl = container.querySelector("plank-switch") as PlankSwitch
     await switchEl.updateComplete
+    await nextFrame() // Wait for label association to be set up
 
     expect(switchEl.checked).toBe(false)
 

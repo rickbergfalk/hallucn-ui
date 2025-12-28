@@ -2,6 +2,9 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest"
 import "@/web-components/plank-input"
 import type { PlankInput } from "@/web-components/plank-input"
 
+// Helper to wait for next animation frame (label association is deferred)
+const nextFrame = () => new Promise((r) => requestAnimationFrame(r))
+
 describe("PlankInput (Web Component)", () => {
   let container: HTMLDivElement
 
@@ -72,6 +75,7 @@ describe("PlankInput (Web Component)", () => {
     await customElements.whenDefined("plank-input")
     const inputEl = container.querySelector("plank-input") as PlankInput
     await inputEl.updateComplete
+    await nextFrame() // Wait for label association to be set up
 
     const label = container.querySelector("label")!
     const nativeInput = inputEl.querySelector("input") as HTMLInputElement

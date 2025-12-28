@@ -41,7 +41,9 @@ export class PlankInput extends LitElement {
   }
 
   firstUpdated() {
-    this._setupLabelAssociation()
+    // Delay to allow other components to render
+    // (plank-label needs to render its inner <label> first)
+    requestAnimationFrame(() => this._setupLabelAssociation())
   }
 
   private _setupLabelAssociation() {
@@ -54,7 +56,7 @@ export class PlankInput extends LitElement {
     })
   }
 
-  private _handleLabelClick = (e: MouseEvent) => {
+  private _handleLabelClick = (e: Event) => {
     e.preventDefault()
     const input = this.querySelector("input")
     input?.focus()
