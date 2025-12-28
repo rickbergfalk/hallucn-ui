@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alert - Planks</title>
+    <script type="module" src="../src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <header class="border-b">
+      <div class="container mx-auto px-4 py-4 flex items-center gap-4">
+        <a href="../" class="text-2xl font-bold">Planks</a>
+        <span class="text-muted-foreground">/</span>
+        <span>Alert</span>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 class="text-4xl font-bold mb-4">Alert</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        Displays a callout for important information.
+      </p>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Default Alert</h2>
+        <div class="max-w-xl mb-4">
+          <plank-alert>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+            <plank-alert-title
+              >Success! Your changes have been saved</plank-alert-title
+            >
+            <plank-alert-description>
+              This is an alert with icon, title and description.
+            </plank-alert-description>
+          </plank-alert>
+        </div>
+        <pre><code>&lt;plank-alert&gt;
+  &lt;svg&gt;...icon...&lt;/svg&gt;
+  &lt;plank-alert-title&gt;Success! Your changes have been saved&lt;/plank-alert-title&gt;
+  &lt;plank-alert-description&gt;
+    This is an alert with icon, title and description.
+  &lt;/plank-alert-description&gt;
+&lt;/plank-alert&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Alert with Icon and Title</h2>
+        <div class="max-w-xl mb-4">
+          <plank-alert>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4" />
+              <path d="M12 8h.01" />
+            </svg>
+            <plank-alert-title
+              >This Alert has a title and an icon. No
+              description.</plank-alert-title
+            >
+          </plank-alert>
+        </div>
+        <pre><code>&lt;plank-alert&gt;
+  &lt;svg&gt;...icon...&lt;/svg&gt;
+  &lt;plank-alert-title&gt;This Alert has a title and an icon. No description.&lt;/plank-alert-title&gt;
+&lt;/plank-alert&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Destructive Alert</h2>
+        <div class="max-w-xl mb-4">
+          <plank-alert variant="destructive">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" x2="12" y1="8" y2="12" />
+              <line x1="12" x2="12.01" y1="16" y2="16" />
+            </svg>
+            <plank-alert-title>Error</plank-alert-title>
+            <plank-alert-description>
+              Your session has expired. Please log in again.
+            </plank-alert-description>
+          </plank-alert>
+        </div>
+        <pre><code>&lt;plank-alert variant="destructive"&gt;
+  &lt;svg&gt;...icon...&lt;/svg&gt;
+  &lt;plank-alert-title&gt;Error&lt;/plank-alert-title&gt;
+  &lt;plank-alert-description&gt;
+    Your session has expired. Please log in again.
+  &lt;/plank-alert-description&gt;
+&lt;/plank-alert&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Components</h2>
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b">
+              <th class="text-left py-2 pr-4">Component</th>
+              <th class="text-left py-2">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">plank-alert</td>
+              <td class="py-2">The alert container</td>
+            </tr>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">plank-alert-title</td>
+              <td class="py-2">The alert title</td>
+            </tr>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">plank-alert-description</td>
+              <td class="py-2">The alert description</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Props</h2>
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b">
+              <th class="text-left py-2 pr-4">Prop</th>
+              <th class="text-left py-2 pr-4">Type</th>
+              <th class="text-left py-2 pr-4">Default</th>
+              <th class="text-left py-2">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">variant</td>
+              <td class="py-2 pr-4 font-mono">"default" | "destructive"</td>
+              <td class="py-2 pr-4 font-mono">"default"</td>
+              <td class="py-2">The visual style variant</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

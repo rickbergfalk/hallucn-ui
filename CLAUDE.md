@@ -191,21 +191,32 @@ describe("plank-newcomponent", () => {
    - Must children be inside those elements for accessibility?
    - This determines which implementation pattern to use
 
-2. Write behavioral + visual tests for React component
-3. **Add semantic structure test** for any native semantic elements identified in step 1
-4. Create equivalent test stubs for web component (all failing)
-5. Implement Lit component until tests pass
-6. Compare visual snapshots
-7. **Add docs page**
+2. **Research existing web component libraries**
+   - Check how Shoelace, Spectrum, Carbon, Lion implement the same component
+   - Note accessibility features (ARIA attributes, keyboard interactions)
+   - Note any events, properties, or behaviors we should consider
+   - Reference: [MDN ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles)
+   - Not all features need to be implemented (match shadcn scope), but ensure accessibility is covered
+
+3. Write behavioral + visual tests for React component
+4. **Add semantic structure test** for any native semantic elements identified in step 1
+5. **Add accessibility tests** based on research from step 2
+   - ARIA attributes (role, aria-live, aria-label, etc.)
+   - Keyboard interactions where applicable
+   - Focus management (or verify no focus for passive elements like alerts)
+6. Create equivalent test stubs for web component (all failing)
+7. Implement Lit component until tests pass
+8. Compare visual snapshots
+9. **Add docs page**
    - Create `docs/components/{component}.html` (copy existing page as template)
    - Add component import to `docs/src/main.ts`
    - Add link card to `docs/index.html`
    - Verify with `npm run docs:dev` that component renders correctly
 
-8. **Run formatting and checks**
-   - Run `npm run format` to fix any Prettier issues
-   - Run `npm run lint` to verify no ESLint errors
-   - Run `npm run typecheck` to verify TypeScript compiles
+10. **Run formatting and checks**
+    - Run `npm run format` to fix any Prettier issues
+    - Run `npm run lint` to verify no ESLint errors
+    - Run `npm run typecheck` to verify TypeScript compiles
 
 ## Conversion Progress
 
@@ -220,7 +231,7 @@ describe("plank-newcomponent", () => {
 - [x] input
 - [x] textarea
 - [x] card (multi-part)
-- [ ] alert
+- [x] alert
 - [ ] kbd
 - [ ] progress
 - [ ] aspect-ratio
