@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest"
+import { describe, it, expect, beforeEach, afterEach } from "vitest"
 import "@/web-components/plank-input"
 import type { PlankInput } from "@/web-components/plank-input"
 
@@ -8,6 +8,10 @@ describe("PlankInput (Web Component)", () => {
   beforeEach(() => {
     container = document.createElement("div")
     document.body.appendChild(container)
+  })
+
+  afterEach(() => {
+    container.remove()
   })
 
   async function renderAndWait(html: string): Promise<PlankInput> {
@@ -58,5 +62,22 @@ describe("PlankInput (Web Component)", () => {
     await inputEl.updateComplete
     const nativeInput = inputEl.querySelector("input") as HTMLInputElement
     expect(nativeInput.value).toBe("test value")
+  })
+
+  it("focuses input when associated label is clicked", async () => {
+    container.innerHTML = `
+      <label for="test-input">Label</label>
+      <plank-input id="test-input"></plank-input>
+    `
+    await customElements.whenDefined("plank-input")
+    const inputEl = container.querySelector("plank-input") as PlankInput
+    await inputEl.updateComplete
+
+    const label = container.querySelector("label")!
+    const nativeInput = inputEl.querySelector("input") as HTMLInputElement
+
+    label.click()
+
+    expect(document.activeElement).toBe(nativeInput)
   })
 })

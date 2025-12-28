@@ -14,6 +14,7 @@ const switchThumbClasses =
  *
  * Uses light DOM so Tailwind classes apply directly.
  * Renders a thumb element inside that slides on state change.
+ * Includes a hidden native checkbox for label association and form integration.
  */
 @customElement("plank-switch")
 export class PlankSwitch extends LitElement {
@@ -23,6 +24,9 @@ export class PlankSwitch extends LitElement {
   @property({ type: Boolean, reflect: true })
   disabled = false
 
+  private _input: HTMLInputElement | null = null
+  private _associatedLabels: Element[] = []
+
   // Light DOM - no shadow root
   createRenderRoot() {
     return this
@@ -30,7 +34,7 @@ export class PlankSwitch extends LitElement {
 
   connectedCallback() {
     super.connectedCallback()
-    // Set up accessibility
+    // Set up accessibility on the custom element
     if (!this.hasAttribute("role")) {
       this.setAttribute("role", "switch")
     }
@@ -46,9 +50,49 @@ export class PlankSwitch extends LitElement {
     super.disconnectedCallback()
     this.removeEventListener("click", this._handleClick)
     this.removeEventListener("keydown", this._handleKeydown)
+    // Clean up label listeners
+    this._associatedLabels.forEach((label) => {
+      label.removeEventListener("click", this._handleLabelClick)
+    })
+    this._associatedLabels = []
+  }
+
+  firstUpdated() {
+    // Get reference to the hidden input
+    this._input = this.querySelector('input[type="checkbox"]')
+    if (this._input) {
+      // Sync initial state
+      this._input.checked = this.checked
+    }
+
+    // Set up label association - find labels that reference our id
+    this._setupLabelAssociation()
+  }
+
+  private _setupLabelAssociation() {
+    if (!this.id) return
+
+    // Find all labels with for="our-id" and add click listeners
+    const labels = document.querySelectorAll(`label[for="${this.id}"]`)
+    this._associatedLabels = Array.from(labels)
+    this._associatedLabels.forEach((label) => {
+      label.addEventListener("click", this._handleLabelClick)
+    })
+  }
+
+  private _handleLabelClick = (e: MouseEvent) => {
+    e.preventDefault()
+    if (!this.disabled) {
+      this._toggle()
+      this.focus()
+    }
   }
 
   private _handleClick = (e: MouseEvent) => {
+    // Ignore clicks on the hidden input
+    if ((e.target as HTMLElement).tagName === "INPUT") {
+      return
+    }
     if (this.disabled) {
       e.preventDefault()
       return
@@ -67,6 +111,10 @@ export class PlankSwitch extends LitElement {
 
   private _toggle() {
     this.checked = !this.checked
+    // Sync hidden input
+    if (this._input) {
+      this._input.checked = this.checked
+    }
     this.dispatchEvent(
       new CustomEvent("checked-change", {
         detail: this.checked,
@@ -88,6 +136,11 @@ export class PlankSwitch extends LitElement {
       }
     }
 
+    // Sync hidden input when checked changes programmatically
+    if (changedProperties.has("checked") && this._input) {
+      this._input.checked = this.checked
+    }
+
     // Update aria-checked and data-state when checked changes
     const state = this.checked ? "checked" : "unchecked"
     this.setAttribute("aria-checked", String(this.checked))
@@ -106,6 +159,15 @@ export class PlankSwitch extends LitElement {
   render() {
     const state = this.checked ? "checked" : "unchecked"
     return html`
+      <input
+        type="checkbox"
+        class="sr-only"
+        .checked=${this.checked}
+        ?disabled=${this.disabled}
+        @click=${(e: Event) => e.stopPropagation()}
+        aria-hidden="true"
+        tabindex="-1"
+      />
       <span
         class=${switchThumbClasses}
         data-slot="switch-thumb"

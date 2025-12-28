@@ -25,9 +25,39 @@ export class PlankTextarea extends LitElement {
   @property({ type: Boolean, reflect: true })
   disabled = false
 
+  private _associatedLabels: Element[] = []
+
   // Light DOM - no shadow root
   createRenderRoot() {
     return this
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    this._associatedLabels.forEach((label) => {
+      label.removeEventListener("click", this._handleLabelClick)
+    })
+    this._associatedLabels = []
+  }
+
+  firstUpdated() {
+    this._setupLabelAssociation()
+  }
+
+  private _setupLabelAssociation() {
+    if (!this.id) return
+
+    const labels = document.querySelectorAll(`label[for="${this.id}"]`)
+    this._associatedLabels = Array.from(labels)
+    this._associatedLabels.forEach((label) => {
+      label.addEventListener("click", this._handleLabelClick)
+    })
+  }
+
+  private _handleLabelClick = (e: MouseEvent) => {
+    e.preventDefault()
+    const textarea = this.querySelector("textarea")
+    textarea?.focus()
   }
 
   private _handleInput(e: Event) {

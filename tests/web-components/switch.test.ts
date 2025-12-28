@@ -177,4 +177,40 @@ describe("PlankSwitch (Web Component)", () => {
 
     expect(switchEl.id).toBe("my-switch")
   })
+
+  it("toggles when associated label is clicked", async () => {
+    container.innerHTML = `
+      <plank-switch id="test-switch"></plank-switch>
+      <label for="test-switch">Toggle me</label>
+    `
+    await customElements.whenDefined("plank-switch")
+    const switchEl = container.querySelector("plank-switch") as PlankSwitch
+    await switchEl.updateComplete
+
+    expect(switchEl.checked).toBe(false)
+
+    const label = container.querySelector("label")!
+    label.click()
+    await switchEl.updateComplete
+
+    expect(switchEl.checked).toBe(true)
+  })
+
+  it("does not toggle via label when disabled", async () => {
+    container.innerHTML = `
+      <plank-switch id="test-switch" disabled></plank-switch>
+      <label for="test-switch">Toggle me</label>
+    `
+    await customElements.whenDefined("plank-switch")
+    const switchEl = container.querySelector("plank-switch") as PlankSwitch
+    await switchEl.updateComplete
+
+    expect(switchEl.checked).toBe(false)
+
+    const label = container.querySelector("label")!
+    label.click()
+    await switchEl.updateComplete
+
+    expect(switchEl.checked).toBe(false)
+  })
 })

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest"
+import { describe, it, expect, beforeEach, afterEach } from "vitest"
 import "@/web-components/plank-textarea"
 import type { PlankTextarea } from "@/web-components/plank-textarea"
 
@@ -8,6 +8,10 @@ describe("PlankTextarea (Web Component)", () => {
   beforeEach(() => {
     container = document.createElement("div")
     document.body.appendChild(container)
+  })
+
+  afterEach(() => {
+    container.remove()
   })
 
   async function renderAndWait(html: string): Promise<PlankTextarea> {
@@ -68,5 +72,26 @@ describe("PlankTextarea (Web Component)", () => {
       "textarea"
     ) as HTMLTextAreaElement
     expect(nativeTextarea.value).toBe("test value")
+  })
+
+  it("focuses textarea when associated label is clicked", async () => {
+    container.innerHTML = `
+      <label for="test-textarea">Label</label>
+      <plank-textarea id="test-textarea"></plank-textarea>
+    `
+    await customElements.whenDefined("plank-textarea")
+    const textareaEl = container.querySelector(
+      "plank-textarea"
+    ) as PlankTextarea
+    await textareaEl.updateComplete
+
+    const label = container.querySelector("label")!
+    const nativeTextarea = textareaEl.querySelector(
+      "textarea"
+    ) as HTMLTextAreaElement
+
+    label.click()
+
+    expect(document.activeElement).toBe(nativeTextarea)
   })
 })
