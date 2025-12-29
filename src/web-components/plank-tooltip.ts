@@ -6,6 +6,7 @@ import {
   offset,
   flip,
   shift,
+  limitShift,
   arrow,
 } from "@floating-ui/dom"
 import { cn } from "@/lib/utils"
@@ -274,7 +275,7 @@ export class PlankTooltipContent extends LitElement {
       "bg-foreground text-background animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-fit rounded-md px-3 py-1.5 text-xs text-balance"
     )
     this._contentEl.style.cssText =
-      "position: absolute; top: 0; left: 0; width: max-content;"
+      "position: fixed; top: 0; left: 0; width: max-content;"
     // Transform origin will be set during positioning
 
     // Copy children to content element
@@ -311,16 +312,26 @@ export class PlankTooltipContent extends LitElement {
     const contentEl = this._contentEl
     const arrowEl = this._arrowEl
 
+    // Arrow height is ~10px (size-2.5 rotated 45deg)
+    const arrowHeight = 10
+
     const { x, y, placement, middlewareData } = await computePosition(
       trigger,
       contentEl,
       {
+        strategy: "fixed",
         placement: this.side,
         middleware: [
-          offset(this.sideOffset + 10), // 10 for arrow height
+          // Match Radix middleware order: offset → shift → flip → arrow
+          offset({ mainAxis: this.sideOffset + arrowHeight, alignmentAxis: 0 }),
+          shift({
+            mainAxis: true,
+            crossAxis: false,
+            limiter: limitShift(),
+            padding: 0,
+          }),
           flip(),
-          shift({ padding: 5 }),
-          arrow({ element: arrowEl }),
+          arrow({ element: arrowEl, padding: 0 }),
         ],
       }
     )

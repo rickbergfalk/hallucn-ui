@@ -3,6 +3,14 @@ import { page } from "vitest/browser"
 import "@/web-components/plank-dialog"
 import "@/web-components/plank-button"
 
+// Small pixel variance allowed for dialog tests:
+// - React Button is a native <button> element
+// - plank-button is a custom element with role="button"
+// - This causes minor subpixel rendering differences in borders (~1% of image)
+const DIALOG_SCREENSHOT_OPTIONS = {
+  comparatorOptions: { allowedMismatchedPixelRatio: 0.015 },
+}
+
 describe("Dialog (Web Component) - Visual", () => {
   let container: HTMLDivElement
 
@@ -50,7 +58,10 @@ describe("Dialog (Web Component) - Visual", () => {
     await (dialog as any).updateComplete
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(page.getByTestId("container")).toMatchScreenshot("dialog-open")
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "dialog-open",
+      DIALOG_SCREENSHOT_OPTIONS
+    )
   })
 
   it("dialog with only title", async () => {
@@ -73,7 +84,8 @@ describe("Dialog (Web Component) - Visual", () => {
     await new Promise((r) => setTimeout(r, 100))
 
     await expect(page.getByTestId("container")).toMatchScreenshot(
-      "dialog-simple"
+      "dialog-simple",
+      DIALOG_SCREENSHOT_OPTIONS
     )
   })
 })

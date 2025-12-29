@@ -6,6 +6,7 @@ import {
   offset,
   flip,
   shift,
+  limitShift,
 } from "@floating-ui/dom"
 import type { Placement } from "@floating-ui/dom"
 import { cn } from "@/lib/utils"
@@ -244,7 +245,7 @@ export class PlankPopoverContent extends LitElement {
       "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-72 rounded-md border p-4 shadow-md outline-hidden",
       this.class
     )
-    this._contentEl.style.cssText = "position: absolute; top: 0; left: 0;"
+    this._contentEl.style.cssText = "position: fixed; top: 0; left: 0;"
 
     // Copy children to content element
     const children = Array.from(this.childNodes)
@@ -289,8 +290,19 @@ export class PlankPopoverContent extends LitElement {
       trigger,
       this._contentEl,
       {
+        strategy: "fixed",
         placement: this._getPlacement(),
-        middleware: [offset(this.sideOffset), flip(), shift({ padding: 5 })],
+        middleware: [
+          // Match Radix middleware order: offset → shift → flip
+          offset({ mainAxis: this.sideOffset, alignmentAxis: 0 }),
+          shift({
+            mainAxis: true,
+            crossAxis: false,
+            limiter: limitShift(),
+            padding: 0,
+          }),
+          flip(),
+        ],
       }
     )
 
