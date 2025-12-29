@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /* Tell Tailwind to scan the web components for class names */
 @source "../../src/web-components/**/*.ts";
@@ -84,6 +85,7 @@
 /* Base styles */
 * {
   border-color: var(--border);
+  outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
 }
 
 body {
