@@ -37,6 +37,35 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/tabs"
 import { RadioGroup, RadioGroupItem } from "@/components/radio-group"
 import { ToggleGroup, ToggleGroupItem } from "@/components/toggle-group"
+import { Kbd } from "@/components/kbd"
+import { AspectRatio } from "@/components/aspect-ratio"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/tooltip"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/popover"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/dialog"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/alert-dialog"
 
 // Component to render Planks HTML after mount
 function PlanksDemo({ html }: { html: string }) {
@@ -485,6 +514,190 @@ function ComparisonPage() {
             <plank-toggle-group-item value="italic" aria-label="Italic">I</plank-toggle-group-item>
             <plank-toggle-group-item value="underline" aria-label="Underline">U</plank-toggle-group-item>
           </plank-toggle-group>
+        `}
+      />
+
+      {/* Kbd */}
+      <ComparisonRow
+        title="Kbd"
+        reactContent={
+          <div className="flex items-center gap-2">
+            <span className="text-sm">Press</span>
+            <Kbd>⌘</Kbd>
+            <Kbd>K</Kbd>
+            <span className="text-sm">to search</span>
+          </div>
+        }
+        planksHtml={`
+          <div class="flex items-center gap-2">
+            <span class="text-sm">Press</span>
+            <plank-kbd>⌘</plank-kbd>
+            <plank-kbd>K</plank-kbd>
+            <span class="text-sm">to search</span>
+          </div>
+        `}
+      />
+
+      {/* Aspect Ratio */}
+      <ComparisonRow
+        title="Aspect Ratio"
+        reactContent={
+          <div className="w-48">
+            <AspectRatio ratio={16 / 9}>
+              <div className="bg-muted rounded-md flex items-center justify-center h-full">
+                16:9
+              </div>
+            </AspectRatio>
+          </div>
+        }
+        planksHtml={`
+          <div class="w-48">
+            <plank-aspect-ratio ratio="1.778">
+              <div class="bg-muted rounded-md flex items-center justify-center h-full">16:9</div>
+            </plank-aspect-ratio>
+          </div>
+        `}
+      />
+
+      {/* Tooltip */}
+      <ComparisonRow
+        title="Tooltip"
+        reactContent={
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline">Hover me</Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Add to library</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        }
+        planksHtml={`
+          <plank-tooltip>
+            <plank-tooltip-trigger>
+              <plank-button variant="outline">Hover me</plank-button>
+            </plank-tooltip-trigger>
+            <plank-tooltip-content>Add to library</plank-tooltip-content>
+          </plank-tooltip>
+        `}
+      />
+
+      {/* Popover */}
+      <ComparisonRow
+        title="Popover"
+        reactContent={
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline">Open popover</Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <h4 className="font-medium leading-none">Dimensions</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Set the dimensions for the layer.
+                  </p>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+        }
+        planksHtml={`
+          <plank-popover>
+            <plank-popover-trigger>
+              <plank-button variant="outline">Open popover</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content class="w-80">
+              <div class="grid gap-4">
+                <div class="space-y-2">
+                  <h4 class="font-medium leading-none">Dimensions</h4>
+                  <p class="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+                </div>
+              </div>
+            </plank-popover-content>
+          </plank-popover>
+        `}
+      />
+
+      {/* Dialog */}
+      <ComparisonRow
+        title="Dialog"
+        reactContent={
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">Open dialog</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit profile</DialogTitle>
+                <DialogDescription>
+                  Make changes to your profile here.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button>Save changes</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        }
+        planksHtml={`
+          <plank-dialog>
+            <plank-dialog-trigger>
+              <plank-button variant="outline">Open dialog</plank-button>
+            </plank-dialog-trigger>
+            <plank-dialog-content>
+              <plank-dialog-header>
+                <plank-dialog-title>Edit profile</plank-dialog-title>
+                <plank-dialog-description>Make changes to your profile here.</plank-dialog-description>
+              </plank-dialog-header>
+              <plank-dialog-footer>
+                <plank-button>Save changes</plank-button>
+              </plank-dialog-footer>
+            </plank-dialog-content>
+          </plank-dialog>
+        `}
+      />
+
+      {/* Alert Dialog */}
+      <ComparisonRow
+        title="Alert Dialog"
+        reactContent={
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive">Delete</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction>Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        }
+        planksHtml={`
+          <plank-alert-dialog>
+            <plank-alert-dialog-trigger>
+              <plank-button variant="destructive">Delete</plank-button>
+            </plank-alert-dialog-trigger>
+            <plank-alert-dialog-content>
+              <plank-alert-dialog-header>
+                <plank-alert-dialog-title>Are you absolutely sure?</plank-alert-dialog-title>
+                <plank-alert-dialog-description>This action cannot be undone.</plank-alert-dialog-description>
+              </plank-alert-dialog-header>
+              <plank-alert-dialog-footer>
+                <plank-alert-dialog-cancel>Cancel</plank-alert-dialog-cancel>
+                <plank-alert-dialog-action>Continue</plank-alert-dialog-action>
+              </plank-alert-dialog-footer>
+            </plank-alert-dialog-content>
+          </plank-alert-dialog>
         `}
       />
     </div>
