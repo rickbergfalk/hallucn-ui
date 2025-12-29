@@ -206,7 +206,7 @@ export class PlankSlider extends LitElement {
 
     const thumbClasses = cn(
       "border-primary ring-ring/50 block size-4 shrink-0 rounded-full border bg-white shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden absolute",
-      this.disabled && "pointer-events-none opacity-50"
+      this.disabled && "pointer-events-none"
     )
 
     // Radix uses getThumbInBoundsOffset() to keep thumb within track bounds

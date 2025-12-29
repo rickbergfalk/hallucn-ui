@@ -42,8 +42,7 @@ describe("plank-slider - Visual", () => {
     const slider = container.querySelector("plank-slider") as PlankSlider
     await slider.updateComplete
     await expect(page.getByTestId("container")).toMatchScreenshot(
-      "slider-at-100",
-      { comparatorOptions: { allowedMismatchedPixelRatio: 0.02 } }
+      "slider-at-100"
     )
   })
 
@@ -53,8 +52,7 @@ describe("plank-slider - Visual", () => {
     const slider = container.querySelector("plank-slider") as PlankSlider
     await slider.updateComplete
     await expect(page.getByTestId("container")).toMatchScreenshot(
-      "slider-disabled",
-      { comparatorOptions: { allowedMismatchedPixelRatio: 0.02 } }
+      "slider-disabled"
     )
   })
 

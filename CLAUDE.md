@@ -157,6 +157,7 @@ render() {
 2. **Visual tests** (`tests/web-components/*.visual.test.ts`)
    - Screenshot comparison against React baselines
    - Pixel-perfect verification
+   - **No variance allowances** (`allowedMismatchedPixelRatio`) unless explicitly instructed - fix the root cause instead
 
 3. **Semantic structure tests** (`tests/web-components/semantic-structure.test.ts`)
    - Verify native semantic elements exist where required
