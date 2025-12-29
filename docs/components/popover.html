@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popover - Planks</title>
+    <script type="module" src="../src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <!-- Header -->
+    <header class="border-b">
+      <div class="container mx-auto px-4 py-4 flex items-center gap-4">
+        <a href="../" class="text-2xl font-bold">Planks</a>
+        <span class="text-muted-foreground">/</span>
+        <span>Popover</span>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 class="text-4xl font-bold mb-4">Popover</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        Displays rich content in a portal, triggered by a button.
+      </p>
+
+      <!-- Basic Usage -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Basic Usage</h2>
+        <div class="mb-4 flex items-center gap-4">
+          <plank-popover>
+            <plank-popover-trigger>
+              <plank-button variant="outline">Open popover</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content>
+              <div class="grid gap-4">
+                <div class="space-y-2">
+                  <h4 class="leading-none font-medium">Dimensions</h4>
+                  <p class="text-muted-foreground text-sm">
+                    Set the dimensions for the layer.
+                  </p>
+                </div>
+              </div>
+            </plank-popover-content>
+          </plank-popover>
+        </div>
+        <pre><code>&lt;plank-popover&gt;
+  &lt;plank-popover-trigger&gt;
+    &lt;plank-button variant="outline"&gt;Open popover&lt;/plank-button&gt;
+  &lt;/plank-popover-trigger&gt;
+  &lt;plank-popover-content&gt;
+    &lt;div class="grid gap-4"&gt;
+      &lt;div class="space-y-2"&gt;
+        &lt;h4 class="leading-none font-medium"&gt;Dimensions&lt;/h4&gt;
+        &lt;p class="text-muted-foreground text-sm"&gt;
+          Set the dimensions for the layer.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/plank-popover-content&gt;
+&lt;/plank-popover&gt;</code></pre>
+      </section>
+
+      <!-- Alignment -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Alignment</h2>
+        <p class="text-muted-foreground mb-4">
+          Use the align attribute to control how the popover aligns with the
+          trigger.
+        </p>
+        <div class="mb-4 flex flex-wrap items-center gap-4">
+          <plank-popover>
+            <plank-popover-trigger>
+              <plank-button variant="outline">Start</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content align="start">
+              <p class="text-sm">Aligned to start</p>
+            </plank-popover-content>
+          </plank-popover>
+
+          <plank-popover>
+            <plank-popover-trigger>
+              <plank-button variant="outline">Center</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content align="center">
+              <p class="text-sm">Aligned to center</p>
+            </plank-popover-content>
+          </plank-popover>
+
+          <plank-popover>
+            <plank-popover-trigger>
+              <plank-button variant="outline">End</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content align="end">
+              <p class="text-sm">Aligned to end</p>
+            </plank-popover-content>
+          </plank-popover>
+        </div>
+        <pre><code>&lt;plank-popover-content align="start"&gt;...&lt;/plank-popover-content&gt;
+&lt;plank-popover-content align="center"&gt;...&lt;/plank-popover-content&gt;
+&lt;plank-popover-content align="end"&gt;...&lt;/plank-popover-content&gt;</code></pre>
+      </section>
+
+      <!-- Different Sides -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Different Sides</h2>
+        <div class="mb-4 flex flex-wrap items-center gap-4">
+          <plank-popover>
+            <plank-popover-trigger>
+              <plank-button variant="outline">Top</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content side="top">
+              <p class="text-sm">Popover on top</p>
+            </plank-popover-content>
+          </plank-popover>
+
+          <plank-popover>
+            <plank-popover-trigger>
+              <plank-button variant="outline">Right</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content side="right">
+              <p class="text-sm">Popover on right</p>
+            </plank-popover-content>
+          </plank-popover>
+
+          <plank-popover>
+            <plank-popover-trigger>
+              <plank-button variant="outline">Bottom</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content side="bottom">
+              <p class="text-sm">Popover on bottom</p>
+            </plank-popover-content>
+          </plank-popover>
+
+          <plank-popover>
+            <plank-popover-trigger>
+              <plank-button variant="outline">Left</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content side="left">
+              <p class="text-sm">Popover on left</p>
+            </plank-popover-content>
+          </plank-popover>
+        </div>
+        <pre><code>&lt;plank-popover-content side="top"&gt;...&lt;/plank-popover-content&gt;
+&lt;plank-popover-content side="right"&gt;...&lt;/plank-popover-content&gt;
+&lt;plank-popover-content side="bottom"&gt;...&lt;/plank-popover-content&gt;
+&lt;plank-popover-content side="left"&gt;...&lt;/plank-popover-content&gt;</code></pre>
+      </section>
+
+      <!-- Controlled -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Controlled State</h2>
+        <p class="text-muted-foreground mb-4">
+          Use the open attribute to control the popover state programmatically.
+        </p>
+        <div class="mb-4 flex items-center gap-4">
+          <plank-popover open id="controlled-popover">
+            <plank-popover-trigger>
+              <plank-button variant="outline">Always open</plank-button>
+            </plank-popover-trigger>
+            <plank-popover-content>
+              <p class="text-sm">This popover is controlled</p>
+            </plank-popover-content>
+          </plank-popover>
+        </div>
+        <pre><code>&lt;plank-popover open&gt;
+  ...
+&lt;/plank-popover&gt;</code></pre>
+      </section>
+
+      <!-- API -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">API</h2>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-popover</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Property</th>
+                <th class="text-left py-2 pr-4">Type</th>
+                <th class="text-left py-2 pr-4">Default</th>
+                <th class="text-left py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">open</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  boolean
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">false</td>
+                <td class="py-2">The controlled open state</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">Events</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Event</th>
+                <th class="text-left py-2 pr-4">Detail</th>
+                <th class="text-left py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">open-change</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  { open: boolean }
+                </td>
+                <td class="py-2">Fired when the open state changes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-popover-trigger</h3>
+        <p class="text-muted-foreground mb-4">
+          The element that triggers the popover. Opens popover on click.
+        </p>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-popover-content</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Property</th>
+                <th class="text-left py-2 pr-4">Type</th>
+                <th class="text-left py-2 pr-4">Default</th>
+                <th class="text-left py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">side</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "top" | "right" | "bottom" | "left"
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "bottom"
+                </td>
+                <td class="py-2">The preferred side for the popover</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">align</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "start" | "center" | "end"
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "center"
+                </td>
+                <td class="py-2">The alignment along the side</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">side-offset</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  number
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">4</td>
+                <td class="py-2">Distance from the trigger in pixels</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Accessibility -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Accessibility</h2>
+        <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+          <li>Popover content has role="dialog"</li>
+          <li>Trigger has aria-haspopup="dialog"</li>
+          <li>Trigger has aria-expanded to indicate open state</li>
+          <li>Trigger has aria-controls pointing to the popover when open</li>
+          <li>Closes on Escape key</li>
+          <li>Closes when clicking outside</li>
+          <li>
+            Uses Floating UI for smart positioning that avoids viewport edges
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

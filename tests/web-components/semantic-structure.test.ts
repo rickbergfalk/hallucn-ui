@@ -7,6 +7,7 @@ import "@/web-components/plank-textarea"
 import "@/web-components/plank-separator"
 import "@/web-components/plank-switch"
 import "@/web-components/plank-tooltip"
+import "@/web-components/plank-popover"
 
 /**
  * Semantic Structure Tests
@@ -303,6 +304,135 @@ describe("Semantic Structure", () => {
 
       const content = document.querySelector('[data-slot="tooltip-content"]')
       expect(content, "Must have data-slot='tooltip-content'").toBeTruthy()
+    })
+  })
+
+  describe("plank-popover", () => {
+    afterEach(() => {
+      // Clean up portaled content
+      document
+        .querySelectorAll('body > div[style*="position: fixed"]')
+        .forEach((el) => {
+          el.remove()
+        })
+    })
+
+    it("popover content must have role=dialog when open", async () => {
+      container.innerHTML = `
+        <plank-popover open>
+          <plank-popover-trigger>
+            <button>Trigger</button>
+          </plank-popover-trigger>
+          <plank-popover-content>Popover text</plank-popover-content>
+        </plank-popover>
+      `
+
+      await customElements.whenDefined("plank-popover")
+      const popover = container.querySelector("plank-popover")!
+      await (popover as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const content = document.querySelector('[role="dialog"]')
+      expect(content, "Must have role='dialog' on content").toBeTruthy()
+      expect(content?.textContent).toContain("Popover text")
+    })
+
+    it("trigger element must have aria-haspopup=dialog", async () => {
+      container.innerHTML = `
+        <plank-popover>
+          <plank-popover-trigger>
+            <button>Trigger</button>
+          </plank-popover-trigger>
+          <plank-popover-content>Popover text</plank-popover-content>
+        </plank-popover>
+      `
+
+      await customElements.whenDefined("plank-popover")
+      const popover = container.querySelector("plank-popover")!
+      await (popover as any).updateComplete
+
+      const button = container.querySelector("button")
+      expect(
+        button?.getAttribute("aria-haspopup"),
+        "Trigger must have aria-haspopup='dialog'"
+      ).toBe("dialog")
+    })
+
+    it("trigger element must have aria-expanded", async () => {
+      container.innerHTML = `
+        <plank-popover>
+          <plank-popover-trigger>
+            <button>Trigger</button>
+          </plank-popover-trigger>
+          <plank-popover-content>Popover text</plank-popover-content>
+        </plank-popover>
+      `
+
+      await customElements.whenDefined("plank-popover")
+      const popover = container.querySelector("plank-popover")!
+      await (popover as any).updateComplete
+
+      const button = container.querySelector("button")
+      expect(
+        button?.getAttribute("aria-expanded"),
+        "Trigger must have aria-expanded='false' when closed"
+      ).toBe("false")
+
+      // Open the popover
+      ;(popover as any).open = true
+      await (popover as any).updateComplete
+
+      expect(
+        button?.getAttribute("aria-expanded"),
+        "Trigger must have aria-expanded='true' when open"
+      ).toBe("true")
+    })
+
+    it("trigger element must have aria-controls when open", async () => {
+      container.innerHTML = `
+        <plank-popover open>
+          <plank-popover-trigger>
+            <button>Trigger</button>
+          </plank-popover-trigger>
+          <plank-popover-content>Popover text</plank-popover-content>
+        </plank-popover>
+      `
+
+      await customElements.whenDefined("plank-popover")
+      const popover = container.querySelector("plank-popover")!
+      await (popover as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const button = container.querySelector("button")
+      const controlsId = button?.getAttribute("aria-controls")
+      expect(
+        controlsId,
+        "Trigger must have aria-controls when open"
+      ).toBeTruthy()
+
+      // The aria-controls should reference the popover content
+      const content = document.getElementById(controlsId!)
+      expect(content, "aria-controls must reference valid element").toBeTruthy()
+      expect(content?.getAttribute("role")).toBe("dialog")
+    })
+
+    it("popover content must have correct data-slot", async () => {
+      container.innerHTML = `
+        <plank-popover open>
+          <plank-popover-trigger>
+            <button>Trigger</button>
+          </plank-popover-trigger>
+          <plank-popover-content>Popover text</plank-popover-content>
+        </plank-popover>
+      `
+
+      await customElements.whenDefined("plank-popover")
+      const popover = container.querySelector("plank-popover")!
+      await (popover as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const content = document.querySelector('[data-slot="popover-content"]')
+      expect(content, "Must have data-slot='popover-content'").toBeTruthy()
     })
   })
 })
