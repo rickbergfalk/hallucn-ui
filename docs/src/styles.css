@@ -123,8 +123,7 @@
 
 @layer base {
   * {
-    @apply border-border;
-    outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
+    @apply border-border outline-ring/50;
   }
 
   body {
