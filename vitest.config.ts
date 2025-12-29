@@ -27,6 +27,7 @@ export default defineConfig({
       enabled: true,
       provider: playwright(),
       instances: [{ browser: "chromium" }],
+      ui: false, // Disable Vitest UI overlay to prevent test counter in screenshots
       expect: {
         toMatchScreenshot: {
           // Web component tests compare against React baselines
