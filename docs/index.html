@@ -466,6 +466,36 @@
             </plank-dialog-content>
           </plank-dialog>
         </a>
+
+        <!-- Alert Dialog -->
+        <a
+          href="./components/alert-dialog.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Alert Dialog</h3>
+          <p class="text-sm text-muted-foreground mb-4">
+            Modal for confirmations.
+          </p>
+          <plank-alert-dialog>
+            <plank-alert-dialog-trigger>
+              <plank-button variant="outline" size="sm">Delete</plank-button>
+            </plank-alert-dialog-trigger>
+            <plank-alert-dialog-content>
+              <plank-alert-dialog-header>
+                <plank-alert-dialog-title
+                  >Are you sure?</plank-alert-dialog-title
+                >
+                <plank-alert-dialog-description>
+                  This action cannot be undone.
+                </plank-alert-dialog-description>
+              </plank-alert-dialog-header>
+              <plank-alert-dialog-footer>
+                <plank-alert-dialog-cancel>Cancel</plank-alert-dialog-cancel>
+                <plank-alert-dialog-action>Continue</plank-alert-dialog-action>
+              </plank-alert-dialog-footer>
+            </plank-alert-dialog-content>
+          </plank-alert-dialog>
+        </a>
       </div>
     </main>
 
