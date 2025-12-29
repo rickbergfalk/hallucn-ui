@@ -209,9 +209,15 @@ export class PlankSlider extends LitElement {
       this.disabled && "pointer-events-none opacity-50"
     )
 
+    // Radix uses getThumbInBoundsOffset() to keep thumb within track bounds
+    // Formula: halfThumbSize * (1 - percentage/50)
+    // At 0%: +8px, At 50%: 0px, At 100%: -8px
+    const halfThumbSize = 8 // size-4 = 16px / 2
+    const thumbInBoundsOffset = halfThumbSize * (1 - percentage / 50)
+
     const thumbStyle = isHorizontal
-      ? `left: ${percentage}%; top: 50%; transform: translate(-50%, -50%)`
-      : `bottom: ${percentage}%; left: 50%; transform: translate(-50%, 50%)`
+      ? `left: calc(${percentage}% + ${thumbInBoundsOffset}px); top: 50%; transform: translate(-50%, -50%)`
+      : `bottom: calc(${percentage}% + ${thumbInBoundsOffset}px); left: 50%; transform: translate(-50%, 50%)`
 
     return html`
       <div

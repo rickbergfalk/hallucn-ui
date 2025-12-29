@@ -397,8 +397,8 @@ describe("PlankSlider (Web Component)", () => {
       const thumb = slider.querySelector(
         '[data-slot="slider-thumb"]'
       ) as HTMLElement
-      // Thumb should be at 50%
-      expect(thumb.style.left).toBe("50%")
+      // Thumb should be at 50% (using Radix-style calc for edge bounds)
+      expect(thumb.style.left).toBe("calc(50% + 0px)")
     })
   })
 })

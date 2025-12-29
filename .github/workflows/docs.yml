@@ -26,6 +26,7 @@ jobs:
           cache: "npm"
 
       - run: npm ci
+      - run: npm --prefix docs ci
 
       - name: Build docs
         run: npm run docs:build
