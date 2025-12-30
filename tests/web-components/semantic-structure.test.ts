@@ -13,6 +13,7 @@ import "@/web-components/plank-dropdown-menu"
 import "@/web-components/plank-context-menu"
 import "@/web-components/plank-sheet"
 import "@/web-components/plank-drawer"
+import "@/web-components/plank-hover-card"
 
 /**
  * Semantic Structure Tests
@@ -1614,6 +1615,112 @@ describe("Semantic Structure", () => {
       const content = document.querySelector('[role="dialog"]')
       // Verify it has the left-side positioning class
       expect(content?.className).toContain("left-0")
+    })
+  })
+
+  describe("plank-hover-card", () => {
+    afterEach(() => {
+      // Clean up portaled content
+      document
+        .querySelectorAll('body > div[style*="position: fixed"]')
+        .forEach((el) => {
+          el.remove()
+        })
+    })
+
+    it("hover card content must have correct data-slot when open", async () => {
+      container.innerHTML = `
+        <plank-hover-card open>
+          <plank-hover-card-trigger>
+            <button>Trigger</button>
+          </plank-hover-card-trigger>
+          <plank-hover-card-content>Hover card text</plank-hover-card-content>
+        </plank-hover-card>
+      `
+
+      await customElements.whenDefined("plank-hover-card")
+      const hoverCard = container.querySelector("plank-hover-card")!
+      await (hoverCard as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      // Look for the portaled content
+      const content = document.querySelector(
+        'body > div[style*="position: fixed"] [data-slot="hover-card-content"]'
+      )
+      expect(content, "Must have data-slot='hover-card-content'").toBeTruthy()
+      expect(content?.textContent).toContain("Hover card text")
+    })
+
+    it("hover card content must have data-state attribute", async () => {
+      container.innerHTML = `
+        <plank-hover-card open>
+          <plank-hover-card-trigger>
+            <button>Trigger</button>
+          </plank-hover-card-trigger>
+          <plank-hover-card-content>Content</plank-hover-card-content>
+        </plank-hover-card>
+      `
+
+      await customElements.whenDefined("plank-hover-card")
+      const hoverCard = container.querySelector("plank-hover-card")!
+      await (hoverCard as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      // Look for the portaled content
+      const content = document.querySelector(
+        'body > div[style*="position: fixed"] [data-slot="hover-card-content"]'
+      )
+      expect(
+        content?.getAttribute("data-state"),
+        "Content must have data-state='open'"
+      ).toBe("open")
+    })
+
+    it("hover card content must have data-side attribute", async () => {
+      container.innerHTML = `
+        <plank-hover-card open>
+          <plank-hover-card-trigger>
+            <button>Trigger</button>
+          </plank-hover-card-trigger>
+          <plank-hover-card-content>Content</plank-hover-card-content>
+        </plank-hover-card>
+      `
+
+      await customElements.whenDefined("plank-hover-card")
+      const hoverCard = container.querySelector("plank-hover-card")!
+      await (hoverCard as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      // Look for the portaled content
+      const content = document.querySelector(
+        'body > div[style*="position: fixed"] [data-slot="hover-card-content"]'
+      )
+      expect(
+        content?.getAttribute("data-side"),
+        "Content must have data-side attribute"
+      ).toBeTruthy()
+    })
+
+    it("trigger element must have data-state attribute", async () => {
+      container.innerHTML = `
+        <plank-hover-card open>
+          <plank-hover-card-trigger>
+            <button>Trigger</button>
+          </plank-hover-card-trigger>
+          <plank-hover-card-content>Content</plank-hover-card-content>
+        </plank-hover-card>
+      `
+
+      await customElements.whenDefined("plank-hover-card")
+      const hoverCard = container.querySelector("plank-hover-card")!
+      await (hoverCard as any).updateComplete
+
+      // Radix HoverCard uses data-state on the trigger (unlike tooltip which uses aria-describedby)
+      const button = container.querySelector("button")
+      expect(
+        button?.getAttribute("data-state"),
+        "Trigger must have data-state='open'"
+      ).toBe("open")
     })
   })
 })

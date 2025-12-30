@@ -21,6 +21,7 @@ export default defineConfig({
       "@radix-ui/react-slider",
       "@radix-ui/react-dropdown-menu",
       "@radix-ui/react-context-menu",
+      "@radix-ui/react-hover-card",
       "lucide-react",
       "vaul",
     ],
