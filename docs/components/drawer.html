@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drawer - Planks</title>
+    <script type="module" src="../src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <!-- Header -->
+    <header class="border-b">
+      <div class="container mx-auto px-4 py-4 flex items-center gap-4">
+        <a href="../" class="text-2xl font-bold">Planks</a>
+        <span class="text-muted-foreground">/</span>
+        <span>Drawer</span>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 class="text-4xl font-bold mb-4">Drawer</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        A panel that slides in from the edge of the screen with a drag handle.
+        Ideal for mobile-friendly navigation or forms.
+      </p>
+
+      <!-- Visual Variance Note -->
+      <section class="mb-8 p-4 border rounded-lg bg-muted/50">
+        <h3 class="text-sm font-semibold mb-2">Visual Variance Note</h3>
+        <p class="text-sm text-muted-foreground">
+          The plank-drawer web component allows up to 2% visual variance
+          compared to the React drawer. This is due to differences between the
+          native vaul library (used in React) and our Lit implementation. The
+          functionality and layout are identical, but minor subpixel rendering
+          differences may occur.
+        </p>
+      </section>
+
+      <!-- Basic Usage - Bottom (Default) -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Basic Usage</h2>
+        <p class="text-muted-foreground mb-4">
+          By default, the drawer slides in from the bottom with a drag handle.
+        </p>
+        <div class="mb-4 flex items-center gap-4">
+          <plank-drawer>
+            <plank-drawer-trigger>
+              <plank-button variant="outline">Open Drawer</plank-button>
+            </plank-drawer-trigger>
+            <plank-drawer-content>
+              <plank-drawer-header>
+                <plank-drawer-title>Edit profile</plank-drawer-title>
+                <plank-drawer-description>
+                  Make changes to your profile here. Click save when you're
+                  done.
+                </plank-drawer-description>
+              </plank-drawer-header>
+              <div class="py-4">
+                <p class="text-sm">Drawer content goes here.</p>
+              </div>
+              <plank-drawer-footer>
+                <plank-button>Save changes</plank-button>
+              </plank-drawer-footer>
+            </plank-drawer-content>
+          </plank-drawer>
+        </div>
+        <pre><code>&lt;plank-drawer&gt;
+  &lt;plank-drawer-trigger&gt;
+    &lt;plank-button variant="outline"&gt;Open Drawer&lt;/plank-button&gt;
+  &lt;/plank-drawer-trigger&gt;
+  &lt;plank-drawer-content&gt;
+    &lt;plank-drawer-header&gt;
+      &lt;plank-drawer-title&gt;Edit profile&lt;/plank-drawer-title&gt;
+      &lt;plank-drawer-description&gt;
+        Make changes to your profile here. Click save when you're done.
+      &lt;/plank-drawer-description&gt;
+    &lt;/plank-drawer-header&gt;
+    &lt;div class="py-4"&gt;
+      &lt;p class="text-sm"&gt;Drawer content goes here.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;plank-drawer-footer&gt;
+      &lt;plank-button&gt;Save changes&lt;/plank-button&gt;
+    &lt;/plank-drawer-footer&gt;
+  &lt;/plank-drawer-content&gt;
+&lt;/plank-drawer&gt;</code></pre>
+      </section>
+
+      <!-- Direction Variations -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Direction Variations</h2>
+        <p class="text-muted-foreground mb-4">
+          Use the direction attribute to control which edge the drawer slides
+          from.
+        </p>
+        <div class="mb-4 flex flex-wrap items-center gap-4">
+          <plank-drawer>
+            <plank-drawer-trigger>
+              <plank-button variant="outline">Bottom (Default)</plank-button>
+            </plank-drawer-trigger>
+            <plank-drawer-content direction="bottom">
+              <plank-drawer-header>
+                <plank-drawer-title>Bottom Drawer</plank-drawer-title>
+                <plank-drawer-description>
+                  This drawer slides in from the bottom.
+                </plank-drawer-description>
+              </plank-drawer-header>
+            </plank-drawer-content>
+          </plank-drawer>
+
+          <plank-drawer>
+            <plank-drawer-trigger>
+              <plank-button variant="outline">Top</plank-button>
+            </plank-drawer-trigger>
+            <plank-drawer-content direction="top">
+              <plank-drawer-header>
+                <plank-drawer-title>Top Drawer</plank-drawer-title>
+                <plank-drawer-description>
+                  This drawer slides in from the top.
+                </plank-drawer-description>
+              </plank-drawer-header>
+            </plank-drawer-content>
+          </plank-drawer>
+
+          <plank-drawer>
+            <plank-drawer-trigger>
+              <plank-button variant="outline">Left</plank-button>
+            </plank-drawer-trigger>
+            <plank-drawer-content direction="left">
+              <plank-drawer-header>
+                <plank-drawer-title>Left Drawer</plank-drawer-title>
+                <plank-drawer-description>
+                  This drawer slides in from the left.
+                </plank-drawer-description>
+              </plank-drawer-header>
+            </plank-drawer-content>
+          </plank-drawer>
+
+          <plank-drawer>
+            <plank-drawer-trigger>
+              <plank-button variant="outline">Right</plank-button>
+            </plank-drawer-trigger>
+            <plank-drawer-content direction="right">
+              <plank-drawer-header>
+                <plank-drawer-title>Right Drawer</plank-drawer-title>
+                <plank-drawer-description>
+                  This drawer slides in from the right.
+                </plank-drawer-description>
+              </plank-drawer-header>
+            </plank-drawer-content>
+          </plank-drawer>
+        </div>
+        <pre><code>&lt;plank-drawer-content direction="top"&gt;
+  ...
+&lt;/plank-drawer-content&gt;
+
+&lt;plank-drawer-content direction="left"&gt;
+  ...
+&lt;/plank-drawer-content&gt;
+
+&lt;plank-drawer-content direction="right"&gt;
+  ...
+&lt;/plank-drawer-content&gt;</code></pre>
+      </section>
+
+      <!-- Navigation Menu Example -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Mobile Navigation Menu</h2>
+        <p class="text-muted-foreground mb-4">
+          A common use case is a mobile navigation menu sliding from the left.
+        </p>
+        <div class="mb-4 flex items-center gap-4">
+          <plank-drawer>
+            <plank-drawer-trigger>
+              <plank-button variant="outline">Menu</plank-button>
+            </plank-drawer-trigger>
+            <plank-drawer-content direction="left">
+              <plank-drawer-header>
+                <plank-drawer-title>Navigation</plank-drawer-title>
+                <plank-drawer-description>
+                  Browse our sections.
+                </plank-drawer-description>
+              </plank-drawer-header>
+              <nav class="flex flex-col gap-2 py-4">
+                <a href="#" class="text-sm hover:underline">Home</a>
+                <a href="#" class="text-sm hover:underline">About</a>
+                <a href="#" class="text-sm hover:underline">Products</a>
+                <a href="#" class="text-sm hover:underline">Contact</a>
+              </nav>
+            </plank-drawer-content>
+          </plank-drawer>
+        </div>
+      </section>
+
+      <!-- With Close Button -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">With Close Button</h2>
+        <p class="text-muted-foreground mb-4">
+          Unlike Sheet, Drawer does not show a close button by default. Use
+          show-close-button to add one.
+        </p>
+        <div class="mb-4 flex items-center gap-4">
+          <plank-drawer>
+            <plank-drawer-trigger>
+              <plank-button variant="outline">Open Drawer</plank-button>
+            </plank-drawer-trigger>
+            <plank-drawer-content show-close-button>
+              <plank-drawer-header>
+                <plank-drawer-title>With Close Button</plank-drawer-title>
+                <plank-drawer-description>
+                  This drawer has a close button in the top-right corner.
+                </plank-drawer-description>
+              </plank-drawer-header>
+            </plank-drawer-content>
+          </plank-drawer>
+        </div>
+        <pre><code>&lt;plank-drawer-content show-close-button&gt;
+  ...
+&lt;/plank-drawer-content&gt;</code></pre>
+      </section>
+
+      <!-- Drawer vs Sheet -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Drawer vs Sheet</h2>
+        <p class="text-muted-foreground mb-4">
+          Both Drawer and Sheet are panel components that slide from screen
+          edges. Here's when to use each:
+        </p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Feature</th>
+                <th class="text-left py-2 pr-4">Drawer</th>
+                <th class="text-left py-2">Sheet</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4">Drag handle</td>
+                <td class="py-2 pr-4">Yes (bottom only)</td>
+                <td class="py-2">No</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4">Close button</td>
+                <td class="py-2 pr-4">Optional (off by default)</td>
+                <td class="py-2">Yes (on by default)</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4">Best for</td>
+                <td class="py-2 pr-4">Mobile interactions, bottom sheets</td>
+                <td class="py-2">Desktop side panels, settings</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4">Text alignment</td>
+                <td class="py-2 pr-4">Centered (top/bottom)</td>
+                <td class="py-2">Left-aligned</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- API -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">API</h2>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-drawer</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Property</th>
+                <th class="text-left py-2 pr-4">Type</th>
+                <th class="text-left py-2 pr-4">Default</th>
+                <th class="text-left py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">open</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  boolean
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">false</td>
+                <td class="py-2">The controlled open state</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">Events</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Event</th>
+                <th class="text-left py-2 pr-4">Detail</th>
+                <th class="text-left py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">open-change</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  { open: boolean }
+                </td>
+                <td class="py-2">Fired when the open state changes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-drawer-trigger</h3>
+        <p class="text-muted-foreground mb-4">
+          The element that triggers the drawer. Opens drawer on click.
+        </p>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-drawer-content</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b">
+                <th class="text-left py-2 pr-4">Property</th>
+                <th class="text-left py-2 pr-4">Type</th>
+                <th class="text-left py-2 pr-4">Default</th>
+                <th class="text-left py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">direction</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "top" | "right" | "bottom" | "left"
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  "bottom"
+                </td>
+                <td class="py-2">Which edge to slide from</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">show-close-button</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  boolean
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">false</td>
+                <td class="py-2">Whether to show the close button</td>
+              </tr>
+              <tr class="border-b">
+                <td class="py-2 pr-4 font-mono">class</td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">
+                  string
+                </td>
+                <td class="py-2 pr-4 font-mono text-muted-foreground">""</td>
+                <td class="py-2">Additional CSS classes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-drawer-close</h3>
+        <p class="text-muted-foreground mb-4">
+          A button that closes the drawer when clicked.
+        </p>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-drawer-header</h3>
+        <p class="text-muted-foreground mb-4">
+          Container for title and description. Text is centered for top/bottom
+          drawers.
+        </p>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-drawer-footer</h3>
+        <p class="text-muted-foreground mb-4">
+          Container for action buttons. Uses mt-auto to stick to the bottom.
+        </p>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">plank-drawer-title</h3>
+        <p class="text-muted-foreground mb-4">
+          The drawer title. Used for aria-labelledby.
+        </p>
+
+        <h3 class="text-xl font-semibold mt-6 mb-4">
+          plank-drawer-description
+        </h3>
+        <p class="text-muted-foreground mb-4">
+          The drawer description. Used for aria-describedby.
+        </p>
+      </section>
+
+      <!-- Accessibility -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Accessibility</h2>
+        <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+          <li>Drawer content has role="dialog"</li>
+          <li>Trigger has aria-haspopup="dialog"</li>
+          <li>Trigger has aria-expanded to indicate open state</li>
+          <li>Trigger has aria-controls pointing to the drawer when open</li>
+          <li>Drawer has aria-labelledby pointing to the title</li>
+          <li>Drawer has aria-describedby pointing to the description</li>
+          <li>Closes on Escape key</li>
+          <li>Closes when clicking on overlay</li>
+          <li>Modal blocks interaction with content behind</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

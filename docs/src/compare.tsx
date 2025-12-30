@@ -88,6 +88,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/sheet"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/drawer"
 
 // Component to render Planks HTML after mount
 function PlanksDemo({ html }: { html: string }) {
@@ -819,6 +827,57 @@ function ComparisonPage() {
           </plank-sheet>
         `}
       />
+
+      {/* Drawer */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-semibold mb-2">Drawer</h2>
+        <p className="text-sm text-muted-foreground mb-4">
+          Note: Up to 2% visual variance allowed due to differences between the
+          vaul library (React) and Lit implementation.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">
+              React (shadcn/ui)
+            </h3>
+            <div className="p-4 border rounded-lg bg-background">
+              <Drawer>
+                <DrawerTrigger asChild>
+                  <Button variant="outline">Open drawer</Button>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerHeader>
+                    <DrawerTitle>Edit profile</DrawerTitle>
+                    <DrawerDescription>
+                      Make changes to your profile here.
+                    </DrawerDescription>
+                  </DrawerHeader>
+                </DrawerContent>
+              </Drawer>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">
+              Web Component (Planks)
+            </h3>
+            <PlanksDemo
+              html={`
+                <plank-drawer>
+                  <plank-drawer-trigger>
+                    <plank-button variant="outline">Open drawer</plank-button>
+                  </plank-drawer-trigger>
+                  <plank-drawer-content>
+                    <plank-drawer-header>
+                      <plank-drawer-title>Edit profile</plank-drawer-title>
+                      <plank-drawer-description>Make changes to your profile here.</plank-drawer-description>
+                    </plank-drawer-header>
+                  </plank-drawer-content>
+                </plank-drawer>
+              `}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

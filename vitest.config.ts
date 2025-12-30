@@ -22,6 +22,7 @@ export default defineConfig({
       "@radix-ui/react-dropdown-menu",
       "@radix-ui/react-context-menu",
       "lucide-react",
+      "vaul",
     ],
   },
   test: {
