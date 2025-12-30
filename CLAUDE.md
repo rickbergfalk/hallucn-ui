@@ -298,7 +298,7 @@ describe("plank-newcomponent", () => {
 - [x] context-menu
 - [x] dialog
 - [x] alert-dialog
-- [ ] sheet
+- [x] sheet
 - [ ] drawer
 - [ ] hover-card
 - [ ] select

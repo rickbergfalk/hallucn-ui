@@ -11,6 +11,7 @@ import "@/web-components/plank-popover"
 import "@/web-components/plank-dialog"
 import "@/web-components/plank-dropdown-menu"
 import "@/web-components/plank-context-menu"
+import "@/web-components/plank-sheet"
 
 /**
  * Semantic Structure Tests
@@ -1127,6 +1128,247 @@ describe("Semantic Structure", () => {
         '[data-slot="context-menu-content"]'
       )
       expect(content, "Must have data-slot='context-menu-content'").toBeTruthy()
+    })
+  })
+
+  describe("plank-sheet", () => {
+    afterEach(() => {
+      // Clean up portaled content
+      document
+        .querySelectorAll('[data-slot="sheet-overlay"]')
+        .forEach((el) => el.remove())
+      document
+        .querySelectorAll('[data-slot="sheet-content"]')
+        .forEach((el) => el.remove())
+      document.querySelectorAll('[role="dialog"]').forEach((el) => el.remove())
+    })
+
+    it("sheet content must have role=dialog when open", async () => {
+      container.innerHTML = `
+        <plank-sheet open>
+          <plank-sheet-trigger>
+            <button>Open</button>
+          </plank-sheet-trigger>
+          <plank-sheet-content>
+            <plank-sheet-title>Sheet Title</plank-sheet-title>
+            Sheet content
+          </plank-sheet-content>
+        </plank-sheet>
+      `
+
+      await customElements.whenDefined("plank-sheet")
+      const sheet = container.querySelector("plank-sheet")!
+      await (sheet as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const content = document.querySelector('[role="dialog"]')
+      expect(content, "Must have role='dialog' on content").toBeTruthy()
+      expect(content?.textContent).toContain("Sheet content")
+    })
+
+    it("trigger element must have aria-haspopup=dialog", async () => {
+      container.innerHTML = `
+        <plank-sheet>
+          <plank-sheet-trigger>
+            <button>Open</button>
+          </plank-sheet-trigger>
+          <plank-sheet-content>
+            <plank-sheet-title>Title</plank-sheet-title>
+          </plank-sheet-content>
+        </plank-sheet>
+      `
+
+      await customElements.whenDefined("plank-sheet")
+      const sheet = container.querySelector("plank-sheet")!
+      await (sheet as any).updateComplete
+
+      const button = container.querySelector("button")
+      expect(
+        button?.getAttribute("aria-haspopup"),
+        "Trigger must have aria-haspopup='dialog'"
+      ).toBe("dialog")
+    })
+
+    it("trigger element must have aria-expanded", async () => {
+      container.innerHTML = `
+        <plank-sheet>
+          <plank-sheet-trigger>
+            <button>Open</button>
+          </plank-sheet-trigger>
+          <plank-sheet-content>
+            <plank-sheet-title>Title</plank-sheet-title>
+          </plank-sheet-content>
+        </plank-sheet>
+      `
+
+      await customElements.whenDefined("plank-sheet")
+      const sheet = container.querySelector("plank-sheet")!
+      await (sheet as any).updateComplete
+
+      const button = container.querySelector("button")
+      expect(
+        button?.getAttribute("aria-expanded"),
+        "Trigger must have aria-expanded='false' when closed"
+      ).toBe("false")
+
+      // Open the sheet
+      ;(sheet as any).open = true
+      await (sheet as any).updateComplete
+
+      expect(
+        button?.getAttribute("aria-expanded"),
+        "Trigger must have aria-expanded='true' when open"
+      ).toBe("true")
+    })
+
+    it("sheet must have aria-labelledby pointing to title", async () => {
+      container.innerHTML = `
+        <plank-sheet open>
+          <plank-sheet-trigger>
+            <button>Open</button>
+          </plank-sheet-trigger>
+          <plank-sheet-content>
+            <plank-sheet-title>My Sheet Title</plank-sheet-title>
+          </plank-sheet-content>
+        </plank-sheet>
+      `
+
+      await customElements.whenDefined("plank-sheet")
+      const sheet = container.querySelector("plank-sheet")!
+      await (sheet as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const sheetContent = document.querySelector('[role="dialog"]')
+      const labelledBy = sheetContent?.getAttribute("aria-labelledby")
+      expect(labelledBy, "Sheet must have aria-labelledby").toBeTruthy()
+
+      const title = document.getElementById(labelledBy!)
+      expect(title, "aria-labelledby must reference valid element").toBeTruthy()
+      expect(title?.textContent).toContain("My Sheet Title")
+    })
+
+    it("sheet must have aria-describedby pointing to description", async () => {
+      container.innerHTML = `
+        <plank-sheet open>
+          <plank-sheet-trigger>
+            <button>Open</button>
+          </plank-sheet-trigger>
+          <plank-sheet-content>
+            <plank-sheet-title>Title</plank-sheet-title>
+            <plank-sheet-description>My Description</plank-sheet-description>
+          </plank-sheet-content>
+        </plank-sheet>
+      `
+
+      await customElements.whenDefined("plank-sheet")
+      const sheet = container.querySelector("plank-sheet")!
+      await (sheet as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const sheetContent = document.querySelector('[role="dialog"]')
+      const describedBy = sheetContent?.getAttribute("aria-describedby")
+      expect(describedBy, "Sheet must have aria-describedby").toBeTruthy()
+
+      const description = document.getElementById(describedBy!)
+      expect(
+        description,
+        "aria-describedby must reference valid element"
+      ).toBeTruthy()
+      expect(description?.textContent).toContain("My Description")
+    })
+
+    it("trigger element must have aria-controls when open", async () => {
+      container.innerHTML = `
+        <plank-sheet open>
+          <plank-sheet-trigger>
+            <button>Open</button>
+          </plank-sheet-trigger>
+          <plank-sheet-content>
+            <plank-sheet-title>Title</plank-sheet-title>
+          </plank-sheet-content>
+        </plank-sheet>
+      `
+
+      await customElements.whenDefined("plank-sheet")
+      const sheet = container.querySelector("plank-sheet")!
+      await (sheet as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const button = container.querySelector("button")
+      const controlsId = button?.getAttribute("aria-controls")
+      expect(
+        controlsId,
+        "Trigger must have aria-controls when open"
+      ).toBeTruthy()
+
+      // The aria-controls should reference the sheet content
+      const content = document.getElementById(controlsId!)
+      expect(content, "aria-controls must reference valid element").toBeTruthy()
+      expect(content?.getAttribute("role")).toBe("dialog")
+    })
+
+    it("sheet overlay must have correct data-slot", async () => {
+      container.innerHTML = `
+        <plank-sheet open>
+          <plank-sheet-trigger>
+            <button>Open</button>
+          </plank-sheet-trigger>
+          <plank-sheet-content>
+            <plank-sheet-title>Title</plank-sheet-title>
+          </plank-sheet-content>
+        </plank-sheet>
+      `
+
+      await customElements.whenDefined("plank-sheet")
+      const sheet = container.querySelector("plank-sheet")!
+      await (sheet as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const overlay = document.querySelector('[data-slot="sheet-overlay"]')
+      expect(overlay, "Must have data-slot='sheet-overlay'").toBeTruthy()
+    })
+
+    it("sheet content must have correct data-slot", async () => {
+      container.innerHTML = `
+        <plank-sheet open>
+          <plank-sheet-trigger>
+            <button>Open</button>
+          </plank-sheet-trigger>
+          <plank-sheet-content>
+            <plank-sheet-title>Title</plank-sheet-title>
+          </plank-sheet-content>
+        </plank-sheet>
+      `
+
+      await customElements.whenDefined("plank-sheet")
+      const sheet = container.querySelector("plank-sheet")!
+      await (sheet as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const content = document.querySelector('[data-slot="sheet-content"]')
+      expect(content, "Must have data-slot='sheet-content'").toBeTruthy()
+    })
+
+    it("sheet must support side attribute for positioning", async () => {
+      container.innerHTML = `
+        <plank-sheet open>
+          <plank-sheet-trigger>
+            <button>Open</button>
+          </plank-sheet-trigger>
+          <plank-sheet-content side="left">
+            <plank-sheet-title>Title</plank-sheet-title>
+          </plank-sheet-content>
+        </plank-sheet>
+      `
+
+      await customElements.whenDefined("plank-sheet")
+      const sheet = container.querySelector("plank-sheet")!
+      await (sheet as any).updateComplete
+      await new Promise((r) => setTimeout(r, 50))
+
+      const content = document.querySelector('[role="dialog"]')
+      // Verify it has the left-side positioning class
+      expect(content?.className).toContain("left-0")
     })
   })
 })
