@@ -66,6 +66,28 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/alert-dialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/dropdown-menu"
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/context-menu"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/sheet"
 
 // Component to render Planks HTML after mount
 function PlanksDemo({ html }: { html: string }) {
@@ -698,6 +720,103 @@ function ComparisonPage() {
               </plank-alert-dialog-footer>
             </plank-alert-dialog-content>
           </plank-alert-dialog>
+        `}
+      />
+
+      {/* Dropdown Menu */}
+      <ComparisonRow
+        title="Dropdown Menu"
+        reactContent={
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">Open menu</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>Log out</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        }
+        planksHtml={`
+          <plank-dropdown-menu>
+            <plank-dropdown-menu-trigger>
+              <plank-button variant="outline">Open menu</plank-button>
+            </plank-dropdown-menu-trigger>
+            <plank-dropdown-menu-content>
+              <plank-dropdown-menu-label>My Account</plank-dropdown-menu-label>
+              <plank-dropdown-menu-separator></plank-dropdown-menu-separator>
+              <plank-dropdown-menu-item>Profile</plank-dropdown-menu-item>
+              <plank-dropdown-menu-item>Settings</plank-dropdown-menu-item>
+              <plank-dropdown-menu-item>Log out</plank-dropdown-menu-item>
+            </plank-dropdown-menu-content>
+          </plank-dropdown-menu>
+        `}
+      />
+
+      {/* Context Menu */}
+      <ComparisonRow
+        title="Context Menu"
+        reactContent={
+          <ContextMenu>
+            <ContextMenuTrigger className="flex h-24 w-48 items-center justify-center rounded-md border border-dashed text-sm">
+              Right click here
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+              <ContextMenuItem>Cut</ContextMenuItem>
+              <ContextMenuItem>Copy</ContextMenuItem>
+              <ContextMenuItem>Paste</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
+        }
+        planksHtml={`
+          <plank-context-menu>
+            <plank-context-menu-trigger>
+              <div class="flex h-24 w-48 items-center justify-center rounded-md border border-dashed text-sm">
+                Right click here
+              </div>
+            </plank-context-menu-trigger>
+            <plank-context-menu-content>
+              <plank-context-menu-item>Cut</plank-context-menu-item>
+              <plank-context-menu-item>Copy</plank-context-menu-item>
+              <plank-context-menu-item>Paste</plank-context-menu-item>
+            </plank-context-menu-content>
+          </plank-context-menu>
+        `}
+      />
+
+      {/* Sheet */}
+      <ComparisonRow
+        title="Sheet"
+        reactContent={
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">Open sheet</Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Edit profile</SheetTitle>
+                <SheetDescription>
+                  Make changes to your profile here.
+                </SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
+        }
+        planksHtml={`
+          <plank-sheet>
+            <plank-sheet-trigger>
+              <plank-button variant="outline">Open sheet</plank-button>
+            </plank-sheet-trigger>
+            <plank-sheet-content>
+              <plank-sheet-header>
+                <plank-sheet-title>Edit profile</plank-sheet-title>
+                <plank-sheet-description>Make changes to your profile here.</plank-sheet-description>
+              </plank-sheet-header>
+            </plank-sheet-content>
+          </plank-sheet>
         `}
       />
     </div>
