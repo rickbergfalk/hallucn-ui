@@ -110,11 +110,9 @@ describe("Tooltip (Web Component)", () => {
     trigger.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }))
     await (tooltip as any).updateComplete
 
-    // Wait for positioning
-    await new Promise((r) => setTimeout(r, 50))
-
-    const portaledContent = document.querySelector('[role="tooltip"]')
-    expect(portaledContent).toBeDefined()
+    // Wait for positioning with polling (more robust for CI)
+    const portaledContent = await waitForElement('[role="tooltip"]')
+    expect(portaledContent).not.toBeNull()
   })
 
   it("hides tooltip on pointer leave", async () => {
@@ -130,14 +128,15 @@ describe("Tooltip (Web Component)", () => {
     await customElements.whenDefined("plank-tooltip")
     const tooltip = container.querySelector("plank-tooltip")!
     await (tooltip as any).updateComplete
-    await new Promise((r) => setTimeout(r, 50))
 
-    expect(document.querySelector('[role="tooltip"]')).toBeDefined()
+    // Wait for tooltip to appear with polling
+    const tooltipEl = await waitForElement('[role="tooltip"]')
+    expect(tooltipEl).not.toBeNull()
 
     const trigger = container.querySelector("plank-tooltip-trigger")!
     trigger.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }))
     await (tooltip as any).updateComplete
-    await new Promise((r) => setTimeout(r, 50))
+    await new Promise((r) => setTimeout(r, 100))
 
     expect(document.querySelector('[role="tooltip"]')).toBeNull()
   })
@@ -175,9 +174,10 @@ describe("Tooltip (Web Component)", () => {
     await customElements.whenDefined("plank-tooltip")
     const tooltip = container.querySelector("plank-tooltip")!
     await (tooltip as any).updateComplete
-    await new Promise((r) => setTimeout(r, 50))
 
-    const content = document.querySelector('[role="tooltip"]')
+    // Wait for positioning with polling (more robust for CI)
+    const content = await waitForElement('[role="tooltip"]')
+    expect(content).not.toBeNull()
     expect(content?.getAttribute("data-side")).toBeDefined()
   })
 
