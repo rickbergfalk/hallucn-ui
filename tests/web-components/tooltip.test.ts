@@ -72,8 +72,8 @@ describe("Tooltip (Web Component)", () => {
     const tooltip = container.querySelector("plank-tooltip")!
     await (tooltip as any).updateComplete
 
-    // Wait for positioning
-    await new Promise((r) => setTimeout(r, 50))
+    // Wait for positioning (longer for CI)
+    await new Promise((r) => setTimeout(r, 100))
 
     const portaledContent = document.querySelector('[role="tooltip"]')
     expect(portaledContent).toBeDefined()
@@ -143,7 +143,8 @@ describe("Tooltip (Web Component)", () => {
     await customElements.whenDefined("plank-tooltip")
     const tooltip = container.querySelector("plank-tooltip")!
     await (tooltip as any).updateComplete
-    await new Promise((r) => setTimeout(r, 50))
+    // Wait for positioning (longer for CI)
+    await new Promise((r) => setTimeout(r, 100))
 
     const content = document.querySelector('[role="tooltip"]')
     expect(content?.getAttribute("data-slot")).toBe("tooltip-content")
