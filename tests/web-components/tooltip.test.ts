@@ -2,6 +2,20 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest"
 import "@/web-components/plank-tooltip"
 import "@/web-components/plank-button"
 
+// Helper to wait for element to appear (more robust than fixed timeout)
+async function waitForElement(
+  selector: string,
+  timeout = 500
+): Promise<Element | null> {
+  const start = Date.now()
+  while (Date.now() - start < timeout) {
+    const element = document.querySelector(selector)
+    if (element) return element
+    await new Promise((r) => setTimeout(r, 20))
+  }
+  return null
+}
+
 describe("Tooltip (Web Component)", () => {
   let container: HTMLDivElement
 
@@ -72,11 +86,9 @@ describe("Tooltip (Web Component)", () => {
     const tooltip = container.querySelector("plank-tooltip")!
     await (tooltip as any).updateComplete
 
-    // Wait for positioning (longer for CI)
-    await new Promise((r) => setTimeout(r, 100))
-
-    const portaledContent = document.querySelector('[role="tooltip"]')
-    expect(portaledContent).toBeDefined()
+    // Wait for positioning with polling (more robust for CI)
+    const portaledContent = await waitForElement('[role="tooltip"]')
+    expect(portaledContent).not.toBeNull()
     expect(portaledContent?.textContent).toContain("Tooltip text")
   })
 
@@ -143,10 +155,10 @@ describe("Tooltip (Web Component)", () => {
     await customElements.whenDefined("plank-tooltip")
     const tooltip = container.querySelector("plank-tooltip")!
     await (tooltip as any).updateComplete
-    // Wait for positioning (longer for CI)
-    await new Promise((r) => setTimeout(r, 100))
 
-    const content = document.querySelector('[role="tooltip"]')
+    // Wait for positioning with polling (more robust for CI)
+    const content = await waitForElement('[role="tooltip"]')
+    expect(content).not.toBeNull()
     expect(content?.getAttribute("data-slot")).toBe("tooltip-content")
   })
 
