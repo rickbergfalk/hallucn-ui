@@ -318,7 +318,7 @@ describe("plank-newcomponent", () => {
 - [x] sidebar
 - [ ] form
 - [x] scroll-area
-- [ ] input-group
+- [x] input-group
 - [x] input-otp
 - [x] sonner
 - [x] chart
