@@ -319,7 +319,7 @@ describe("plank-newcomponent", () => {
 - [ ] form
 - [x] scroll-area
 - [ ] input-group
-- [ ] input-otp
+- [x] input-otp
 - [ ] sonner
 - [ ] chart
 

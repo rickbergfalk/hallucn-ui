@@ -115,6 +115,25 @@
           <plank-input placeholder="Enter text..." class="w-full"></plank-input>
         </a>
 
+        <!-- Input OTP -->
+        <a
+          href="./components/input-otp.html"
+          class="block p-6 border rounded-lg hover:border-foreground transition-colors"
+        >
+          <h3 class="font-semibold mb-2">Input OTP</h3>
+          <p class="text-sm text-muted-foreground mb-4">
+            One-time password input.
+          </p>
+          <plank-input-otp max-length="4">
+            <plank-input-otp-group>
+              <plank-input-otp-slot index="0"></plank-input-otp-slot>
+              <plank-input-otp-slot index="1"></plank-input-otp-slot>
+              <plank-input-otp-slot index="2"></plank-input-otp-slot>
+              <plank-input-otp-slot index="3"></plank-input-otp-slot>
+            </plank-input-otp-group>
+          </plank-input-otp>
+        </a>
+
         <!-- Kbd -->
         <a
           href="./components/kbd.html"
