@@ -313,8 +313,8 @@ describe("plank-newcomponent", () => {
 - [x] pagination
 - [x] breadcrumb
 - [x] resizable
+- [x] navigation-menu
 - [ ] form
-- [ ] navigation-menu
 - [ ] menubar
 - [ ] sidebar
 - [x] scroll-area
