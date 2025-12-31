@@ -316,7 +316,6 @@ describe("plank-newcomponent", () => {
 - [x] navigation-menu
 - [x] menubar
 - [x] sidebar
-- [ ] form
 - [x] scroll-area
 - [x] input-group
 - [x] input-otp

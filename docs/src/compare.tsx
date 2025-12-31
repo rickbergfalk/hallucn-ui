@@ -96,6 +96,86 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/drawer"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/hover-card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/select"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/command"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/table"
+import { Calendar } from "@/components/calendar"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/carousel"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/pagination"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/breadcrumb"
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/resizable"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/navigation-menu"
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@/components/menubar"
+import { ScrollArea } from "@/components/scroll-area"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  InputOTPSeparator,
+} from "@/components/input-otp"
 
 // Component to render Planks HTML after mount
 function PlanksDemo({ html }: { html: string }) {
@@ -877,6 +957,560 @@ function ComparisonPage() {
             />
           </div>
         </div>
+      </div>
+
+      {/* Hover Card */}
+      <ComparisonRow
+        title="Hover Card"
+        reactContent={
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <Button variant="link">@shadcn</Button>
+            </HoverCardTrigger>
+            <HoverCardContent className="w-80">
+              <div className="flex justify-between space-x-4">
+                <div className="space-y-1">
+                  <h4 className="text-sm font-semibold">@shadcn</h4>
+                  <p className="text-sm">
+                    The creator of shadcn/ui and related tools.
+                  </p>
+                </div>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
+        }
+        planksHtml={`
+          <plank-hover-card>
+            <plank-hover-card-trigger>
+              <plank-button variant="link">@shadcn</plank-button>
+            </plank-hover-card-trigger>
+            <plank-hover-card-content class="w-80">
+              <div class="flex justify-between space-x-4">
+                <div class="space-y-1">
+                  <h4 class="text-sm font-semibold">@shadcn</h4>
+                  <p class="text-sm">The creator of shadcn/ui and related tools.</p>
+                </div>
+              </div>
+            </plank-hover-card-content>
+          </plank-hover-card>
+        `}
+      />
+
+      {/* Select */}
+      <ComparisonRow
+        title="Select"
+        reactContent={
+          <Select>
+            <SelectTrigger className="w-48">
+              <SelectValue placeholder="Select a fruit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="apple">Apple</SelectItem>
+              <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="orange">Orange</SelectItem>
+            </SelectContent>
+          </Select>
+        }
+        planksHtml={`
+          <plank-select class="w-48">
+            <plank-select-trigger>
+              <plank-select-value placeholder="Select a fruit"></plank-select-value>
+            </plank-select-trigger>
+            <plank-select-content>
+              <plank-select-item value="apple">Apple</plank-select-item>
+              <plank-select-item value="banana">Banana</plank-select-item>
+              <plank-select-item value="orange">Orange</plank-select-item>
+            </plank-select-content>
+          </plank-select>
+        `}
+      />
+
+      {/* Command */}
+      <ComparisonRow
+        title="Command"
+        reactContent={
+          <Command className="rounded-lg border shadow-md max-w-xs">
+            <CommandInput placeholder="Type a command..." />
+            <CommandList>
+              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandGroup heading="Suggestions">
+                <CommandItem>Calendar</CommandItem>
+                <CommandItem>Search</CommandItem>
+                <CommandItem>Settings</CommandItem>
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        }
+        planksHtml={`
+          <plank-command class="rounded-lg border shadow-md max-w-xs">
+            <plank-command-input placeholder="Type a command..."></plank-command-input>
+            <plank-command-list>
+              <plank-command-empty>No results found.</plank-command-empty>
+              <plank-command-group heading="Suggestions">
+                <plank-command-item>Calendar</plank-command-item>
+                <plank-command-item>Search</plank-command-item>
+                <plank-command-item>Settings</plank-command-item>
+              </plank-command-group>
+            </plank-command-list>
+          </plank-command>
+        `}
+      />
+
+      {/* Table */}
+      <ComparisonRow
+        title="Table"
+        reactContent={
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Role</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>Alice</TableCell>
+                <TableCell>Active</TableCell>
+                <TableCell>Admin</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Bob</TableCell>
+                <TableCell>Inactive</TableCell>
+                <TableCell>User</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        }
+        planksHtml={`
+          <plank-table>
+            <plank-table-header>
+              <plank-table-row>
+                <plank-table-head>Name</plank-table-head>
+                <plank-table-head>Status</plank-table-head>
+                <plank-table-head>Role</plank-table-head>
+              </plank-table-row>
+            </plank-table-header>
+            <plank-table-body>
+              <plank-table-row>
+                <plank-table-cell>Alice</plank-table-cell>
+                <plank-table-cell>Active</plank-table-cell>
+                <plank-table-cell>Admin</plank-table-cell>
+              </plank-table-row>
+              <plank-table-row>
+                <plank-table-cell>Bob</plank-table-cell>
+                <plank-table-cell>Inactive</plank-table-cell>
+                <plank-table-cell>User</plank-table-cell>
+              </plank-table-row>
+            </plank-table-body>
+          </plank-table>
+        `}
+      />
+
+      {/* Calendar */}
+      <ComparisonRow
+        title="Calendar"
+        reactContent={<Calendar className="rounded-md border" />}
+        planksHtml={`<plank-calendar class="rounded-md border"></plank-calendar>`}
+      />
+
+      {/* Carousel */}
+      <ComparisonRow
+        title="Carousel"
+        reactContent={
+          <Carousel className="w-full max-w-xs mx-auto">
+            <CarouselContent>
+              <CarouselItem>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="flex aspect-square items-center justify-center p-6">
+                      <span className="text-4xl font-semibold">1</span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="flex aspect-square items-center justify-center p-6">
+                      <span className="text-4xl font-semibold">2</span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="flex aspect-square items-center justify-center p-6">
+                      <span className="text-4xl font-semibold">3</span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        }
+        planksHtml={`
+          <plank-carousel class="w-full max-w-xs mx-auto">
+            <plank-carousel-content>
+              <plank-carousel-item>
+                <div class="p-1">
+                  <plank-card>
+                    <plank-card-content class="flex aspect-square items-center justify-center p-6">
+                      <span class="text-4xl font-semibold">1</span>
+                    </plank-card-content>
+                  </plank-card>
+                </div>
+              </plank-carousel-item>
+              <plank-carousel-item>
+                <div class="p-1">
+                  <plank-card>
+                    <plank-card-content class="flex aspect-square items-center justify-center p-6">
+                      <span class="text-4xl font-semibold">2</span>
+                    </plank-card-content>
+                  </plank-card>
+                </div>
+              </plank-carousel-item>
+              <plank-carousel-item>
+                <div class="p-1">
+                  <plank-card>
+                    <plank-card-content class="flex aspect-square items-center justify-center p-6">
+                      <span class="text-4xl font-semibold">3</span>
+                    </plank-card-content>
+                  </plank-card>
+                </div>
+              </plank-carousel-item>
+            </plank-carousel-content>
+            <plank-carousel-previous></plank-carousel-previous>
+            <plank-carousel-next></plank-carousel-next>
+          </plank-carousel>
+        `}
+      />
+
+      {/* Pagination */}
+      <ComparisonRow
+        title="Pagination"
+        reactContent={
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious href="#" />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">1</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" isActive>
+                  2
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">3</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext href="#" />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        }
+        planksHtml={`
+          <plank-pagination>
+            <plank-pagination-content>
+              <plank-pagination-item>
+                <plank-pagination-previous href="#"></plank-pagination-previous>
+              </plank-pagination-item>
+              <plank-pagination-item>
+                <plank-pagination-link href="#">1</plank-pagination-link>
+              </plank-pagination-item>
+              <plank-pagination-item>
+                <plank-pagination-link href="#" active>2</plank-pagination-link>
+              </plank-pagination-item>
+              <plank-pagination-item>
+                <plank-pagination-link href="#">3</plank-pagination-link>
+              </plank-pagination-item>
+              <plank-pagination-item>
+                <plank-pagination-next href="#"></plank-pagination-next>
+              </plank-pagination-item>
+            </plank-pagination-content>
+          </plank-pagination>
+        `}
+      />
+
+      {/* Breadcrumb */}
+      <ComparisonRow
+        title="Breadcrumb"
+        reactContent={
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="#">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="#">Components</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        }
+        planksHtml={`
+          <plank-breadcrumb>
+            <plank-breadcrumb-list>
+              <plank-breadcrumb-item>
+                <plank-breadcrumb-link href="#">Home</plank-breadcrumb-link>
+              </plank-breadcrumb-item>
+              <plank-breadcrumb-separator></plank-breadcrumb-separator>
+              <plank-breadcrumb-item>
+                <plank-breadcrumb-link href="#">Components</plank-breadcrumb-link>
+              </plank-breadcrumb-item>
+              <plank-breadcrumb-separator></plank-breadcrumb-separator>
+              <plank-breadcrumb-item>
+                <plank-breadcrumb-page>Breadcrumb</plank-breadcrumb-page>
+              </plank-breadcrumb-item>
+            </plank-breadcrumb-list>
+          </plank-breadcrumb>
+        `}
+      />
+
+      {/* Resizable */}
+      <ComparisonRow
+        title="Resizable"
+        reactContent={
+          <ResizablePanelGroup
+            direction="horizontal"
+            className="max-w-md rounded-lg border"
+          >
+            <ResizablePanel defaultSize={50}>
+              <div className="flex h-24 items-center justify-center p-6">
+                <span className="font-semibold">Panel 1</span>
+              </div>
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={50}>
+              <div className="flex h-24 items-center justify-center p-6">
+                <span className="font-semibold">Panel 2</span>
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        }
+        planksHtml={`
+          <plank-resizable-panel-group direction="horizontal" class="max-w-md rounded-lg border">
+            <plank-resizable-panel default-size="50">
+              <div class="flex h-24 items-center justify-center p-6">
+                <span class="font-semibold">Panel 1</span>
+              </div>
+            </plank-resizable-panel>
+            <plank-resizable-handle with-handle></plank-resizable-handle>
+            <plank-resizable-panel default-size="50">
+              <div class="flex h-24 items-center justify-center p-6">
+                <span class="font-semibold">Panel 2</span>
+              </div>
+            </plank-resizable-panel>
+          </plank-resizable-panel-group>
+        `}
+      />
+
+      {/* Navigation Menu */}
+      <ComparisonRow
+        title="Navigation Menu"
+        reactContent={
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className="grid gap-3 p-4 w-48">
+                    <NavigationMenuLink href="#">
+                      Introduction
+                    </NavigationMenuLink>
+                    <NavigationMenuLink href="#">
+                      Installation
+                    </NavigationMenuLink>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className="grid gap-3 p-4 w-48">
+                    <NavigationMenuLink href="#">Button</NavigationMenuLink>
+                    <NavigationMenuLink href="#">Card</NavigationMenuLink>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        }
+        planksHtml={`
+          <plank-navigation-menu>
+            <plank-navigation-menu-list>
+              <plank-navigation-menu-item>
+                <plank-navigation-menu-trigger>Getting Started</plank-navigation-menu-trigger>
+                <plank-navigation-menu-content>
+                  <div class="grid gap-3 p-4 w-48">
+                    <plank-navigation-menu-link href="#">Introduction</plank-navigation-menu-link>
+                    <plank-navigation-menu-link href="#">Installation</plank-navigation-menu-link>
+                  </div>
+                </plank-navigation-menu-content>
+              </plank-navigation-menu-item>
+              <plank-navigation-menu-item>
+                <plank-navigation-menu-trigger>Components</plank-navigation-menu-trigger>
+                <plank-navigation-menu-content>
+                  <div class="grid gap-3 p-4 w-48">
+                    <plank-navigation-menu-link href="#">Button</plank-navigation-menu-link>
+                    <plank-navigation-menu-link href="#">Card</plank-navigation-menu-link>
+                  </div>
+                </plank-navigation-menu-content>
+              </plank-navigation-menu-item>
+            </plank-navigation-menu-list>
+          </plank-navigation-menu>
+        `}
+      />
+
+      {/* Menubar */}
+      <ComparisonRow
+        title="Menubar"
+        reactContent={
+          <Menubar>
+            <MenubarMenu>
+              <MenubarTrigger>File</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>New File</MenubarItem>
+                <MenubarItem>Open</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem>Save</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>Edit</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>Undo</MenubarItem>
+                <MenubarItem>Redo</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
+        }
+        planksHtml={`
+          <plank-menubar>
+            <plank-menubar-menu>
+              <plank-menubar-trigger>File</plank-menubar-trigger>
+              <plank-menubar-content>
+                <plank-menubar-item>New File</plank-menubar-item>
+                <plank-menubar-item>Open</plank-menubar-item>
+                <plank-menubar-separator></plank-menubar-separator>
+                <plank-menubar-item>Save</plank-menubar-item>
+              </plank-menubar-content>
+            </plank-menubar-menu>
+            <plank-menubar-menu>
+              <plank-menubar-trigger>Edit</plank-menubar-trigger>
+              <plank-menubar-content>
+                <plank-menubar-item>Undo</plank-menubar-item>
+                <plank-menubar-item>Redo</plank-menubar-item>
+              </plank-menubar-content>
+            </plank-menubar-menu>
+          </plank-menubar>
+        `}
+      />
+
+      {/* Scroll Area */}
+      <ComparisonRow
+        title="Scroll Area"
+        reactContent={
+          <ScrollArea className="h-48 w-48 rounded-md border p-4">
+            <div className="space-y-4">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <div key={i} className="text-sm">
+                  Item {i + 1}
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+        }
+        planksHtml={`
+          <plank-scroll-area class="h-48 w-48 rounded-md border p-4">
+            <div class="space-y-4">
+              <div class="text-sm">Item 1</div>
+              <div class="text-sm">Item 2</div>
+              <div class="text-sm">Item 3</div>
+              <div class="text-sm">Item 4</div>
+              <div class="text-sm">Item 5</div>
+              <div class="text-sm">Item 6</div>
+              <div class="text-sm">Item 7</div>
+              <div class="text-sm">Item 8</div>
+              <div class="text-sm">Item 9</div>
+              <div class="text-sm">Item 10</div>
+            </div>
+          </plank-scroll-area>
+        `}
+      />
+
+      {/* Input OTP */}
+      <ComparisonRow
+        title="Input OTP"
+        reactContent={
+          <InputOTP maxLength={6}>
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+            </InputOTPGroup>
+            <InputOTPSeparator />
+            <InputOTPGroup>
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+        }
+        planksHtml={`
+          <plank-input-otp maxlength="6">
+            <plank-input-otp-group>
+              <plank-input-otp-slot index="0"></plank-input-otp-slot>
+              <plank-input-otp-slot index="1"></plank-input-otp-slot>
+              <plank-input-otp-slot index="2"></plank-input-otp-slot>
+            </plank-input-otp-group>
+            <plank-input-otp-separator></plank-input-otp-separator>
+            <plank-input-otp-group>
+              <plank-input-otp-slot index="3"></plank-input-otp-slot>
+              <plank-input-otp-slot index="4"></plank-input-otp-slot>
+              <plank-input-otp-slot index="5"></plank-input-otp-slot>
+            </plank-input-otp-group>
+          </plank-input-otp>
+        `}
+      />
+
+      {/* Note about components not included */}
+      <div className="mb-12 p-4 border rounded-lg bg-muted/50">
+        <h2 className="text-lg font-semibold mb-2">Additional Components</h2>
+        <p className="text-sm text-muted-foreground">
+          The following components are also available but are not shown in this
+          comparison as they require more complex setup or runtime
+          configuration:
+        </p>
+        <ul className="list-disc list-inside text-sm text-muted-foreground mt-2 space-y-1">
+          <li>
+            <strong>Combobox</strong> - Combines input with command/dropdown
+          </li>
+          <li>
+            <strong>Sidebar</strong> - Full application sidebar layout
+          </li>
+          <li>
+            <strong>Input Group</strong> - Grouped input with addons
+          </li>
+          <li>
+            <strong>Sonner (Toast)</strong> - Toast notifications (requires
+            toast trigger)
+          </li>
+          <li>
+            <strong>Chart</strong> - Data visualization (requires data
+            configuration)
+          </li>
+        </ul>
       </div>
     </div>
   )
