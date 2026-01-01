@@ -1,12 +1,21 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest"
+import { page } from "vitest/browser"
 import "@/web-components/plank-input-otp"
 
+/**
+ * Visual tests for plank-input-otp web component.
+ *
+ * These tests compare against the React component screenshots directly
+ * (configured in vitest.config.ts via resolveScreenshotPath).
+ * The React screenshots serve as the baseline/source of truth.
+ */
 describe("plank-input-otp visual", () => {
   let container: HTMLElement
 
   beforeEach(() => {
     container = document.createElement("div")
     container.id = "test-container"
+    container.setAttribute("data-testid", "container")
     document.body.appendChild(container)
   })
 
@@ -38,8 +47,8 @@ describe("plank-input-otp visual", () => {
 
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/input-otp-basic-chromium.png`
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-otp-basic"
     )
   })
 
@@ -67,8 +76,8 @@ describe("plank-input-otp visual", () => {
 
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/input-otp-filled-chromium.png`
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-otp-filled"
     )
   })
 
@@ -99,8 +108,8 @@ describe("plank-input-otp visual", () => {
 
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/input-otp-separators-chromium.png`
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-otp-separators"
     )
   })
 })

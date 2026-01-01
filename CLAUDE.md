@@ -184,11 +184,18 @@ Exceptions where JS conditionals are acceptable:
    - Event firing
    - State management
 
-2. **Visual tests** (`tests/web-components/*.visual.test.ts`)
-   - Screenshot comparison against React baselines
-   - Pixel-perfect verification when possible
+2. **Visual tests** - ALWAYS COMPARE TO REACT
+   - **React tests** (`tests/react/*.visual.test.tsx`): Generate baseline screenshots
+   - **Web component tests** (`tests/web-components/*.visual.test.ts`): Compare against React baselines
+   - The React component is the source of truth - web components must match it
    - **Up to 2% variance allowed** (`maxDiffPixelRatio: 0.02`) for complex components that use third-party libraries (e.g., vaul for Drawer) where minor rendering differences are unavoidable
    - Always try to fix the root cause first; only use variance as a last resort
+
+   **CRITICAL RULES:**
+   - NEVER use `toMatchFileSnapshot()` for web component visual tests
+   - ALWAYS use `toMatchScreenshot()` which compares to React via `resolveScreenshotPath` in vitest.config.ts
+   - NEVER commit static snapshots to `tests/web-components/__snapshots__/`
+   - React baselines are auto-generated in `tests/react/__screenshots__/`
 
 3. **Semantic structure tests** (`tests/web-components/semantic-structure.test.ts`)
    - Verify native semantic elements exist where required

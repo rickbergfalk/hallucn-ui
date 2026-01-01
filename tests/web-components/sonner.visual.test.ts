@@ -1,16 +1,22 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest"
+import { page } from "vitest/browser"
 import "@/web-components/plank-sonner"
 import { toast, PlankToaster } from "@/web-components/plank-sonner"
 
+/**
+ * Visual tests for plank-toaster web component.
+ *
+ * These tests compare against the React component screenshots directly
+ * (configured in vitest.config.ts via resolveScreenshotPath).
+ * The React screenshots serve as the baseline/source of truth.
+ */
 describe("plank-toaster visual", () => {
   let container: HTMLElement
 
   beforeEach(() => {
     container = document.createElement("div")
     container.id = "test-container"
-    container.style.width = "400px"
-    container.style.height = "300px"
-    container.style.position = "relative"
+    container.setAttribute("data-testid", "container")
     document.body.appendChild(container)
   })
 
@@ -19,7 +25,13 @@ describe("plank-toaster visual", () => {
   })
 
   it("matches default toast appearance", async () => {
-    container.innerHTML = `<plank-toaster position="bottom-right"></plank-toaster>`
+    container.innerHTML = `
+      <div style="width: 400px; height: 300px; position: relative;">
+        <plank-toaster position="bottom-right"></plank-toaster>
+      </div>
+    `
+    // Move data-testid to inner div for consistent screenshot area
+    container.querySelector("div")!.setAttribute("data-testid", "toast-area")
     await customElements.whenDefined("plank-toaster")
     const toaster = container.querySelector("plank-toaster")! as PlankToaster
     await toaster.updateComplete
@@ -30,13 +42,18 @@ describe("plank-toaster visual", () => {
     await toaster.updateComplete
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/sonner-default-chromium.png`
+    await expect(page.getByTestId("toast-area")).toMatchScreenshot(
+      "sonner-default"
     )
   })
 
   it("matches success toast appearance", async () => {
-    container.innerHTML = `<plank-toaster position="bottom-right"></plank-toaster>`
+    container.innerHTML = `
+      <div style="width: 400px; height: 300px; position: relative;">
+        <plank-toaster position="bottom-right"></plank-toaster>
+      </div>
+    `
+    container.querySelector("div")!.setAttribute("data-testid", "toast-area")
     await customElements.whenDefined("plank-toaster")
     const toaster = container.querySelector("plank-toaster")! as PlankToaster
     await toaster.updateComplete
@@ -45,13 +62,18 @@ describe("plank-toaster visual", () => {
     await toaster.updateComplete
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/sonner-success-chromium.png`
+    await expect(page.getByTestId("toast-area")).toMatchScreenshot(
+      "sonner-success"
     )
   })
 
   it("matches error toast appearance", async () => {
-    container.innerHTML = `<plank-toaster position="bottom-right"></plank-toaster>`
+    container.innerHTML = `
+      <div style="width: 400px; height: 300px; position: relative;">
+        <plank-toaster position="bottom-right"></plank-toaster>
+      </div>
+    `
+    container.querySelector("div")!.setAttribute("data-testid", "toast-area")
     await customElements.whenDefined("plank-toaster")
     const toaster = container.querySelector("plank-toaster")! as PlankToaster
     await toaster.updateComplete
@@ -60,13 +82,18 @@ describe("plank-toaster visual", () => {
     await toaster.updateComplete
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/sonner-error-chromium.png`
+    await expect(page.getByTestId("toast-area")).toMatchScreenshot(
+      "sonner-error"
     )
   })
 
   it("matches multiple toasts stacked", async () => {
-    container.innerHTML = `<plank-toaster position="bottom-right"></plank-toaster>`
+    container.innerHTML = `
+      <div style="width: 400px; height: 300px; position: relative;">
+        <plank-toaster position="bottom-right"></plank-toaster>
+      </div>
+    `
+    container.querySelector("div")!.setAttribute("data-testid", "toast-area")
     await customElements.whenDefined("plank-toaster")
     const toaster = container.querySelector("plank-toaster")! as PlankToaster
     await toaster.updateComplete
@@ -77,8 +104,8 @@ describe("plank-toaster visual", () => {
     await toaster.updateComplete
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/sonner-stacked-chromium.png`
+    await expect(page.getByTestId("toast-area")).toMatchScreenshot(
+      "sonner-stacked"
     )
   })
 })

@@ -1,16 +1,25 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest"
+import { page } from "vitest/browser"
 import "@/web-components/plank-input-group"
 import type {
   PlankInputGroup,
   PlankInputGroupTextarea,
 } from "@/web-components/plank-input-group"
 
+/**
+ * Visual tests for plank-input-group web component.
+ *
+ * These tests compare against the React component screenshots directly
+ * (configured in vitest.config.ts via resolveScreenshotPath).
+ * The React screenshots serve as the baseline/source of truth.
+ */
 describe("plank-input-group visual", () => {
   let container: HTMLElement
 
   beforeEach(() => {
     container = document.createElement("div")
     container.id = "test-container"
+    container.setAttribute("data-testid", "container")
     document.body.appendChild(container)
   })
 
@@ -23,7 +32,7 @@ describe("plank-input-group visual", () => {
       <div style="padding: 20px; width: 300px;">
         <plank-input-group>
           <plank-input-group-addon>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4">
               <circle cx="11" cy="11" r="8"></circle>
               <path d="m21 21-4.3-4.3"></path>
             </svg>
@@ -41,8 +50,8 @@ describe("plank-input-group visual", () => {
     await group.updateComplete
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/input-group-icon-chromium.png`
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-group-icon"
     )
   })
 
@@ -70,8 +79,8 @@ describe("plank-input-group visual", () => {
     await group.updateComplete
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/input-group-text-chromium.png`
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-group-text"
     )
   })
 
@@ -96,8 +105,8 @@ describe("plank-input-group visual", () => {
     await group.updateComplete
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/input-group-button-chromium.png`
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-group-button"
     )
   })
 
@@ -122,8 +131,8 @@ describe("plank-input-group visual", () => {
     await textarea.updateComplete
     await new Promise((r) => setTimeout(r, 100))
 
-    await expect(container).toMatchFileSnapshot(
-      `__snapshots__/input-group-textarea-chromium.png`
+    await expect(page.getByTestId("container")).toMatchScreenshot(
+      "input-group-textarea"
     )
   })
 })
