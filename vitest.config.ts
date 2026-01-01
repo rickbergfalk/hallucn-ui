@@ -31,10 +31,12 @@ export default defineConfig({
     ],
   },
   test: {
+    fileParallelism: true, // Run test files in parallel
+    isolate: true, // Isolate each test file (important for visual tests)
     browser: {
       enabled: true,
       provider: playwright(),
-      instances: [{ browser: "chromium" }],
+      instances: [{ browser: "chromium", headless: true }],
       ui: false, // Disable Vitest UI overlay to prevent test counter in screenshots
       expect: {
         toMatchScreenshot: {
