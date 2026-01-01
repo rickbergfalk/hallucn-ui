@@ -27,6 +27,7 @@ export default defineConfig({
       "lucide-react",
       "vaul",
       "react-day-picker",
+      "lit/directives/if-defined.js",
     ],
   },
   test: {

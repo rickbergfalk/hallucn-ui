@@ -352,7 +352,8 @@ describe("plank-input-group-button", () => {
     )! as PlankInputGroupButton
     await button.updateComplete
 
-    expect(button.className).toContain("hover:bg-accent")
+    const nativeButton = button.querySelector("button")!
+    expect(nativeButton.className).toContain("hover:bg-accent")
   })
 
   it("supports different variants", async () => {
@@ -363,7 +364,8 @@ describe("plank-input-group-button", () => {
     )! as PlankInputGroupButton
     await button.updateComplete
 
-    expect(button.className).toContain("bg-secondary")
+    const nativeButton = button.querySelector("button")!
+    expect(nativeButton.className).toContain("bg-secondary")
   })
 
   it("supports different sizes", async () => {
@@ -374,7 +376,8 @@ describe("plank-input-group-button", () => {
     )! as PlankInputGroupButton
     await button.updateComplete
 
-    expect(button.className).toContain("h-8")
+    const nativeButton = button.querySelector("button")!
+    expect(nativeButton.className).toContain("h-8")
   })
 
   it("supports icon sizes", async () => {
@@ -385,7 +388,8 @@ describe("plank-input-group-button", () => {
     )! as PlankInputGroupButton
     await button.updateComplete
 
-    expect(button.className).toContain("size-6")
+    const nativeButton = button.querySelector("button")!
+    expect(nativeButton.className).toContain("size-6")
   })
 
   it("supports disabled state", async () => {
@@ -398,7 +402,7 @@ describe("plank-input-group-button", () => {
 
     const nativeButton = button.querySelector("button")!
     expect(nativeButton.disabled).toBe(true)
-    expect(button.className).toContain("opacity-50")
+    expect(nativeButton.className).toContain("opacity-50")
   })
 
   it("renders native button element", async () => {

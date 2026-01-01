@@ -1,5 +1,6 @@
 import { LitElement, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
+import { ifDefined } from "lit/directives/if-defined.js"
 import { cn } from "@/lib/utils"
 
 /**
@@ -166,7 +167,7 @@ export class PlankInputGroupButton extends LitElement {
     return this
   }
 
-  willUpdate() {
+  private _getButtonClasses() {
     const sizeClasses = {
       xs: "h-6 gap-1 px-2 rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-3.5 has-[>svg]:px-2",
       sm: "h-8 px-2.5 gap-1.5 rounded-md has-[>svg]:px-2.5",
@@ -188,16 +189,20 @@ export class PlankInputGroupButton extends LitElement {
       link: "text-primary underline-offset-4 hover:underline",
     }
 
-    this.className = cn(
+    return cn(
       "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium",
       "transition-all outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
       "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
       "shadow-none",
       variantClasses[this.variant],
       sizeClasses[this.size],
-      this.disabled ? "opacity-50 pointer-events-none" : "",
-      this.className
+      this.disabled ? "opacity-50 pointer-events-none" : ""
     )
+  }
+
+  willUpdate() {
+    // Use display:contents so wrapper doesn't affect layout
+    this.style.display = "contents"
     this.dataset.slot = "input-group-button"
     this.dataset.size = this.size
   }
@@ -222,7 +227,7 @@ export class PlankInputGroupButton extends LitElement {
       type=${this.type}
       ?disabled=${this.disabled}
       @click=${this._handleClick}
-      class="contents"
+      class=${this._getButtonClasses()}
     >
       <slot></slot>
     </button>`
@@ -351,7 +356,7 @@ export class PlankInputGroupTextarea extends LitElement {
   @property({ type: String }) placeholder = ""
   @property({ type: String }) value = ""
   @property({ type: String }) name = ""
-  @property({ type: Number }) rows = 3
+  @property({ type: Number }) rows: number | undefined = undefined
   @property({ type: Boolean }) disabled = false
   @property({ type: Boolean }) readonly = false
   @property({ type: Boolean }) invalid = false
@@ -360,15 +365,19 @@ export class PlankInputGroupTextarea extends LitElement {
     return this
   }
 
-  willUpdate() {
-    this.className = cn(
+  private _getTextareaClasses() {
+    return cn(
       "flex-1 resize-none rounded-none border-0 bg-transparent py-3 shadow-none outline-none",
       "placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground",
-      "flex min-h-16 w-full min-w-0 px-3 text-base md:text-sm",
+      "flex field-sizing-content min-h-16 w-full min-w-0 px-3 text-base md:text-sm",
       "focus-visible:ring-0 dark:bg-transparent",
-      "disabled:cursor-not-allowed disabled:opacity-50",
-      this.className
+      "disabled:cursor-not-allowed disabled:opacity-50"
     )
+  }
+
+  willUpdate() {
+    // Use display:contents so the wrapper doesn't affect layout
+    this.style.display = "contents"
     this.dataset.slot = "input-group-control"
   }
 
@@ -401,12 +410,12 @@ export class PlankInputGroupTextarea extends LitElement {
       placeholder=${this.placeholder}
       .value=${this.value}
       name=${this.name}
-      rows=${this.rows}
+      rows=${ifDefined(this.rows)}
       ?disabled=${this.disabled}
       ?readonly=${this.readonly}
       aria-invalid=${this.invalid ? "true" : "false"}
       data-slot="input-group-control"
-      class=${this.className}
+      class=${this._getTextareaClasses()}
       @input=${this._handleInput}
       @change=${this._handleChange}
     ></textarea>`
