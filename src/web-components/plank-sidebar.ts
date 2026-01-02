@@ -1053,6 +1053,8 @@ export class PlankSidebarMenuSubButton extends LitElement {
 
   render() {
     if (this.href) {
+      // Children are moved into anchor in updated() for accessible name
+      // eslint-disable-next-line lit-a11y/accessible-name
       return html`<a href=${this.href} class="contents"></a>`
     }
     return html``

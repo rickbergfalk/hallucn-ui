@@ -240,6 +240,8 @@ export class PlankInputGroupButton extends LitElement {
   }
 
   render() {
+    // Children are moved into button in updated() for accessible name
+    // eslint-disable-next-line lit-a11y/accessible-name
     return html`<button
       type=${this.type}
       ?disabled=${this.disabled}

@@ -208,7 +208,10 @@ export class DocsLayout extends LitElement {
                                 // Close mobile sidebar on navigation
                                 const provider = this.closest(
                                   "plank-sidebar-provider"
-                                ) as any
+                                ) as HTMLElement & {
+                                  isMobile?: boolean
+                                  setOpenMobile?: (v: boolean) => void
+                                }
                                 if (provider?.isMobile) {
                                   provider.setOpenMobile(false)
                                 }
