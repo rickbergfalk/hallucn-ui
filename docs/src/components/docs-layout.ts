@@ -48,6 +48,7 @@ const NAV_GROUPS = [
       { name: "Avatar", href: "avatar.html" },
       { name: "Badge", href: "badge.html" },
       { name: "Calendar", href: "calendar.html" },
+      { name: "Empty", href: "empty.html" },
       { name: "Progress", href: "progress.html" },
       { name: "Skeleton", href: "skeleton.html" },
       { name: "Table", href: "table.html" },

@@ -25,6 +25,14 @@ import {
   CardContent,
 } from "@/components/card"
 import { Alert, AlertTitle, AlertDescription } from "@/components/alert"
+import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+} from "@/components/empty"
 import { Avatar, AvatarFallback } from "@/components/avatar"
 import {
   Collapsible,
@@ -508,6 +516,57 @@ function ComparisonPage() {
             <plank-alert-title>Heads up!</plank-alert-title>
             <plank-alert-description>This is an important message.</plank-alert-description>
           </plank-alert>
+        `}
+      />
+
+      {/* Empty */}
+      <ComparisonRow
+        title="Empty"
+        reactContent={
+          <Empty className="border max-w-sm">
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
+                  <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+                </svg>
+              </EmptyMedia>
+              <EmptyTitle>No messages</EmptyTitle>
+              <EmptyDescription>
+                Your inbox is empty. New messages will appear here.
+              </EmptyDescription>
+            </EmptyHeader>
+            <EmptyContent>
+              <Button size="sm">Compose</Button>
+            </EmptyContent>
+          </Empty>
+        }
+        planksHtml={`
+          <plank-empty class="border max-w-sm">
+            <plank-empty-header>
+              <plank-empty-media variant="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
+                  <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+                </svg>
+              </plank-empty-media>
+              <plank-empty-title>No messages</plank-empty-title>
+              <plank-empty-description>Your inbox is empty. New messages will appear here.</plank-empty-description>
+            </plank-empty-header>
+            <plank-empty-content>
+              <plank-button size="sm">Compose</plank-button>
+            </plank-empty-content>
+          </plank-empty>
         `}
       />
 

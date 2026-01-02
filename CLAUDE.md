@@ -285,7 +285,7 @@ describe("plank-newcomponent", () => {
 - [x] aspect-ratio
 - [x] native-select
 - [x] button-group (multi-part)
-- [ ] empty (multi-part)
+- [x] empty (multi-part)
 - [ ] field (multi-part)
 - [ ] item (multi-part)
 
