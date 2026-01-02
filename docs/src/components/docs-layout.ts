@@ -99,10 +99,7 @@ const NAV_GROUPS = [
   },
   {
     label: "Misc",
-    items: [
-      { name: "Carousel", href: "carousel.html" },
-      { name: "Kbd", href: "kbd.html" },
-    ],
+    items: [{ name: "Kbd", href: "kbd.html" }],
   },
 ]
 

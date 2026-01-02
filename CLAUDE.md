@@ -320,7 +320,6 @@ describe("plank-newcomponent", () => {
 ### Tier 6 - Complex compositions
 - [x] table
 - [x] calendar
-- [x] carousel
 - [x] pagination
 - [x] breadcrumb
 - [x] resizable
