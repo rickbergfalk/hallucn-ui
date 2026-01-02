@@ -184,7 +184,7 @@ Exceptions where JS conditionals are acceptable:
    - **React tests** (`tests/react/*.visual.test.tsx`): Generate baseline screenshots
    - **Web component tests** (`tests/web-components/*.visual.test.ts`): Compare against React baselines
    - The React component is the source of truth - web components must match it
-   - **Up to 2% variance allowed** (`maxDiffPixelRatio: 0.02`) for complex components that use third-party libraries (e.g., vaul for Drawer) where minor rendering differences are unavoidable
+   - **Up to 1% variance allowed** (`maxDiffPixelRatio: 0.01`) for complex components that use third-party libraries (e.g., vaul for Drawer) where minor rendering differences are unavoidable
    - Always try to fix the root cause first; only use variance as a last resort
 
    **CRITICAL RULES:**
@@ -250,7 +250,9 @@ describe("plank-newcomponent", () => {
 10. **Add docs page**
     - Create `docs/components/{component}.html` (copy existing page as template)
     - Add component import to `docs/src/main.ts`
+    - Add component page link to sidebar nav
     - Add link card to `docs/index.html`
+    - Add component to comparison page
     - Verify with `npm run docs:dev` that component renders correctly
 
 11. **Run formatting and checks**
