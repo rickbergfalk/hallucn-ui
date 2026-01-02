@@ -277,6 +277,61 @@ export class DocsLayout extends LitElement {
         main.appendChild(child)
       })
     }
+
+    // Scroll to active sidebar item after render
+    this._scrollToActiveItem()
+  }
+
+  private async _scrollToActiveItem() {
+    // Wait for sidebar components to render
+    await this.updateComplete
+    await new Promise((resolve) => requestAnimationFrame(resolve))
+
+    const sidebarContent = this.querySelector(
+      "plank-sidebar-content"
+    ) as HTMLElement
+    if (!sidebarContent) return
+
+    // Check for saved scroll position first
+    const savedScroll = sessionStorage.getItem("docs-sidebar-scroll")
+    if (savedScroll) {
+      sidebarContent.scrollTop = parseInt(savedScroll, 10)
+      this._setupScrollPersistence(sidebarContent)
+      return
+    }
+
+    // Otherwise scroll to active item - calculate position manually to avoid scrolling ancestors
+    const activeButton = sidebarContent.querySelector(
+      "plank-sidebar-menu-button[active]"
+    ) as HTMLElement
+    if (activeButton) {
+      const buttonRect = activeButton.getBoundingClientRect()
+      const contentRect = sidebarContent.getBoundingClientRect()
+      const buttonOffsetTop =
+        buttonRect.top - contentRect.top + sidebarContent.scrollTop
+      // Center the button in the viewport
+      const targetScroll =
+        buttonOffsetTop -
+        sidebarContent.clientHeight / 2 +
+        buttonRect.height / 2
+      sidebarContent.scrollTop = Math.max(0, targetScroll)
+    }
+
+    // Set up scroll persistence
+    this._setupScrollPersistence(sidebarContent)
+  }
+
+  private _setupScrollPersistence(scrollable: HTMLElement) {
+    let scrollTimeout: number
+    scrollable.addEventListener("scroll", () => {
+      clearTimeout(scrollTimeout)
+      scrollTimeout = window.setTimeout(() => {
+        sessionStorage.setItem(
+          "docs-sidebar-scroll",
+          String(scrollable.scrollTop)
+        )
+      }, 100)
+    })
   }
 }
 
