@@ -10,6 +10,7 @@ import { Label } from "@/components/label"
 import { NativeSelect, NativeSelectOption } from "@/components/native-select"
 import { Separator } from "@/components/separator"
 import { Skeleton } from "@/components/skeleton"
+import { Spinner } from "@/components/spinner"
 import { Switch } from "@/components/switch"
 import { Checkbox } from "@/components/checkbox"
 import { Toggle } from "@/components/toggle"
@@ -348,6 +349,25 @@ function ComparisonPage() {
               <plank-skeleton class="h-4 w-32"></plank-skeleton>
               <plank-skeleton class="h-4 w-24"></plank-skeleton>
             </div>
+          </div>
+        `}
+      />
+
+      {/* Spinner */}
+      <ComparisonRow
+        title="Spinner"
+        reactContent={
+          <div className="flex items-center gap-4">
+            <Spinner />
+            <Spinner className="size-6" />
+            <Spinner className="size-8" />
+          </div>
+        }
+        planksHtml={`
+          <div class="flex items-center gap-4">
+            <plank-spinner></plank-spinner>
+            <plank-spinner class="size-6"></plank-spinner>
+            <plank-spinner class="size-8"></plank-spinner>
           </div>
         `}
       />

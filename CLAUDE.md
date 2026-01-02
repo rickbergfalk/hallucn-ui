@@ -273,7 +273,7 @@ describe("plank-newcomponent", () => {
 - [x] separator
 - [x] skeleton
 - [x] label
-- [ ] spinner
+- [x] spinner
 
 ### Tier 2 - Simple styled elements (no Radix, no state)
 - [x] input

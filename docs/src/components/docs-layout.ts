@@ -58,6 +58,7 @@ const NAV_GROUPS = [
       { name: "Alert", href: "alert.html" },
       { name: "Alert Dialog", href: "alert-dialog.html" },
       { name: "Sonner", href: "sonner.html" },
+      { name: "Spinner", href: "spinner.html" },
       { name: "Tooltip", href: "tooltip.html" },
     ],
   },

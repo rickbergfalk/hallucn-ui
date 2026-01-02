@@ -20,6 +20,7 @@ import "@/web-components/plank-combobox"
 import "@/web-components/plank-table"
 import "@/web-components/plank-calendar"
 import "@/web-components/plank-native-select"
+import "@/web-components/plank-spinner"
 
 /**
  * Semantic Structure Tests
@@ -2714,6 +2715,35 @@ describe("Semantic Structure", () => {
       const icon = element.querySelector("svg")
       expect(icon, "Must have chevron SVG icon").toBeTruthy()
       expect(icon!.dataset.slot).toBe("native-select-icon")
+    })
+  })
+
+  describe("plank-spinner", () => {
+    it("must contain SVG with role=status", async () => {
+      container.innerHTML = `<plank-spinner></plank-spinner>`
+
+      await customElements.whenDefined("plank-spinner")
+      const element = container.querySelector("plank-spinner")!
+      await (element as any).updateComplete
+
+      const svg = element.querySelector("svg")
+      expect(svg, "Must contain SVG element").toBeTruthy()
+      expect(svg!.getAttribute("role"), "SVG must have role=status").toBe(
+        "status"
+      )
+    })
+
+    it("must have aria-label for accessibility", async () => {
+      container.innerHTML = `<plank-spinner></plank-spinner>`
+
+      await customElements.whenDefined("plank-spinner")
+      const element = container.querySelector("plank-spinner")!
+      await (element as any).updateComplete
+
+      const svg = element.querySelector("svg")
+      expect(svg!.getAttribute("aria-label"), "SVG must have aria-label").toBe(
+        "Loading"
+      )
     })
   })
 })
