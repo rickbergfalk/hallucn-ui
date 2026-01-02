@@ -21,6 +21,7 @@ import "@/web-components/plank-table"
 import "@/web-components/plank-calendar"
 import "@/web-components/plank-native-select"
 import "@/web-components/plank-spinner"
+import "@/web-components/plank-button-group"
 
 /**
  * Semantic Structure Tests
@@ -2744,6 +2745,57 @@ describe("Semantic Structure", () => {
       expect(svg!.getAttribute("aria-label"), "SVG must have aria-label").toBe(
         "Loading"
       )
+    })
+  })
+
+  describe("plank-button-group", () => {
+    it("must have role=group for accessibility", async () => {
+      container.innerHTML = `
+        <plank-button-group>
+          <plank-button>Test</plank-button>
+        </plank-button-group>
+      `
+
+      await customElements.whenDefined("plank-button-group")
+      const element = container.querySelector("plank-button-group")!
+      await (element as any).updateComplete
+
+      expect(
+        element.getAttribute("role"),
+        "Must have role=group for grouping buttons"
+      ).toBe("group")
+    })
+
+    it("must have data-slot=button-group", async () => {
+      container.innerHTML = `
+        <plank-button-group>
+          <plank-button>Test</plank-button>
+        </plank-button-group>
+      `
+
+      await customElements.whenDefined("plank-button-group")
+      const element = container.querySelector("plank-button-group")!
+      await (element as any).updateComplete
+
+      expect(element.dataset.slot).toBe("button-group")
+    })
+
+    it("children must be preserved inside button-group", async () => {
+      container.innerHTML = `
+        <plank-button-group>
+          <plank-button>First</plank-button>
+          <plank-button>Second</plank-button>
+        </plank-button-group>
+      `
+
+      await customElements.whenDefined("plank-button-group")
+      const element = container.querySelector("plank-button-group")!
+      await (element as any).updateComplete
+
+      const buttons = element.querySelectorAll("plank-button")
+      expect(buttons.length, "Must preserve all button children").toBe(2)
+      expect(buttons[0].textContent).toContain("First")
+      expect(buttons[1].textContent).toContain("Second")
     })
   })
 })

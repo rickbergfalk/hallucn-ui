@@ -15,6 +15,7 @@ const NAV_GROUPS = [
     label: "Form Controls",
     items: [
       { name: "Button", href: "button.html" },
+      { name: "Button Group", href: "button-group.html" },
       { name: "Checkbox", href: "checkbox.html" },
       { name: "Combobox", href: "combobox.html" },
       { name: "Input", href: "input.html" },

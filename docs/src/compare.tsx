@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client"
 
 // Import React components
 import { Button } from "@/components/button"
+import { ButtonGroup, ButtonGroupText } from "@/components/button-group"
 import { Badge } from "@/components/badge"
 import { Input } from "@/components/input"
 import { Textarea } from "@/components/textarea"
@@ -248,6 +249,37 @@ function ComparisonPage() {
             <plank-button variant="destructive">Destructive</plank-button>
             <plank-button variant="outline">Outline</plank-button>
             <plank-button variant="ghost">Ghost</plank-button>
+          </div>
+        `}
+      />
+
+      {/* Button Group */}
+      <ComparisonRow
+        title="Button Group"
+        reactContent={
+          <div className="flex flex-col gap-4">
+            <ButtonGroup>
+              <Button variant="outline">Left</Button>
+              <Button variant="outline">Center</Button>
+              <Button variant="outline">Right</Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <ButtonGroupText>Label</ButtonGroupText>
+              <Button variant="outline">Action</Button>
+            </ButtonGroup>
+          </div>
+        }
+        planksHtml={`
+          <div class="flex flex-col gap-4">
+            <plank-button-group>
+              <plank-button variant="outline">Left</plank-button>
+              <plank-button variant="outline">Center</plank-button>
+              <plank-button variant="outline">Right</plank-button>
+            </plank-button-group>
+            <plank-button-group>
+              <plank-button-group-text>Label</plank-button-group-text>
+              <plank-button variant="outline">Action</plank-button>
+            </plank-button-group>
           </div>
         `}
       />

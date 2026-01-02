@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button Group - Planks</title>
+    <script type="module" src="../src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <docs-layout title="Button Group">
+      <h1 class="text-4xl font-bold mb-4">Button Group</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        Groups related buttons together with connected styling.
+      </p>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Horizontal (Default)</h2>
+        <div class="mb-4">
+          <plank-button-group>
+            <plank-button variant="outline">Left</plank-button>
+            <plank-button variant="outline">Center</plank-button>
+            <plank-button variant="outline">Right</plank-button>
+          </plank-button-group>
+        </div>
+        <pre><code>&lt;plank-button-group&gt;
+  &lt;plank-button variant="outline"&gt;Left&lt;/plank-button&gt;
+  &lt;plank-button variant="outline"&gt;Center&lt;/plank-button&gt;
+  &lt;plank-button variant="outline"&gt;Right&lt;/plank-button&gt;
+&lt;/plank-button-group&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Vertical</h2>
+        <div class="mb-4">
+          <plank-button-group orientation="vertical">
+            <plank-button variant="outline">Top</plank-button>
+            <plank-button variant="outline">Middle</plank-button>
+            <plank-button variant="outline">Bottom</plank-button>
+          </plank-button-group>
+        </div>
+        <pre><code>&lt;plank-button-group orientation="vertical"&gt;
+  &lt;plank-button variant="outline"&gt;Top&lt;/plank-button&gt;
+  &lt;plank-button variant="outline"&gt;Middle&lt;/plank-button&gt;
+  &lt;plank-button variant="outline"&gt;Bottom&lt;/plank-button&gt;
+&lt;/plank-button-group&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">With Text</h2>
+        <div class="mb-4">
+          <plank-button-group>
+            <plank-button-group-text>Label</plank-button-group-text>
+            <plank-button variant="outline">Action</plank-button>
+          </plank-button-group>
+        </div>
+        <pre><code>&lt;plank-button-group&gt;
+  &lt;plank-button-group-text&gt;Label&lt;/plank-button-group-text&gt;
+  &lt;plank-button variant="outline"&gt;Action&lt;/plank-button&gt;
+&lt;/plank-button-group&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">With Separator</h2>
+        <div class="mb-4">
+          <plank-button-group>
+            <plank-button variant="outline">Save</plank-button>
+            <plank-button-group-separator></plank-button-group-separator>
+            <plank-button variant="outline">Cancel</plank-button>
+          </plank-button-group>
+        </div>
+        <pre><code>&lt;plank-button-group&gt;
+  &lt;plank-button variant="outline"&gt;Save&lt;/plank-button&gt;
+  &lt;plank-button-group-separator&gt;&lt;/plank-button-group-separator&gt;
+  &lt;plank-button variant="outline"&gt;Cancel&lt;/plank-button&gt;
+&lt;/plank-button-group&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Icon Buttons</h2>
+        <div class="mb-4">
+          <plank-button-group>
+            <plank-button variant="outline" size="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"
+                />
+              </svg>
+            </plank-button>
+            <plank-button variant="outline" size="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                <circle cx="9" cy="9" r="2" />
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+              </svg>
+            </plank-button>
+            <plank-button variant="outline" size="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" x2="12" y1="3" y2="15" />
+              </svg>
+            </plank-button>
+          </plank-button-group>
+        </div>
+        <pre><code>&lt;plank-button-group&gt;
+  &lt;plank-button variant="outline" size="icon"&gt;...&lt;/plank-button&gt;
+  &lt;plank-button variant="outline" size="icon"&gt;...&lt;/plank-button&gt;
+  &lt;plank-button variant="outline" size="icon"&gt;...&lt;/plank-button&gt;
+&lt;/plank-button-group&gt;</code></pre>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">API</h2>
+
+        <h3 class="text-xl font-semibold mb-3">plank-button-group</h3>
+        <table class="w-full text-sm mb-6">
+          <thead>
+            <tr class="border-b">
+              <th class="text-left py-2 pr-4">Property</th>
+              <th class="text-left py-2 pr-4">Type</th>
+              <th class="text-left py-2 pr-4">Default</th>
+              <th class="text-left py-2">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">orientation</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">string</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">
+                "horizontal"
+              </td>
+              <td class="py-2">horizontal | vertical</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="text-xl font-semibold mb-3">plank-button-group-text</h3>
+        <p class="text-muted-foreground mb-4">
+          Text element for labels within the button group. Accepts any children.
+        </p>
+
+        <h3 class="text-xl font-semibold mb-3">plank-button-group-separator</h3>
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b">
+              <th class="text-left py-2 pr-4">Property</th>
+              <th class="text-left py-2 pr-4">Type</th>
+              <th class="text-left py-2 pr-4">Default</th>
+              <th class="text-left py-2">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="py-2 pr-4 font-mono">orientation</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">string</td>
+              <td class="py-2 pr-4 font-mono text-muted-foreground">
+                "vertical"
+              </td>
+              <td class="py-2">horizontal | vertical</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </docs-layout>
+  </body>
+</html>
