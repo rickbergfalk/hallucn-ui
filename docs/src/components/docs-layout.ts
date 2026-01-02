@@ -18,6 +18,7 @@ const NAV_GROUPS = [
       { name: "Button Group", href: "button-group.html" },
       { name: "Checkbox", href: "checkbox.html" },
       { name: "Combobox", href: "combobox.html" },
+      { name: "Field", href: "field.html" },
       { name: "Input", href: "input.html" },
       { name: "Input Group", href: "input-group.html" },
       { name: "Input OTP", href: "input-otp.html" },

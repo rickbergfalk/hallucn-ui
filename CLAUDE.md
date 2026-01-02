@@ -286,7 +286,7 @@ describe("plank-newcomponent", () => {
 - [x] native-select
 - [x] button-group (multi-part)
 - [x] empty (multi-part)
-- [ ] field (multi-part)
+- [x] field (multi-part)
 - [ ] item (multi-part)
 
 ### Tier 3 - Components with state

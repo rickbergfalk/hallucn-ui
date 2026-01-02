@@ -34,6 +34,7 @@ import {
   EmptyContent,
 } from "@/components/empty"
 import { Avatar, AvatarFallback } from "@/components/avatar"
+import { Field, FieldLabel, FieldDescription } from "@/components/field"
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -567,6 +568,29 @@ function ComparisonPage() {
               <plank-button size="sm">Compose</plank-button>
             </plank-empty-content>
           </plank-empty>
+        `}
+      />
+
+      {/* Field */}
+      <ComparisonRow
+        title="Field"
+        reactContent={
+          <div className="max-w-sm">
+            <Field>
+              <FieldLabel>Email</FieldLabel>
+              <Input type="email" placeholder="email@example.com" />
+              <FieldDescription>We'll never share your email.</FieldDescription>
+            </Field>
+          </div>
+        }
+        planksHtml={`
+          <div class="max-w-sm">
+            <plank-field>
+              <plank-field-label>Email</plank-field-label>
+              <plank-input type="email" placeholder="email@example.com"></plank-input>
+              <plank-field-description>We'll never share your email.</plank-field-description>
+            </plank-field>
+          </div>
         `}
       />
 
