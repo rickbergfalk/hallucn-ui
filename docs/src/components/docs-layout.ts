@@ -292,33 +292,58 @@ export class DocsLayout extends LitElement {
     ) as HTMLElement
     if (!sidebarContent) return
 
+    const activeButton = sidebarContent.querySelector(
+      "plank-sidebar-menu-button[active]"
+    ) as HTMLElement
+
     // Check for saved scroll position first
     const savedScroll = sessionStorage.getItem("docs-sidebar-scroll")
     if (savedScroll) {
       sidebarContent.scrollTop = parseInt(savedScroll, 10)
+
+      // After restoring, check if active item is visible - if not, scroll to it
+      if (
+        activeButton &&
+        !this._isElementVisible(activeButton, sidebarContent)
+      ) {
+        this._scrollToElement(activeButton, sidebarContent)
+      }
+
       this._setupScrollPersistence(sidebarContent)
       return
     }
 
-    // Otherwise scroll to active item - calculate position manually to avoid scrolling ancestors
-    const activeButton = sidebarContent.querySelector(
-      "plank-sidebar-menu-button[active]"
-    ) as HTMLElement
+    // Otherwise scroll to active item
     if (activeButton) {
-      const buttonRect = activeButton.getBoundingClientRect()
-      const contentRect = sidebarContent.getBoundingClientRect()
-      const buttonOffsetTop =
-        buttonRect.top - contentRect.top + sidebarContent.scrollTop
-      // Center the button in the viewport
-      const targetScroll =
-        buttonOffsetTop -
-        sidebarContent.clientHeight / 2 +
-        buttonRect.height / 2
-      sidebarContent.scrollTop = Math.max(0, targetScroll)
+      this._scrollToElement(activeButton, sidebarContent)
     }
 
     // Set up scroll persistence
     this._setupScrollPersistence(sidebarContent)
+  }
+
+  private _isElementVisible(
+    element: HTMLElement,
+    container: HTMLElement
+  ): boolean {
+    const elementRect = element.getBoundingClientRect()
+    const containerRect = container.getBoundingClientRect()
+
+    return (
+      elementRect.top >= containerRect.top &&
+      elementRect.bottom <= containerRect.bottom
+    )
+  }
+
+  private _scrollToElement(element: HTMLElement, container: HTMLElement) {
+    const buttonRect = element.getBoundingClientRect()
+    const contentRect = container.getBoundingClientRect()
+    const buttonOffsetTop =
+      buttonRect.top - contentRect.top + container.scrollTop
+    // Center the button in the viewport
+    const targetScroll =
+      buttonOffsetTop - container.clientHeight / 2 + buttonRect.height / 2
+    container.scrollTop = Math.max(0, targetScroll)
   }
 
   private _setupScrollPersistence(scrollable: HTMLElement) {
