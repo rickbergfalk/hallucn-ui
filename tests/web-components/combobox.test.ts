@@ -19,7 +19,7 @@ describe("Combobox (Web Component)", () => {
       })
   })
 
-  it("renders trigger with correct data-slot", async () => {
+  it("renders input group with correct data-slot", async () => {
     container.innerHTML = `
       <plank-combobox>
         <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -30,11 +30,11 @@ describe("Combobox (Web Component)", () => {
     const combobox = container.querySelector("plank-combobox")!
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[data-slot="combobox-trigger"]')
-    expect(trigger).toBeTruthy()
+    const inputGroup = container.querySelector('[data-slot="input-group"]')
+    expect(inputGroup).toBeTruthy()
   })
 
-  it("trigger has role combobox", async () => {
+  it("input has role combobox", async () => {
     container.innerHTML = `
       <plank-combobox>
         <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -45,8 +45,9 @@ describe("Combobox (Web Component)", () => {
     const combobox = container.querySelector("plank-combobox")!
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[role="combobox"]')
-    expect(trigger).toBeTruthy()
+    const input = container.querySelector('[role="combobox"]')
+    expect(input).toBeTruthy()
+    expect(input?.tagName.toLowerCase()).toBe("input")
   })
 
   it("combobox content is hidden by default", async () => {
@@ -64,7 +65,7 @@ describe("Combobox (Web Component)", () => {
     expect(content).toBeNull()
   })
 
-  it("shows combobox content on click", async () => {
+  it("shows combobox content on trigger button click", async () => {
     container.innerHTML = `
       <plank-combobox>
         <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -75,15 +76,17 @@ describe("Combobox (Web Component)", () => {
     const combobox = container.querySelector("plank-combobox")!
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 50))
 
     const content = document.querySelector('[role="listbox"]')
     expect(content).toBeTruthy()
   })
 
-  it("shows placeholder when no value selected", async () => {
+  it("shows placeholder in input when no value selected", async () => {
     container.innerHTML = `
       <plank-combobox placeholder="Select framework...">
         <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -94,11 +97,13 @@ describe("Combobox (Web Component)", () => {
     const combobox = container.querySelector("plank-combobox")!
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[role="combobox"]')
-    expect(trigger?.textContent).toContain("Select framework...")
+    const input = container.querySelector(
+      '[role="combobox"]'
+    ) as HTMLInputElement
+    expect(input.placeholder).toBe("Select framework...")
   })
 
-  it("shows selected value in trigger", async () => {
+  it("shows selected value in input", async () => {
     container.innerHTML = `
       <plank-combobox placeholder="Select...">
         <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -111,8 +116,10 @@ describe("Combobox (Web Component)", () => {
     await (combobox as any).updateComplete
 
     // Open the combobox
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 50))
 
     // Click on Next.js option
@@ -120,7 +127,10 @@ describe("Combobox (Web Component)", () => {
     nextOption.click()
     await new Promise((r) => setTimeout(r, 50))
 
-    expect(trigger.textContent).toContain("Next.js")
+    const input = container.querySelector(
+      '[role="combobox"]'
+    ) as HTMLInputElement
+    expect(input.value).toBe("Next.js")
   })
 
   it("closes on item selection", async () => {
@@ -135,14 +145,18 @@ describe("Combobox (Web Component)", () => {
     await (combobox as any).updateComplete
 
     // Open the combobox
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 50))
 
     // Click on option
     const option = document.querySelector('[role="option"]') as HTMLElement
     option.click()
-    await new Promise((r) => setTimeout(r, 50))
+    // Wait for Lit update cycle to complete
+    await (combobox as any).updateComplete
+    await new Promise((r) => setTimeout(r, 100))
 
     // Should be closed
     const content = document.querySelector('[role="listbox"]')
@@ -161,8 +175,10 @@ describe("Combobox (Web Component)", () => {
     const combobox = container.querySelector("plank-combobox")!
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[role="combobox"]')
-    expect(trigger?.textContent).toContain("SvelteKit")
+    const input = container.querySelector(
+      '[role="combobox"]'
+    ) as HTMLInputElement
+    expect(input.value).toBe("SvelteKit")
   })
 
   it("fires value-change when selection changes", async () => {
@@ -181,8 +197,10 @@ describe("Combobox (Web Component)", () => {
     await (combobox as any).updateComplete
 
     // Open and select
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 50))
 
     const option = document.querySelector('[role="option"]') as HTMLElement
@@ -207,14 +225,16 @@ describe("Combobox (Web Component)", () => {
     })
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 50))
 
     expect(onOpenChange).toHaveBeenCalledWith(true)
   })
 
-  it("trigger has correct ARIA attributes when open", async () => {
+  it("input has correct ARIA attributes when open", async () => {
     container.innerHTML = `
       <plank-combobox>
         <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -225,13 +245,16 @@ describe("Combobox (Web Component)", () => {
     const combobox = container.querySelector("plank-combobox")!
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    expect(trigger.getAttribute("aria-expanded")).toBe("false")
+    const input = container.querySelector('[role="combobox"]') as HTMLElement
+    expect(input.getAttribute("aria-expanded")).toBe("false")
 
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 50))
 
-    expect(trigger.getAttribute("aria-expanded")).toBe("true")
+    expect(input.getAttribute("aria-expanded")).toBe("true")
   })
 
   it("disabled combobox cannot be opened", async () => {
@@ -245,8 +268,10 @@ describe("Combobox (Web Component)", () => {
     const combobox = container.querySelector("plank-combobox")!
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 100))
 
     const content = document.querySelector('[role="listbox"]')
@@ -265,8 +290,10 @@ describe("Combobox (Web Component)", () => {
     const combobox = container.querySelector("plank-combobox")!
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 50))
 
     const disabledOption = document.querySelector(
@@ -275,22 +302,7 @@ describe("Combobox (Web Component)", () => {
     expect(disabledOption).toBeTruthy()
   })
 
-  it("trigger has data-placeholder when no value", async () => {
-    container.innerHTML = `
-      <plank-combobox placeholder="Select...">
-        <plank-combobox-item value="next">Next.js</plank-combobox-item>
-      </plank-combobox>
-    `
-
-    await customElements.whenDefined("plank-combobox")
-    const combobox = container.querySelector("plank-combobox")!
-    await (combobox as any).updateComplete
-
-    const trigger = container.querySelector('[role="combobox"]')
-    expect(trigger?.hasAttribute("data-placeholder")).toBe(true)
-  })
-
-  it("opens on keyboard Enter", async () => {
+  it("opens on keyboard ArrowDown", async () => {
     container.innerHTML = `
       <plank-combobox>
         <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -301,50 +313,8 @@ describe("Combobox (Web Component)", () => {
     const combobox = container.querySelector("plank-combobox")!
     await (combobox as any).updateComplete
 
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "Enter", bubbles: true })
-    )
-    await new Promise((r) => setTimeout(r, 50))
-
-    const content = document.querySelector('[role="listbox"]')
-    expect(content).toBeTruthy()
-  })
-
-  it("opens on keyboard Space", async () => {
-    container.innerHTML = `
-      <plank-combobox>
-        <plank-combobox-item value="next">Next.js</plank-combobox-item>
-      </plank-combobox>
-    `
-
-    await customElements.whenDefined("plank-combobox")
-    const combobox = container.querySelector("plank-combobox")!
-    await (combobox as any).updateComplete
-
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.dispatchEvent(
-      new KeyboardEvent("keydown", { key: " ", bubbles: true })
-    )
-    await new Promise((r) => setTimeout(r, 50))
-
-    const content = document.querySelector('[role="listbox"]')
-    expect(content).toBeTruthy()
-  })
-
-  it("opens on ArrowDown", async () => {
-    container.innerHTML = `
-      <plank-combobox>
-        <plank-combobox-item value="next">Next.js</plank-combobox-item>
-      </plank-combobox>
-    `
-
-    await customElements.whenDefined("plank-combobox")
-    const combobox = container.querySelector("plank-combobox")!
-    await (combobox as any).updateComplete
-
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.dispatchEvent(
+    const input = container.querySelector('[role="combobox"]') as HTMLElement
+    input.dispatchEvent(
       new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true })
     )
     await new Promise((r) => setTimeout(r, 50))
@@ -365,15 +335,18 @@ describe("Combobox (Web Component)", () => {
     await (combobox as any).updateComplete
 
     // Open the combobox
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 50))
 
     // Verify it's open
     expect(document.querySelector('[role="listbox"]')).toBeTruthy()
 
-    // Press Escape
-    document.dispatchEvent(
+    // Press Escape on the input
+    const input = container.querySelector('[role="combobox"]') as HTMLElement
+    input.dispatchEvent(
       new KeyboardEvent("keydown", { key: "Escape", bubbles: true })
     )
     await new Promise((r) => setTimeout(r, 50))
@@ -395,8 +368,10 @@ describe("Combobox (Web Component)", () => {
     await (combobox as any).updateComplete
 
     // Open the combobox
-    const trigger = container.querySelector('[role="combobox"]') as HTMLElement
-    trigger.click()
+    const triggerBtn = container.querySelector(
+      '[data-slot="input-group-button"]'
+    ) as HTMLElement
+    triggerBtn.click()
     await new Promise((r) => setTimeout(r, 50))
 
     // Verify it's open
@@ -406,16 +381,16 @@ describe("Combobox (Web Component)", () => {
     document.body.dispatchEvent(
       new PointerEvent("pointerdown", { bubbles: true })
     )
-    await new Promise((r) => setTimeout(r, 50))
+    await new Promise((r) => setTimeout(r, 200))
 
     // Should be closed
     const content = document.querySelector('[role="listbox"]')
     expect(content).toBeNull()
   })
 
-  // Search/filtering tests
+  // Search/filtering tests - the main input IS the search input
   describe("search functionality", () => {
-    it("has a search input when open", async () => {
+    it("main input is the search input", async () => {
       container.innerHTML = `
         <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -426,19 +401,11 @@ describe("Combobox (Web Component)", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      const trigger = container.querySelector(
-        '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
-      await new Promise((r) => setTimeout(r, 50))
-
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
-      )
-      expect(input).toBeTruthy()
+      const input = container.querySelector('[role="combobox"]')
+      expect(input?.tagName.toLowerCase()).toBe("input")
     })
 
-    it("filters items based on search input", async () => {
+    it("filters items based on input value", async () => {
       container.innerHTML = `
         <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -451,15 +418,13 @@ describe("Combobox (Web Component)", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      const trigger = container.querySelector(
+      // Focus and type to open and filter
+      const input = container.querySelector(
         '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
+      ) as HTMLInputElement
+      input.focus()
       await new Promise((r) => setTimeout(r, 50))
 
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
-      ) as HTMLInputElement
       input.value = "svelte"
       input.dispatchEvent(new Event("input", { bubbles: true }))
       await new Promise((r) => setTimeout(r, 50))
@@ -484,15 +449,13 @@ describe("Combobox (Web Component)", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      const trigger = container.querySelector(
+      // Focus and type to filter
+      const input = container.querySelector(
         '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
+      ) as HTMLInputElement
+      input.focus()
       await new Promise((r) => setTimeout(r, 50))
 
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
-      ) as HTMLInputElement
       input.value = "xyz"
       input.dispatchEvent(new Event("input", { bubbles: true }))
       await new Promise((r) => setTimeout(r, 50))
@@ -503,36 +466,13 @@ describe("Combobox (Web Component)", () => {
         "none"
       )
     })
-
-    it("uses custom search placeholder", async () => {
-      container.innerHTML = `
-        <plank-combobox searchPlaceholder="Filter frameworks...">
-          <plank-combobox-item value="next">Next.js</plank-combobox-item>
-        </plank-combobox>
-      `
-
-      await customElements.whenDefined("plank-combobox")
-      const combobox = container.querySelector("plank-combobox")!
-      await (combobox as any).updateComplete
-
-      const trigger = container.querySelector(
-        '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
-      await new Promise((r) => setTimeout(r, 50))
-
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
-      ) as HTMLInputElement
-      expect(input.placeholder).toBe("Filter frameworks...")
-    })
   })
 
   // Keyboard navigation tests
   describe("keyboard navigation", () => {
     it("ArrowDown moves to next item", async () => {
       container.innerHTML = `
-        <plank-combobox open>
+        <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
           <plank-combobox-item value="svelte">SvelteKit</plank-combobox-item>
         </plank-combobox>
@@ -541,11 +481,15 @@ describe("Combobox (Web Component)", () => {
       await customElements.whenDefined("plank-combobox")
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
+
+      // Open via focus
+      const input = container.querySelector(
+        '[role="combobox"]'
+      ) as HTMLInputElement
+      input.focus()
       await new Promise((r) => setTimeout(r, 50))
 
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
-      ) as HTMLInputElement
+      // Move down
       input.dispatchEvent(
         new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true })
       )
@@ -568,16 +512,11 @@ describe("Combobox (Web Component)", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      // Open the combobox by clicking the trigger
-      const trigger = container.querySelector(
+      const input = container.querySelector(
         '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
-      await new Promise((r) => setTimeout(r, 50))
-
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
       ) as HTMLInputElement
+      input.focus()
+      await new Promise((r) => setTimeout(r, 50))
 
       // Move down twice to get to SvelteKit (index 1)
       input.dispatchEvent(
@@ -605,7 +544,7 @@ describe("Combobox (Web Component)", () => {
 
     it("Enter selects highlighted item", async () => {
       container.innerHTML = `
-        <plank-combobox open>
+        <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
           <plank-combobox-item value="svelte">SvelteKit</plank-combobox-item>
         </plank-combobox>
@@ -614,11 +553,12 @@ describe("Combobox (Web Component)", () => {
       await customElements.whenDefined("plank-combobox")
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
-      await new Promise((r) => setTimeout(r, 50))
 
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
+      const input = container.querySelector(
+        '[role="combobox"]'
       ) as HTMLInputElement
+      input.focus()
+      await new Promise((r) => setTimeout(r, 50))
 
       // Move to first item
       input.dispatchEvent(
@@ -632,13 +572,12 @@ describe("Combobox (Web Component)", () => {
       )
       await new Promise((r) => setTimeout(r, 50))
 
-      const trigger = container.querySelector('[role="combobox"]')
-      expect(trigger?.textContent).toContain("Next.js")
+      expect(input.value).toBe("Next.js")
     })
 
     it("Home moves to first item", async () => {
       container.innerHTML = `
-        <plank-combobox open>
+        <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
           <plank-combobox-item value="svelte">SvelteKit</plank-combobox-item>
           <plank-combobox-item value="nuxt">Nuxt.js</plank-combobox-item>
@@ -648,11 +587,12 @@ describe("Combobox (Web Component)", () => {
       await customElements.whenDefined("plank-combobox")
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
-      await new Promise((r) => setTimeout(r, 50))
 
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
+      const input = container.querySelector(
+        '[role="combobox"]'
       ) as HTMLInputElement
+      input.focus()
+      await new Promise((r) => setTimeout(r, 50))
 
       // Move down twice then Home
       input.dispatchEvent(
@@ -672,7 +612,7 @@ describe("Combobox (Web Component)", () => {
 
     it("End moves to last item", async () => {
       container.innerHTML = `
-        <plank-combobox open>
+        <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
           <plank-combobox-item value="svelte">SvelteKit</plank-combobox-item>
           <plank-combobox-item value="nuxt">Nuxt.js</plank-combobox-item>
@@ -682,11 +622,12 @@ describe("Combobox (Web Component)", () => {
       await customElements.whenDefined("plank-combobox")
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
-      await new Promise((r) => setTimeout(r, 50))
 
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
+      const input = container.querySelector(
+        '[role="combobox"]'
       ) as HTMLInputElement
+      input.focus()
+      await new Promise((r) => setTimeout(r, 50))
 
       input.dispatchEvent(
         new KeyboardEvent("keydown", { key: "End", bubbles: true })
@@ -697,33 +638,9 @@ describe("Combobox (Web Component)", () => {
       expect(highlighted?.textContent).toContain("Nuxt.js")
     })
 
-    it("Escape closes dropdown from search input", async () => {
-      container.innerHTML = `
-        <plank-combobox open>
-          <plank-combobox-item value="next">Next.js</plank-combobox-item>
-        </plank-combobox>
-      `
-
-      await customElements.whenDefined("plank-combobox")
-      const combobox = container.querySelector("plank-combobox")!
-      await (combobox as any).updateComplete
-      await new Promise((r) => setTimeout(r, 50))
-
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
-      ) as HTMLInputElement
-      input.dispatchEvent(
-        new KeyboardEvent("keydown", { key: "Escape", bubbles: true })
-      )
-      await new Promise((r) => setTimeout(r, 50))
-
-      const content = document.querySelector('[role="listbox"]')
-      expect(content).toBeNull()
-    })
-
     it("skips disabled items during navigation", async () => {
       container.innerHTML = `
-        <plank-combobox open>
+        <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
           <plank-combobox-item value="svelte" disabled>SvelteKit</plank-combobox-item>
           <plank-combobox-item value="nuxt">Nuxt.js</plank-combobox-item>
@@ -733,11 +650,12 @@ describe("Combobox (Web Component)", () => {
       await customElements.whenDefined("plank-combobox")
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
-      await new Promise((r) => setTimeout(r, 50))
 
-      const input = document.querySelector(
-        '[data-slot="combobox-content"] input'
+      const input = container.querySelector(
+        '[role="combobox"]'
       ) as HTMLInputElement
+      input.focus()
+      await new Promise((r) => setTimeout(r, 50))
 
       // Move to first
       input.dispatchEvent(
@@ -774,10 +692,10 @@ describe("Combobox (Web Component)", () => {
       await (combobox as any).updateComplete
 
       // Open and click on already selected item
-      const trigger = container.querySelector(
-        '[role="combobox"]'
+      const triggerBtn = container.querySelector(
+        '[data-slot="input-group-button"]'
       ) as HTMLElement
-      trigger.click()
+      triggerBtn.click()
       await new Promise((r) => setTimeout(r, 50))
 
       const option = document.querySelector('[role="option"]') as HTMLElement
@@ -800,10 +718,10 @@ describe("Combobox (Web Component)", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      const trigger = container.querySelector(
-        '[role="combobox"]'
+      const triggerBtn = container.querySelector(
+        '[data-slot="input-group-button"]'
       ) as HTMLElement
-      trigger.click()
+      triggerBtn.click()
       await new Promise((r) => setTimeout(r, 50))
 
       const selectedOption = document.querySelector(
@@ -816,7 +734,7 @@ describe("Combobox (Web Component)", () => {
 
   // Accessibility tests
   describe("accessibility", () => {
-    it("trigger has aria-haspopup listbox", async () => {
+    it("input has aria-haspopup listbox", async () => {
       container.innerHTML = `
         <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -827,11 +745,11 @@ describe("Combobox (Web Component)", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      const trigger = container.querySelector('[role="combobox"]')
-      expect(trigger?.getAttribute("aria-haspopup")).toBe("listbox")
+      const input = container.querySelector('[role="combobox"]')
+      expect(input?.getAttribute("aria-haspopup")).toBe("listbox")
     })
 
-    it("trigger has aria-controls when open", async () => {
+    it("input has aria-controls when open", async () => {
       container.innerHTML = `
         <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
@@ -842,13 +760,14 @@ describe("Combobox (Web Component)", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      const trigger = container.querySelector(
-        '[role="combobox"]'
+      const triggerBtn = container.querySelector(
+        '[data-slot="input-group-button"]'
       ) as HTMLElement
-      trigger.click()
+      triggerBtn.click()
       await new Promise((r) => setTimeout(r, 50))
 
-      const ariaControls = trigger.getAttribute("aria-controls")
+      const input = container.querySelector('[role="combobox"]') as HTMLElement
+      const ariaControls = input.getAttribute("aria-controls")
       const listbox = document.getElementById(ariaControls!)
       expect(listbox).toBeTruthy()
       expect(listbox?.getAttribute("role")).toBe("listbox")
@@ -856,7 +775,7 @@ describe("Combobox (Web Component)", () => {
 
     it("items have role option", async () => {
       container.innerHTML = `
-        <plank-combobox open>
+        <plank-combobox>
           <plank-combobox-item value="next">Next.js</plank-combobox-item>
         </plank-combobox>
       `
@@ -864,6 +783,12 @@ describe("Combobox (Web Component)", () => {
       await customElements.whenDefined("plank-combobox")
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
+
+      // Open via trigger button
+      const triggerBtn = container.querySelector(
+        '[data-slot="input-group-button"]'
+      ) as HTMLElement
+      triggerBtn.click()
       await new Promise((r) => setTimeout(r, 50))
 
       const options = document.querySelectorAll('[role="option"]')

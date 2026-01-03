@@ -17,7 +17,7 @@ type Side = "top" | "right" | "bottom" | "left"
 /**
  * PlankCombobox - A searchable dropdown select component
  *
- * Combines popover and command patterns into a single combobox component.
+ * Autocomplete pattern: type in the input to filter, select from dropdown.
  *
  * @fires value-change - Fired when the selected value changes
  * @fires open-change - Fired when the dropdown opens or closes
@@ -36,24 +36,24 @@ export class PlankCombobox extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false
   @property({ type: String, reflect: true }) value = ""
   @property({ type: String }) placeholder = "Select..."
-  @property({ type: String }) searchPlaceholder = "Search..."
   @property({ type: String }) emptyText = "No results found."
   @property({ type: Boolean, reflect: true }) disabled = false
   @property({ type: String }) class: string = ""
 
   @state() private _searchValue = ""
-  @state() private _selectedIndex = 0
+  @state() private _selectedIndex = -1
+  private _justSelected = false
 
   private _instanceId = `plank-combobox-${++comboboxId}`
-  private _triggerEl: HTMLButtonElement | null = null
+  private _inputGroupEl: HTMLDivElement | null = null
+  private _inputEl: HTMLInputElement | null = null
+  private _triggerButtonEl: HTMLButtonElement | null = null
   private _portal: HTMLDivElement | null = null
   private _contentEl: HTMLDivElement | null = null
-  private _inputEl: HTMLInputElement | null = null
   private _cleanup: (() => void) | null = null
   private _items: PlankComboboxItem[] = []
   private _visibleItems: PlankComboboxItem[] = []
   private _boundHandleOutsideClick: ((e: PointerEvent) => void) | null = null
-  private _boundHandleEscape: ((e: KeyboardEvent) => void) | null = null
 
   createRenderRoot() {
     return this
@@ -69,15 +69,14 @@ export class PlankCombobox extends LitElement {
   }
 
   firstUpdated() {
-    this._renderTrigger()
+    this._renderInputGroup()
     this._collectItems()
   }
 
   updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("open")) {
-      // Update aria-expanded on trigger
-      if (this._triggerEl) {
-        this._triggerEl.setAttribute("aria-expanded", String(this.open))
+      if (this._inputEl) {
+        this._inputEl.setAttribute("aria-expanded", String(this.open))
       }
       if (this.open) {
         this._showContent()
@@ -86,7 +85,7 @@ export class PlankCombobox extends LitElement {
       }
     }
     if (changedProperties.has("value")) {
-      this._updateTriggerText()
+      this._updateInputDisplay()
     }
   }
 
@@ -102,63 +101,204 @@ export class PlankCombobox extends LitElement {
     this._items.forEach((item) => item._setCombobox(this))
   }
 
-  private _renderTrigger() {
-    if (!this._triggerEl) {
-      this._triggerEl = document.createElement("button")
-      this._triggerEl.type = "button"
-      this._triggerEl.setAttribute("role", "combobox")
-      this._triggerEl.setAttribute("aria-autocomplete", "list")
-      this._triggerEl.setAttribute("aria-haspopup", "listbox")
-      this._triggerEl.addEventListener("click", this._handleTriggerClick)
-      this._triggerEl.addEventListener("keydown", this._handleTriggerKeyDown)
-      this.appendChild(this._triggerEl)
-    }
-
-    this._triggerEl.dataset.slot = "combobox-trigger"
-    this._triggerEl.setAttribute("aria-expanded", String(this.open))
-    this._triggerEl.setAttribute("aria-controls", `${this._instanceId}-listbox`)
-
-    if (this.disabled) {
-      this._triggerEl.disabled = true
-      this._triggerEl.dataset.disabled = ""
-    } else {
-      this._triggerEl.disabled = false
-      delete this._triggerEl.dataset.disabled
-    }
-
-    this._triggerEl.className = cn(
-      "border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 flex w-full items-center justify-between gap-2 rounded-md border bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
+  private _renderInputGroup() {
+    // Create InputGroup wrapper (matches React's InputGroup structure)
+    this._inputGroupEl = document.createElement("div")
+    this._inputGroupEl.dataset.slot = "input-group"
+    this._inputGroupEl.setAttribute("role", "group")
+    this._inputGroupEl.className = cn(
+      "group/input-group border-input dark:bg-input/30 relative flex w-full items-center rounded-md border shadow-xs transition-[color,box-shadow] outline-none",
+      "h-9 min-w-0",
+      // Focus state
+      "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50 has-[[data-slot=input-group-control]:focus-visible]:ring-[3px]",
       this.class
     )
 
-    this._updateTriggerText()
-  }
+    // Create the input element
+    this._inputEl = document.createElement("input")
+    this._inputEl.type = "text"
+    this._inputEl.setAttribute("role", "combobox")
+    this._inputEl.setAttribute("aria-autocomplete", "list")
+    this._inputEl.setAttribute("aria-haspopup", "listbox")
+    this._inputEl.setAttribute("aria-expanded", String(this.open))
+    this._inputEl.setAttribute("aria-controls", `${this._instanceId}-listbox`)
+    this._inputEl.dataset.slot = "input-group-control"
+    this._inputEl.className = cn(
+      "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground h-9 w-full min-w-0 rounded-md bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+      "flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 dark:bg-transparent"
+    )
+    this._inputEl.placeholder = this.placeholder
 
-  private _updateTriggerText() {
-    if (!this._triggerEl) return
-
-    // Clear existing content
-    this._triggerEl.innerHTML = ""
-
-    // Add text span
-    const textSpan = document.createElement("span")
-    textSpan.className = "truncate"
-
-    if (this.value) {
-      const selectedItem = this._items.find((item) => item.value === this.value)
-      textSpan.textContent = selectedItem?.textContent?.trim() || this.value
-      delete this._triggerEl.dataset.placeholder
-    } else {
-      textSpan.textContent = this.placeholder
-      this._triggerEl.dataset.placeholder = ""
+    if (this.disabled) {
+      this._inputEl.disabled = true
     }
-    this._triggerEl.appendChild(textSpan)
+
+    this._inputEl.addEventListener("input", this._handleInputChange)
+    this._inputEl.addEventListener("keydown", this._handleInputKeyDown)
+    this._inputEl.addEventListener("focus", this._handleInputFocus)
+    this._inputEl.addEventListener("blur", this._handleInputBlur)
+
+    this._inputGroupEl.appendChild(this._inputEl)
+
+    // Create addon container for trigger button
+    const addon = document.createElement("div")
+    addon.dataset.slot = "input-group-addon"
+    addon.dataset.align = "inline-end"
+    addon.className =
+      "text-muted-foreground flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium select-none order-last pr-3 has-[>button]:mr-[-0.45rem]"
+
+    // Create trigger button
+    this._triggerButtonEl = document.createElement("button")
+    this._triggerButtonEl.type = "button"
+    this._triggerButtonEl.dataset.slot = "input-group-button"
+    this._triggerButtonEl.className = cn(
+      "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground rounded-md text-sm shadow-none",
+      "size-6 rounded-[calc(var(--radius)-5px)] p-0 has-[>svg]:p-0"
+    )
+
+    if (this.disabled) {
+      this._triggerButtonEl.disabled = true
+    }
 
     // Add chevron icon
-    const chevron = document.createElement("span")
-    chevron.className = "shrink-0 opacity-50"
-    chevron.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>`
-    this._triggerEl.appendChild(chevron)
+    this._triggerButtonEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground pointer-events-none size-4"><path d="m6 9 6 6 6-6"/></svg>`
+
+    this._triggerButtonEl.addEventListener("click", this._handleTriggerClick)
+    this._triggerButtonEl.addEventListener(
+      "mousedown",
+      this._handleTriggerMouseDown
+    )
+
+    addon.appendChild(this._triggerButtonEl)
+    this._inputGroupEl.appendChild(addon)
+
+    this.appendChild(this._inputGroupEl)
+
+    // Set initial display
+    this._updateInputDisplay()
+  }
+
+  private _updateInputDisplay() {
+    if (!this._inputEl) return
+
+    // When not focused and has value, show selected text
+    if (document.activeElement !== this._inputEl) {
+      if (this.value) {
+        const selectedItem = this._items.find(
+          (item) => item.value === this.value
+        )
+        this._inputEl.value = selectedItem?.textContent?.trim() || this.value
+      } else {
+        this._inputEl.value = ""
+      }
+    }
+  }
+
+  private _handleInputChange = (e: Event) => {
+    const value = (e.target as HTMLInputElement).value
+    this._searchValue = value
+    this._selectedIndex = -1
+
+    // Open dropdown when typing
+    if (!this.open && value.length > 0) {
+      this._setOpen(true)
+    }
+
+    // Update filtering
+    if (this.open) {
+      this._filterItems()
+    }
+  }
+
+  private _handleInputFocus = () => {
+    // Don't reopen if we just selected something
+    if (this._justSelected) {
+      this._justSelected = false
+      return
+    }
+    // Show search value when typing, or selected value when not
+    // Don't clear if we just selected something (searchValue is empty and value exists)
+    if (this._inputEl && (this._searchValue || !this.value)) {
+      this._inputEl.value = this._searchValue
+    }
+    // Open on focus
+    if (!this.open) {
+      this._setOpen(true)
+    }
+  }
+
+  private _handleInputBlur = () => {
+    // Delay to allow click events to fire first
+    setTimeout(() => {
+      if (!this.open) {
+        this._searchValue = ""
+        this._updateInputDisplay()
+      }
+    }, 150)
+  }
+
+  private _handleInputKeyDown = (e: KeyboardEvent) => {
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault()
+        if (!this.open) {
+          this._setOpen(true)
+        } else if (this._visibleItems.length > 0) {
+          if (this._selectedIndex < 0) {
+            this._selectedIndex = 0
+          } else {
+            this._selectedIndex =
+              (this._selectedIndex + 1) % this._visibleItems.length
+          }
+          this._updateHighlight()
+        }
+        break
+      case "ArrowUp":
+        e.preventDefault()
+        if (!this.open) {
+          this._setOpen(true)
+        } else if (this._visibleItems.length > 0) {
+          if (this._selectedIndex < 0) {
+            this._selectedIndex = this._visibleItems.length - 1
+          } else {
+            this._selectedIndex =
+              this._selectedIndex <= 0
+                ? this._visibleItems.length - 1
+                : this._selectedIndex - 1
+          }
+          this._updateHighlight()
+        }
+        break
+      case "Enter":
+        e.preventDefault()
+        if (
+          this.open &&
+          this._selectedIndex >= 0 &&
+          this._selectedIndex < this._visibleItems.length
+        ) {
+          const item = this._visibleItems[this._selectedIndex]
+          this._selectValue(item.value)
+        }
+        break
+      case "Escape":
+        e.preventDefault()
+        this._setOpen(false)
+        break
+      case "Home":
+        if (this.open) {
+          e.preventDefault()
+          this._selectedIndex = 0
+          this._updateHighlight()
+        }
+        break
+      case "End":
+        if (this.open) {
+          e.preventDefault()
+          this._selectedIndex = Math.max(0, this._visibleItems.length - 1)
+          this._updateHighlight()
+        }
+        break
+    }
   }
 
   private _handleTriggerClick = () => {
@@ -167,13 +307,9 @@ export class PlankCombobox extends LitElement {
     }
   }
 
-  private _handleTriggerKeyDown = (e: KeyboardEvent) => {
-    if (["Enter", " ", "ArrowDown", "ArrowUp"].includes(e.key)) {
-      e.preventDefault()
-      if (!this.open) {
-        this._setOpen(true)
-      }
-    }
+  private _handleTriggerMouseDown = (e: MouseEvent) => {
+    // Prevent input blur when clicking trigger
+    e.preventDefault()
   }
 
   private _toggle() {
@@ -195,9 +331,8 @@ export class PlankCombobox extends LitElement {
   private _showContent() {
     if (this._portal) return
 
-    // Reset search and selection
-    this._searchValue = ""
-    this._selectedIndex = -1 // -1 means nothing highlighted initially
+    // Reset selection
+    this._selectedIndex = -1
     this._filterItems()
 
     // Create portal container
@@ -205,60 +340,33 @@ export class PlankCombobox extends LitElement {
     this._portal.style.cssText =
       "position: fixed; top: 0; left: 0; z-index: 50;"
 
-    // Create content element
+    // Create content element (dropdown) - matches React's ComboboxContent/ComboboxList
     this._contentEl = document.createElement("div")
     this._contentEl.id = `${this._instanceId}-content`
     this._contentEl.dataset.slot = "combobox-content"
     this._contentEl.dataset.state = "open"
     this._contentEl.className = cn(
-      "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border shadow-md"
+      "bg-popover text-popover-foreground ring-foreground/10 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-96 overflow-hidden rounded-md shadow-md ring-1"
     )
     this._contentEl.style.cssText = "position: fixed; top: 0; left: 0;"
 
-    // Create command structure inside
-    const command = document.createElement("div")
-    command.className = "flex h-full w-full flex-col overflow-hidden rounded-md"
-
-    // Create input wrapper
-    const inputWrapper = document.createElement("div")
-    inputWrapper.className = "flex h-9 items-center gap-2 border-b px-3"
-
-    // Search icon
-    const searchIcon = document.createElement("span")
-    searchIcon.className = "size-4 shrink-0 opacity-50"
-    searchIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`
-    inputWrapper.appendChild(searchIcon)
-
-    // Search input
-    this._inputEl = document.createElement("input")
-    this._inputEl.type = "text"
-    this._inputEl.placeholder = this.searchPlaceholder
-    this._inputEl.className =
-      "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden"
-    this._inputEl.addEventListener("input", this._handleSearchInput)
-    this._inputEl.addEventListener("keydown", this._handleSearchKeyDown)
-    inputWrapper.appendChild(this._inputEl)
-
-    command.appendChild(inputWrapper)
-
-    // Create list container
+    // Create list container directly (no search input - that's the main input)
     const listContainer = document.createElement("div")
     listContainer.id = `${this._instanceId}-listbox`
+    listContainer.dataset.slot = "combobox-list"
     listContainer.setAttribute("role", "listbox")
-    listContainer.className =
-      "max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto p-1"
+    listContainer.className = "max-h-[300px] scroll-py-1 overflow-y-auto p-1"
 
     // Render items
     this._renderItems(listContainer)
 
-    command.appendChild(listContainer)
-    this._contentEl.appendChild(command)
+    this._contentEl.appendChild(listContainer)
     this._portal.appendChild(this._contentEl)
     document.body.appendChild(this._portal)
 
     // Set up positioning
-    if (this._triggerEl && this._contentEl) {
-      this._cleanup = autoUpdate(this._triggerEl, this._contentEl, () => {
+    if (this._inputGroupEl && this._contentEl) {
+      this._cleanup = autoUpdate(this._inputGroupEl, this._contentEl, () => {
         this._updatePosition()
       })
     }
@@ -268,25 +376,16 @@ export class PlankCombobox extends LitElement {
     setTimeout(() => {
       document.addEventListener("pointerdown", this._boundHandleOutsideClick!)
     }, 0)
-
-    // Set up escape key handler
-    this._boundHandleEscape = this._handleEscape.bind(this)
-    document.addEventListener("keydown", this._boundHandleEscape)
-
-    // Focus input
-    setTimeout(() => {
-      this._inputEl?.focus()
-    }, 0)
   }
 
   private _renderItems(container: HTMLElement) {
-    // Clear existing
     container.innerHTML = ""
 
     // Add empty state
     const emptyEl = document.createElement("div")
     emptyEl.dataset.slot = "combobox-empty"
-    emptyEl.className = "py-6 text-center text-sm hidden"
+    emptyEl.className =
+      "text-muted-foreground hidden w-full justify-center py-2 text-center text-sm"
     emptyEl.textContent = this.emptyText
     container.appendChild(emptyEl)
 
@@ -319,9 +418,9 @@ export class PlankCombobox extends LitElement {
       // Check indicator
       const indicator = document.createElement("span")
       indicator.className =
-        "absolute right-2 flex size-4 items-center justify-center"
+        "pointer-events-none absolute right-2 flex size-4 items-center justify-center"
       if (isSelected) {
-        indicator.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M20 6 9 17l-5-5"/></svg>`
+        indicator.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none size-4"><path d="M20 6 9 17l-5-5"/></svg>`
       }
       el.appendChild(indicator)
 
@@ -337,7 +436,6 @@ export class PlankCombobox extends LitElement {
       container.appendChild(el)
     })
 
-    // Update visibility
     this._updateItemVisibility(container)
   }
 
@@ -373,7 +471,7 @@ export class PlankCombobox extends LitElement {
       '[data-slot="combobox-empty"]'
     ) as HTMLElement
     if (emptyEl) {
-      emptyEl.style.display = visibleCount === 0 ? "block" : "none"
+      emptyEl.style.display = visibleCount === 0 ? "flex" : "none"
     }
 
     // Update visible items list
@@ -384,7 +482,7 @@ export class PlankCombobox extends LitElement {
       return el && el.style.display !== "none" && !item.disabled
     })
 
-    // Update selection - clamp to valid range but keep -1 if nothing was highlighted
+    // Clamp selection
     if (
       this._selectedIndex >= 0 &&
       this._selectedIndex >= this._visibleItems.length
@@ -414,12 +512,10 @@ export class PlankCombobox extends LitElement {
       (this._contentEl?.querySelector('[role="listbox"]') as HTMLElement)
     if (!listContainer) return
 
-    // Remove all highlights
     listContainer
       .querySelectorAll("[data-highlighted]")
       .forEach((el) => el.removeAttribute("data-highlighted"))
 
-    // Add highlight to selected
     if (
       this._selectedIndex >= 0 &&
       this._selectedIndex < this._visibleItems.length
@@ -436,70 +532,6 @@ export class PlankCombobox extends LitElement {
     }
   }
 
-  private _handleSearchInput = (e: Event) => {
-    this._searchValue = (e.target as HTMLInputElement).value
-    this._selectedIndex = -1 // Reset to no selection when typing
-    this._filterItems()
-  }
-
-  private _handleSearchKeyDown = (e: KeyboardEvent) => {
-    switch (e.key) {
-      case "ArrowDown":
-        e.preventDefault()
-        if (this._visibleItems.length > 0) {
-          // If nothing highlighted yet, highlight first item
-          if (this._selectedIndex < 0) {
-            this._selectedIndex = 0
-          } else {
-            this._selectedIndex =
-              (this._selectedIndex + 1) % this._visibleItems.length
-          }
-          this._updateHighlight()
-        }
-        break
-      case "ArrowUp":
-        e.preventDefault()
-        if (this._visibleItems.length > 0) {
-          // If nothing highlighted yet, highlight last item
-          if (this._selectedIndex < 0) {
-            this._selectedIndex = this._visibleItems.length - 1
-          } else {
-            this._selectedIndex =
-              this._selectedIndex <= 0
-                ? this._visibleItems.length - 1
-                : this._selectedIndex - 1
-          }
-          this._updateHighlight()
-        }
-        break
-      case "Enter":
-        e.preventDefault()
-        if (
-          this._selectedIndex >= 0 &&
-          this._selectedIndex < this._visibleItems.length
-        ) {
-          const item = this._visibleItems[this._selectedIndex]
-          this._selectValue(item.value)
-        }
-        break
-      case "Home":
-        e.preventDefault()
-        this._selectedIndex = 0
-        this._updateHighlight()
-        break
-      case "End":
-        e.preventDefault()
-        this._selectedIndex = Math.max(0, this._visibleItems.length - 1)
-        this._updateHighlight()
-        break
-      case "Escape":
-        e.preventDefault()
-        this._setOpen(false)
-        this._triggerEl?.focus()
-        break
-    }
-  }
-
   private _selectValue(value: string) {
     const newValue = this.value === value ? "" : value
     if (this.value !== newValue) {
@@ -511,21 +543,35 @@ export class PlankCombobox extends LitElement {
         })
       )
     }
+    this._searchValue = ""
     this._setOpen(false)
-    this._triggerEl?.focus()
+    // Force update the input with selected value (not search value)
+    if (this._inputEl) {
+      if (this.value) {
+        const selectedItem = this._items.find(
+          (item) => item.value === this.value
+        )
+        this._inputEl.value = selectedItem?.textContent?.trim() || this.value
+      } else {
+        this._inputEl.value = ""
+      }
+    }
+    // Prevent focus from reopening
+    this._justSelected = true
+    this._inputEl?.focus()
   }
 
   private async _updatePosition() {
-    if (!this._triggerEl || !this._contentEl) return
+    if (!this._inputGroupEl || !this._contentEl) return
 
     const { x, y, placement } = await computePosition(
-      this._triggerEl,
+      this._inputGroupEl,
       this._contentEl,
       {
         strategy: "fixed",
         placement: "bottom-start",
         middleware: [
-          offset({ mainAxis: 4, alignmentAxis: 0 }),
+          offset({ mainAxis: 6, alignmentAxis: 0 }),
           shift({
             mainAxis: true,
             crossAxis: false,
@@ -545,7 +591,7 @@ export class PlankCombobox extends LitElement {
     Object.assign(this._contentEl.style, {
       left: `${x}px`,
       top: `${y}px`,
-      minWidth: `${this._triggerEl.offsetWidth}px`,
+      minWidth: `${this._inputGroupEl.offsetWidth}px`,
     })
   }
 
@@ -556,19 +602,13 @@ export class PlankCombobox extends LitElement {
       return
     }
 
-    if (this._triggerEl?.contains(target)) {
+    if (this._inputGroupEl?.contains(target)) {
       return
     }
 
     this._setOpen(false)
-  }
-
-  private _handleEscape(e: KeyboardEvent) {
-    if (e.key === "Escape") {
-      e.preventDefault()
-      this._setOpen(false)
-      this._triggerEl?.focus()
-    }
+    this._searchValue = ""
+    this._updateInputDisplay()
   }
 
   private _hideContent() {
@@ -582,20 +622,13 @@ export class PlankCombobox extends LitElement {
       this._boundHandleOutsideClick = null
     }
 
-    if (this._boundHandleEscape) {
-      document.removeEventListener("keydown", this._boundHandleEscape)
-      this._boundHandleEscape = null
-    }
-
     if (this._portal) {
       this._portal.remove()
       this._portal = null
       this._contentEl = null
-      this._inputEl = null
     }
   }
 
-  // Public method to get display text for current value
   getDisplayText(): string {
     if (!this.value) return ""
     const item = this._items.find((i) => i.value === this.value)

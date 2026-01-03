@@ -2163,11 +2163,11 @@ describe("Semantic Structure", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      // Open the combobox
+      // Open the combobox by focusing the input (combobox opens on focus)
       const trigger = container.querySelector(
         '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
+      ) as HTMLInputElement
+      trigger.focus()
       await new Promise((r) => setTimeout(r, 50))
 
       const listbox = document.querySelector('[role="listbox"]')
@@ -2185,11 +2185,11 @@ describe("Semantic Structure", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      // Open the combobox
+      // Open the combobox by focusing the input (combobox opens on focus)
       const trigger = container.querySelector(
         '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
+      ) as HTMLInputElement
+      trigger.focus()
       await new Promise((r) => setTimeout(r, 50))
 
       const listboxId = trigger.getAttribute("aria-controls")
@@ -2211,11 +2211,11 @@ describe("Semantic Structure", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      // Open the combobox
+      // Open the combobox by focusing the input (combobox opens on focus)
       const trigger = container.querySelector(
         '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
+      ) as HTMLInputElement
+      trigger.focus()
       await new Promise((r) => setTimeout(r, 50))
 
       const option = document.querySelector('[role="option"]')
@@ -2234,11 +2234,11 @@ describe("Semantic Structure", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      // Open the combobox
+      // Open the combobox by focusing the input (combobox opens on focus)
       const trigger = container.querySelector(
         '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
+      ) as HTMLInputElement
+      trigger.focus()
       await new Promise((r) => setTimeout(r, 50))
 
       const selectedOption = document.querySelector('[aria-selected="true"]')
@@ -2260,11 +2260,11 @@ describe("Semantic Structure", () => {
       const combobox = container.querySelector("plank-combobox")!
       await (combobox as any).updateComplete
 
-      // Open the combobox
+      // Open the combobox by focusing the input (combobox opens on focus)
       const trigger = container.querySelector(
         '[role="combobox"]'
-      ) as HTMLElement
-      trigger.click()
+      ) as HTMLInputElement
+      trigger.focus()
       await new Promise((r) => setTimeout(r, 50))
 
       const disabledOption = document.querySelector('[aria-disabled="true"]')

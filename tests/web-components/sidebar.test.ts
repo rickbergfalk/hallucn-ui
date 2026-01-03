@@ -811,9 +811,13 @@ describe("plank-sidebar", () => {
       expect(container.querySelector("plank-sidebar-inset")).toBeTruthy()
       expect(container.querySelector("plank-sidebar-trigger")).toBeTruthy()
       expect(container.querySelector("plank-sidebar-menu")).toBeTruthy()
-      expect(container.querySelectorAll("plank-sidebar-menu-item").length).toBe(
-        2
+      // Query desktop container only (mobile container has cloned items)
+      const desktopSidebar = container.querySelector(
+        "[data-slot='sidebar-inner']"
       )
+      expect(
+        desktopSidebar?.querySelectorAll("plank-sidebar-menu-item").length
+      ).toBe(2)
     })
   })
 })

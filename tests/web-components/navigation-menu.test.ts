@@ -363,8 +363,8 @@ describe("plank-navigation-menu-link", () => {
 
     const anchor = link.querySelector("a")!
     // The component uses cn() which may produce different class orderings
-    expect(anchor.className).toContain("flex")
-    expect(anchor.className).toContain("rounded-sm")
+    expect(anchor.className).toContain("inline-flex")
+    expect(anchor.className).toContain("rounded-md")
   })
 })
 

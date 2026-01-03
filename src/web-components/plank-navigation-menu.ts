@@ -422,6 +422,7 @@ export class PlankNavigationMenuLink extends LitElement {
   @property({ type: String }) class: string = ""
 
   private _originalChildren: Node[] = []
+  @state() private _isTopLevel = true
 
   createRenderRoot() {
     return this
@@ -430,6 +431,8 @@ export class PlankNavigationMenuLink extends LitElement {
   connectedCallback() {
     super.connectedCallback()
     this._originalChildren = [...this.childNodes]
+    // Check if this is a top-level link (direct child of menu-item, not inside content)
+    this._isTopLevel = !this.closest("plank-navigation-menu-content")
   }
 
   firstUpdated() {
@@ -446,25 +449,30 @@ export class PlankNavigationMenuLink extends LitElement {
   willUpdate() {
     this.dataset.slot = "navigation-menu-link"
     this.dataset.active = String(this.active)
-    this.className = "contents"
+    // Use style instead of className to avoid conflict with @property class
+    this.style.display = "contents"
   }
 
   render() {
     // Content is dynamically moved to anchor in firstUpdated() - aria-label provides fallback
+    // Use consistent link styling matching trigger buttons
+    const linkClasses = cn(
+      "data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent",
+      "data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground",
+      "hover:bg-accent hover:text-accent-foreground",
+      "focus:bg-accent focus:text-accent-foreground",
+      "focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground",
+      "transition-all outline-none",
+      "focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
+      // Match trigger button height for consistent nav layout
+      "inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium",
+      this.class
+    )
     return html`
       <a
         href=${this.href}
         aria-label=${this.textContent?.trim() || "Link"}
-        class=${cn(
-          "data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent",
-          "data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground",
-          "hover:bg-accent hover:text-accent-foreground",
-          "focus:bg-accent focus:text-accent-foreground",
-          "focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground",
-          "flex flex-col gap-1 rounded-sm p-2 text-sm transition-all outline-none",
-          "focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
-          this.class
-        )}
+        class=${linkClasses}
         data-active=${this.active}
       ></a>
     `
