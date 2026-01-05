@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bundle Size - hallucn/ui</title>
+    <script type="module" src="../src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <docs-layout title="Bundle Size">
+      <h1 class="text-4xl font-bold mb-4">Bundle Size</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        Compare hallucn component sizes with React + Radix equivalents.
+      </p>
+
+      <!-- Full Library Comparison -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Full Library Comparison</h2>
+        <p class="text-muted-foreground mb-6">
+          Complete bundle sizes with all dependencies included - this is what
+          you actually ship.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <hal-card>
+            <hal-card-header>
+              <hal-card-title class="text-green-600">hallucn</hal-card-title>
+              <hal-card-description
+                >52 components + Lit + Floating UI</hal-card-description
+              >
+            </hal-card-header>
+            <hal-card-content>
+              <p class="text-4xl font-bold" id="total-size">-</p>
+              <p class="text-sm text-muted-foreground">gzipped</p>
+            </hal-card-content>
+          </hal-card>
+          <hal-card>
+            <hal-card-header>
+              <hal-card-title>React + shadcn/ui</hal-card-title>
+              <hal-card-description
+                >52 components + React + Radix</hal-card-description
+              >
+            </hal-card-header>
+            <hal-card-content>
+              <p class="text-4xl font-bold" id="react-total-size">-</p>
+              <p class="text-sm text-muted-foreground">gzipped</p>
+            </hal-card-content>
+          </hal-card>
+        </div>
+        <hal-alert variant="default" class="bg-green-50 border-green-200">
+          <hal-alert-title class="text-green-800" id="library-savings-alert"
+            >-% smaller full library</hal-alert-title
+          >
+          <hal-alert-description class="text-green-700">
+            hallucn's complete component library is 70% smaller than the
+            equivalent React + shadcn/ui setup.
+          </hal-alert-description>
+        </hal-alert>
+      </section>
+
+      <!-- Framework Runtime -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Framework Runtime</h2>
+        <p class="text-muted-foreground mb-6">
+          The base framework cost before any components.
+        </p>
+        <hal-table>
+          <hal-table-header>
+            <hal-table-row>
+              <hal-table-head>Framework</hal-table-head>
+              <hal-table-head class="text-right">Gzipped</hal-table-head>
+              <hal-table-head class="text-right">Difference</hal-table-head>
+            </hal-table-row>
+          </hal-table-header>
+          <hal-table-body>
+            <hal-table-row>
+              <hal-table-cell class="font-medium">Lit</hal-table-cell>
+              <hal-table-cell class="text-right" id="lit-runtime"
+                >-</hal-table-cell
+              >
+              <hal-table-cell class="text-right text-green-600"
+                >baseline</hal-table-cell
+              >
+            </hal-table-row>
+            <hal-table-row>
+              <hal-table-cell class="font-medium"
+                >React + ReactDOM</hal-table-cell
+              >
+              <hal-table-cell class="text-right" id="react-runtime"
+                >-</hal-table-cell
+              >
+              <hal-table-cell
+                class="text-right text-muted-foreground"
+                id="runtime-ratio"
+                >-x larger</hal-table-cell
+              >
+            </hal-table-row>
+          </hal-table-body>
+        </hal-table>
+      </section>
+
+      <!-- Summary Cards -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Summary</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <hal-card>
+            <hal-card-header>
+              <hal-card-title>Components</hal-card-title>
+              <hal-card-description>Total web components</hal-card-description>
+            </hal-card-header>
+            <hal-card-content>
+              <p class="text-3xl font-bold" id="component-count">-</p>
+            </hal-card-content>
+          </hal-card>
+          <hal-card>
+            <hal-card-header>
+              <hal-card-title>Avg Savings</hal-card-title>
+              <hal-card-description
+                >Per-component vs React</hal-card-description
+              >
+            </hal-card-header>
+            <hal-card-content>
+              <p class="text-3xl font-bold text-green-600" id="avg-savings">
+                -
+              </p>
+            </hal-card-content>
+          </hal-card>
+          <hal-card>
+            <hal-card-header>
+              <hal-card-title>Library Savings</hal-card-title>
+              <hal-card-description>Full bundle vs React</hal-card-description>
+            </hal-card-header>
+            <hal-card-content>
+              <p class="text-3xl font-bold text-green-600" id="library-savings">
+                -
+              </p>
+            </hal-card-content>
+          </hal-card>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Note: Per-component sizes below exclude framework runtime (Lit,
+          Floating UI) to match how React measurements exclude React/ReactDOM.
+          This shows actual component code overhead.
+        </p>
+      </section>
+
+      <!-- Per-Component Sizes -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Per-Component Sizes</h2>
+        <p class="text-muted-foreground mb-4">
+          Click column headers to sort. Sizes are minified + gzipped, excluding
+          framework runtime for fair comparison.
+        </p>
+        <div class="overflow-x-auto">
+          <hal-table id="size-table">
+            <hal-table-header>
+              <hal-table-row>
+                <hal-table-head
+                  class="cursor-pointer hover:bg-muted"
+                  data-sort="name"
+                  >Component</hal-table-head
+                >
+                <hal-table-head
+                  class="text-right cursor-pointer hover:bg-muted"
+                  data-sort="gzipped"
+                  >hallucn</hal-table-head
+                >
+                <hal-table-head
+                  class="text-right cursor-pointer hover:bg-muted"
+                  data-sort="react"
+                  >React</hal-table-head
+                >
+                <hal-table-head
+                  class="text-right cursor-pointer hover:bg-muted"
+                  data-sort="diff"
+                  >Diff</hal-table-head
+                >
+              </hal-table-row>
+            </hal-table-header>
+            <hal-table-body id="table-body">
+              <hal-table-row>
+                <hal-table-cell
+                  colspan="4"
+                  class="text-center text-muted-foreground"
+                >
+                  Loading...
+                </hal-table-cell>
+              </hal-table-row>
+            </hal-table-body>
+          </hal-table>
+        </div>
+      </section>
+
+      <!-- How to interpret -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Understanding the Numbers</h2>
+        <div class="space-y-4">
+          <hal-alert>
+            <hal-alert-title
+              >Per-component comparison methodology</hal-alert-title
+            >
+            <hal-alert-description>
+              Per-component sizes exclude the framework runtime (Lit ~6 KB) for
+              fair comparison with React, which also excludes React/ReactDOM.
+              This measures actual component code overhead. Complex components
+              using Floating UI (tooltips, popovers, menus) show the biggest
+              savings over React + Radix.
+            </hal-alert-description>
+          </hal-alert>
+          <hal-alert>
+            <hal-alert-title>Real-world bundle size</hal-alert-title>
+            <hal-alert-description>
+              The "Full Library" comparison at the top shows actual shipped
+              sizes with all dependencies. hallucn at 76.9 KB includes Lit (~6
+              KB), Floating UI (~6 KB), and all 52 components. The equivalent
+              React setup is 254.8 KB.
+            </hal-alert-description>
+          </hal-alert>
+        </div>
+      </section>
+
+      <!-- Build Scripts -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Generating Reports</h2>
+        <p class="text-muted-foreground mb-4">
+          Run these commands to regenerate bundle size reports:
+        </p>
+        <pre><code># Quick size comparison (terminal output)
+npm run size
+
+# Build docs (includes bundle size page)
+npm run docs:build</code></pre>
+      </section>
+    </docs-layout>
+
+    <script type="module">
+      import bundleData from "virtual:bundle-size-data"
+
+      function formatBytes(bytes) {
+        if (bytes < 1024) return `${bytes} B`
+        return `${(bytes / 1024).toFixed(1)} KB`
+      }
+
+      function loadReports() {
+        if (!bundleData) {
+          document.getElementById("table-body").innerHTML = `
+            <hal-table-row>
+              <hal-table-cell colspan="4" class="text-center text-muted-foreground">
+                Bundle data not available.
+              </hal-table-cell>
+            </hal-table-row>
+          `
+          return
+        }
+
+        // Update full library comparison
+        document.getElementById("total-size").textContent = formatBytes(
+          bundleData.hallucn.total.gzipped
+        )
+        document.getElementById("react-total-size").textContent = formatBytes(
+          bundleData.react.total.gzipped
+        )
+
+        // Calculate library savings
+        const librarySavings = (
+          ((bundleData.react.total.gzipped - bundleData.hallucn.total.gzipped) /
+            bundleData.react.total.gzipped) *
+          100
+        ).toFixed(0)
+        document.getElementById("library-savings").textContent =
+          `-${librarySavings}%`
+        document.getElementById("library-savings-alert").textContent =
+          `${librarySavings}% smaller full library`
+
+        // Update framework runtime
+        document.getElementById("lit-runtime").textContent = formatBytes(
+          bundleData.lit.runtime.gzipped
+        )
+        document.getElementById("react-runtime").textContent = formatBytes(
+          bundleData.react.runtime.gzipped
+        )
+        const runtimeRatio = (
+          bundleData.react.runtime.gzipped / bundleData.lit.runtime.gzipped
+        ).toFixed(0)
+        document.getElementById("runtime-ratio").textContent =
+          `${runtimeRatio}x larger`
+
+        // Update component count
+        document.getElementById("component-count").textContent =
+          bundleData.hallucn.components.length
+
+        // Build comparison data
+        const reactMap = new Map()
+        for (const c of bundleData.react.components) {
+          reactMap.set(c.name, c)
+        }
+
+        const data = bundleData.hallucn.components.map((c) => {
+          const react = reactMap.get(c.name)
+          return {
+            name: c.name,
+            gzipped: c.gzipped,
+            react: react?.gzipped || 0,
+            diff: react
+              ? ((c.gzipped - react.gzipped) / react.gzipped) * 100
+              : null,
+          }
+        })
+
+        // Calculate average savings
+        const savings = data.filter((d) => d.diff !== null && d.diff < 0)
+        if (savings.length > 0) {
+          const avgSavings =
+            savings.reduce((sum, d) => sum + d.diff, 0) / savings.length
+          document.getElementById("avg-savings").textContent =
+            `${avgSavings.toFixed(0)}%`
+        }
+
+        // Render table
+        renderTable(data)
+
+        // Add sort handlers
+        document.querySelectorAll("[data-sort]").forEach((header) => {
+          header.addEventListener("click", () => {
+            const key = header.dataset.sort
+            const sorted = [...data].sort((a, b) => {
+              if (key === "name") return a.name.localeCompare(b.name)
+              if (key === "diff") return (a.diff ?? 999) - (b.diff ?? 999)
+              return b[key] - a[key]
+            })
+            renderTable(sorted)
+          })
+        })
+      }
+
+      function renderTable(data) {
+        const tbody = document.getElementById("table-body")
+        tbody.innerHTML = data
+          .map((c) => {
+            const diffClass =
+              c.diff === null
+                ? "text-muted-foreground"
+                : c.diff < 0
+                  ? "text-green-600"
+                  : "text-red-600"
+            const diffText =
+              c.diff === null
+                ? "-"
+                : `${c.diff < 0 ? "" : "+"}${c.diff.toFixed(0)}%`
+
+            return `
+            <hal-table-row>
+              <hal-table-cell class="font-mono">${c.name}</hal-table-cell>
+              <hal-table-cell class="text-right">${formatBytes(c.gzipped)}</hal-table-cell>
+              <hal-table-cell class="text-right">${c.react ? formatBytes(c.react) : "-"}</hal-table-cell>
+              <hal-table-cell class="text-right ${diffClass}">${diffText}</hal-table-cell>
+            </hal-table-row>
+          `
+          })
+          .join("")
+      }
+
+      loadReports()
+    </script>
+  </body>
+</html>

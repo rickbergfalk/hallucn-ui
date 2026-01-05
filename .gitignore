@@ -10,6 +10,11 @@ __screenshots__
 dist
 build
 
+# bundle size reports (generated at docs build time)
+bundle-report.json
+react-baseline.json
+BUNDLE_SIZE.md
+
 # misc
 .DS_Store
 *.pem

@@ -9,6 +9,7 @@ const NAV_GROUPS = [
     items: [
       { name: "Home", href: "index.html" },
       { name: "Compare", href: "compare.html" },
+      { name: "Bundle Size", href: "bundle-size.html" },
     ],
   },
   {
@@ -151,17 +152,18 @@ export class DocsLayout extends LitElement {
 
   private _getHref(href: string): string {
     const isComponentPage = window.location.pathname.includes("/components/")
+    const rootPages = ["index.html", "compare.html"]
     if (isComponentPage) {
       // We're in /components/, so hrefs like "button.html" stay as-is
-      // and "index.html" or "compare.html" need "../"
-      if (href === "index.html" || href === "compare.html") {
+      // and root pages like "index.html" or "compare.html" need "../"
+      if (rootPages.includes(href)) {
         return `../${href}`
       }
       return href
     } else {
       // We're at root level, so hrefs need "components/" prefix
-      // except index.html and compare.html
-      if (href === "index.html" || href === "compare.html") {
+      // except root pages like index.html and compare.html
+      if (rootPages.includes(href)) {
         return href
       }
       return `components/${href}`
