@@ -19,12 +19,8 @@ function NavigationMenuComparison() {
               <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <div className="grid gap-3 p-4 w-48">
-                  <NavigationMenuLink href="#">
-                    Introduction
-                  </NavigationMenuLink>
-                  <NavigationMenuLink href="#">
-                    Installation
-                  </NavigationMenuLink>
+                  <NavigationMenuLink href="#">Introduction</NavigationMenuLink>
+                  <NavigationMenuLink href="#">Installation</NavigationMenuLink>
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>

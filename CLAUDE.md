@@ -252,8 +252,45 @@ describe("hal-newcomponent", () => {
     - Add component import to `docs/src/main.ts`
     - Add component page link to sidebar nav
     - Add link card to `docs/index.html`
-    - Add component to comparison page
+    - **Add React vs Web Component comparison section** (see below)
     - Verify with `npm run docs:dev` that component renders correctly
+
+### Adding Comparison Section to Docs Pages
+
+Every component docs page must have a "React vs Web Component" comparison section at the top (after the description, before other sections). This allows visual verification that the web component matches the React implementation.
+
+1. **Create comparison file** at `docs/src/compare/{component}.tsx`:
+```tsx
+import { createRoot } from "react-dom/client"
+import { Component } from "@/components/component"
+import { ComparisonRow } from "./comparison-row"
+
+function ComponentComparison() {
+  return (
+    <ComparisonRow
+      reactContent={<Component>Example</Component>}
+      hallucnHtml={`<hal-component>Example</hal-component>`}
+    />
+  )
+}
+
+const container = document.getElementById("comparison-root")
+if (container) {
+  createRoot(container).render(<ComponentComparison />)
+}
+```
+
+2. **Add comparison section** to `docs/components/{component}.html` after the description:
+```html
+<p class="text-xl text-muted-foreground mb-8">Component description...</p>
+
+<!-- Comparison -->
+<section class="mb-12">
+  <h2 class="text-2xl font-semibold mb-4">React vs Web Component</h2>
+  <div id="comparison-root"></div>
+  <script type="module" src="../src/compare/{component}.tsx"></script>
+</section>
+```
 
 11. **Run formatting and checks**
     - Run `npm run format` to fix any Prettier issues
@@ -338,6 +375,15 @@ Components with failing tests that need investigation:
 - [ ] **navigation-menu** - Visual tests failing (5 tests): dimension mismatch ~10px height difference
 - [ ] **pagination** - Visual test failing (1 test): dimension mismatch ~10px height difference
 - [ ] **sidebar** - Behavioral test failing (1 test): menu item count assertion (expected 2, got 4)
+
+## TODO Missing Comparisons
+Component docs pages missing "React vs Web Component" comparison sections:
+
+- [ ] **combobox** - needs `docs/src/compare/combobox.tsx` and comparison section in HTML
+- [ ] **input-group** - needs `docs/src/compare/input-group.tsx` and comparison section in HTML
+- [ ] **item** - needs `docs/src/compare/item.tsx` and comparison section in HTML
+- [ ] **sidebar** - needs `docs/src/compare/sidebar.tsx` and comparison section in HTML
+- [ ] **sonner** - needs `docs/src/compare/sonner.tsx` and comparison section in HTML
 
 ## TODO Distribution
 - [ ] Bundle/distribution format?

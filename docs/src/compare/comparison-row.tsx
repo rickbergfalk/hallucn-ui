@@ -25,9 +25,7 @@ export function ComparisonRow({
 }) {
   return (
     <div>
-      {note && (
-        <p className="text-sm text-muted-foreground mb-4">{note}</p>
-      )}
+      {note && <p className="text-sm text-muted-foreground mb-4">{note}</p>}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <h3 className="text-sm font-medium text-muted-foreground mb-2">
