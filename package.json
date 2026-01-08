@@ -46,7 +46,8 @@
     "docs:dev": "npm --prefix docs run dev",
     "docs:build": "npm --prefix docs run build",
     "docs:preview": "npm --prefix docs run preview",
-    "prepublishOnly": "npm run build && npm run build:analyze"
+    "prepublishOnly": "npm run build && npm run build:analyze",
+    "registry:build": "tsx scripts/build-registry.ts"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.4",

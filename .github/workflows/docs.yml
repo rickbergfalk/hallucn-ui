@@ -1,4 +1,4 @@
-name: Deploy Docs
+name: Deploy Docs & Registry
 
 on:
   push:
@@ -28,8 +28,14 @@ jobs:
       - run: npm ci
       - run: npm --prefix docs ci
 
+      - name: Build registry
+        run: npm run registry:build
+
       - name: Build docs
         run: npm run docs:build
+
+      - name: Copy registry to docs
+        run: cp -r public/r docs/dist/r
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

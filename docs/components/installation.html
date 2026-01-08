@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Installation - hallucn/ui</title>
+    <script type="module" src="../src/main.ts"></script>
+  </head>
+  <body class="min-h-screen">
+    <docs-layout title="Installation">
+      <h1 class="text-4xl font-bold mb-4">Installation</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        Add hallucn components to your project using the shadcn CLI.
+      </p>
+
+      <!-- Prerequisites -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Prerequisites</h2>
+        <p class="text-muted-foreground mb-4">
+          hallucn components require Tailwind CSS v4 in your project. The
+          components emit Tailwind utility classes and rely on your build system
+          to process them.
+        </p>
+        <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+          <li>
+            <a
+              href="https://tailwindcss.com/docs/installation"
+              class="text-primary underline underline-offset-4"
+              >Tailwind CSS v4</a
+            >
+            configured in your project
+          </li>
+          <li>TypeScript (recommended but not required)</li>
+          <li>A module bundler (Vite, webpack, esbuild, etc.)</li>
+        </ul>
+      </section>
+
+      <!-- Install via shadcn CLI -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Install Components</h2>
+        <p class="text-muted-foreground mb-4">
+          Use the shadcn CLI to add components directly from the hallucn
+          registry. Each component is installed as a source file you can
+          customize.
+        </p>
+        <pre><code>npx shadcn@latest add https://hallucn-ui.github.io/r/button.json</code></pre>
+        <p class="text-sm text-muted-foreground mt-4">
+          This copies the component source to
+          <code class="bg-muted px-1 rounded">src/components/ui/button.ts</code>
+          and installs required dependencies.
+        </p>
+      </section>
+
+      <!-- Multiple components -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">
+          Installing Multiple Components
+        </h2>
+        <p class="text-muted-foreground mb-4">
+          You can install multiple components in a single command:
+        </p>
+        <pre><code>npx shadcn@latest add \
+  https://hallucn-ui.github.io/r/button.json \
+  https://hallucn-ui.github.io/r/dialog.json \
+  https://hallucn-ui.github.io/r/input.json</code></pre>
+      </section>
+
+      <!-- Registry Namespace -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">
+          Configure Registry Namespace
+        </h2>
+        <p class="text-muted-foreground mb-4">
+          For a shorter command, configure hallucn as a named registry in your
+          <code class="bg-muted px-1 rounded">components.json</code>:
+        </p>
+        <pre><code>{
+  "registries": {
+    "@hallucn": "https://hallucn-ui.github.io/r"
+  }
+}</code></pre>
+        <p class="text-muted-foreground mt-4 mb-4">
+          Then install components with shorter commands:
+        </p>
+        <pre><code>npx shadcn@latest add @hallucn/button @hallucn/dialog</code></pre>
+      </section>
+
+      <!-- What Gets Installed -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">What Gets Installed</h2>
+        <p class="text-muted-foreground mb-4">
+          When you install a component, the CLI adds:
+        </p>
+        <hal-table>
+          <hal-table-header>
+            <hal-table-row>
+              <hal-table-head>Item</hal-table-head>
+              <hal-table-head>Location</hal-table-head>
+            </hal-table-row>
+          </hal-table-header>
+          <hal-table-body>
+            <hal-table-row>
+              <hal-table-cell class="font-medium"
+                >Component source</hal-table-cell
+              >
+              <hal-table-cell class="font-mono text-muted-foreground"
+                >src/components/ui/{component}.ts</hal-table-cell
+              >
+            </hal-table-row>
+            <hal-table-row>
+              <hal-table-cell class="font-medium"
+                >Utils (first install)</hal-table-cell
+              >
+              <hal-table-cell class="font-mono text-muted-foreground"
+                >src/lib/utils.ts</hal-table-cell
+              >
+            </hal-table-row>
+            <hal-table-row>
+              <hal-table-cell class="font-medium">Dependencies</hal-table-cell>
+              <hal-table-cell class="font-mono text-muted-foreground"
+                >package.json (lit, etc.)</hal-table-cell
+              >
+            </hal-table-row>
+          </hal-table-body>
+        </hal-table>
+      </section>
+
+      <!-- Usage -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Usage</h2>
+        <p class="text-muted-foreground mb-4">
+          Import the component in your app's entry point to register the custom
+          element:
+        </p>
+        <pre><code>// main.ts or app entry point
+import "./components/ui/button"</code></pre>
+        <p class="text-muted-foreground mt-4 mb-4">
+          Then use it anywhere in your HTML:
+        </p>
+        <pre><code>&lt;hal-button variant="outline"&gt;Click me&lt;/hal-button&gt;</code></pre>
+      </section>
+
+      <!-- Dependencies -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Dependencies</h2>
+        <p class="text-muted-foreground mb-4">
+          Components automatically install their required npm packages:
+        </p>
+        <hal-table>
+          <hal-table-header>
+            <hal-table-row>
+              <hal-table-head>Package</hal-table-head>
+              <hal-table-head>Used By</hal-table-head>
+            </hal-table-row>
+          </hal-table-header>
+          <hal-table-body>
+            <hal-table-row>
+              <hal-table-cell class="font-mono">lit</hal-table-cell>
+              <hal-table-cell class="text-muted-foreground"
+                >All components (web component framework)</hal-table-cell
+              >
+            </hal-table-row>
+            <hal-table-row>
+              <hal-table-cell class="font-mono"
+                >clsx, tailwind-merge</hal-table-cell
+              >
+              <hal-table-cell class="text-muted-foreground"
+                >All components (class utilities)</hal-table-cell
+              >
+            </hal-table-row>
+            <hal-table-row>
+              <hal-table-cell class="font-mono"
+                >class-variance-authority</hal-table-cell
+              >
+              <hal-table-cell class="text-muted-foreground"
+                >Components with variants (button, badge, etc.)</hal-table-cell
+              >
+            </hal-table-row>
+            <hal-table-row>
+              <hal-table-cell class="font-mono"
+                >@floating-ui/dom</hal-table-cell
+              >
+              <hal-table-cell class="text-muted-foreground"
+                >Positioned components (tooltip, popover, select,
+                etc.)</hal-table-cell
+              >
+            </hal-table-row>
+          </hal-table-body>
+        </hal-table>
+      </section>
+
+      <!-- TypeScript -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">TypeScript Configuration</h2>
+        <p class="text-muted-foreground mb-4">
+          If using TypeScript, ensure your
+          <code class="bg-muted px-1 rounded">tsconfig.json</code> includes
+          decorator support:
+        </p>
+        <pre><code>{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false
+  }
+}</code></pre>
+      </section>
+    </docs-layout>
+  </body>
+</html>

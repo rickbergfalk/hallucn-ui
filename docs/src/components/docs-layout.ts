@@ -8,6 +8,7 @@ const NAV_GROUPS = [
     label: "Getting Started",
     items: [
       { name: "Home", href: "index.html" },
+      { name: "Installation", href: "installation.html" },
       { name: "Bundle Size", href: "bundle-size.html" },
     ],
   },

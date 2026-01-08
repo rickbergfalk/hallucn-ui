@@ -9,6 +9,7 @@ __screenshots__
 # build
 dist
 build
+public/r
 
 # bundle size reports (generated at docs build time)
 bundle-report.json
