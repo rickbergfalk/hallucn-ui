@@ -190,14 +190,12 @@ export class HalResizablePanel extends LitElement {
   }
 
   _updateLayout() {
-    const direction = this._group?.getDirection() ?? "horizontal"
-    if (direction === "horizontal") {
-      this.style.width = `${this._size}%`
-      this.style.height = ""
-    } else {
-      this.style.height = `${this._size}%`
-      this.style.width = ""
-    }
+    // Use flex-basis instead of width/height percentages.
+    // Percentage heights don't work when parent only has min-height (not height).
+    // flex-basis works correctly in both horizontal and vertical flex containers.
+    this.style.flex = `0 0 ${this._size}%`
+    this.style.width = ""
+    this.style.height = ""
   }
 
   willUpdate() {
