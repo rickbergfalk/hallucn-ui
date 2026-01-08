@@ -241,6 +241,7 @@ code {
 h1:hover .heading-anchor,
 h2:hover .heading-anchor,
 h3:hover .heading-anchor,
-h4:hover .heading-anchor {
+h4:hover .heading-anchor,
+.heading-anchor:focus-visible {
   opacity: 1;
 }
