@@ -30,8 +30,15 @@
             >
             configured in your project
           </li>
-          <li>TypeScript (recommended but not required)</li>
           <li>A module bundler (Vite, webpack, esbuild, etc.)</li>
+          <li>
+            <a
+              href="https://ui.shadcn.com/docs/components-json"
+              class="text-primary underline underline-offset-4"
+              >components.json</a
+            >
+            configured (for shadcn CLI)
+          </li>
         </ul>
       </section>
 
@@ -104,7 +111,7 @@
                 >Component source</hal-table-cell
               >
               <hal-table-cell class="font-mono text-muted-foreground"
-                >src/components/ui/{component}.ts</hal-table-cell
+                >src/components/ui/{component}.ts or .js</hal-table-cell
               >
             </hal-table-row>
             <hal-table-row>
@@ -112,7 +119,7 @@
                 >Utils (first install)</hal-table-cell
               >
               <hal-table-cell class="font-mono text-muted-foreground"
-                >src/lib/utils.ts</hal-table-cell
+                >src/lib/utils.ts or .js</hal-table-cell
               >
             </hal-table-row>
             <hal-table-row>
@@ -123,6 +130,12 @@
             </hal-table-row>
           </hal-table-body>
         </hal-table>
+        <p class="text-sm text-muted-foreground mt-4">
+          File extension (<code class="bg-muted px-1 rounded">.ts</code> or
+          <code class="bg-muted px-1 rounded">.js</code>) is determined by your
+          <code class="bg-muted px-1 rounded">components.json</code> tsx
+          setting.
+        </p>
       </section>
 
       <!-- Usage -->
@@ -193,7 +206,10 @@ import "./components/ui/button"</code></pre>
       <section class="mb-12">
         <h2 class="text-2xl font-semibold mb-4">TypeScript Configuration</h2>
         <p class="text-muted-foreground mb-4">
-          If using TypeScript, ensure your
+          If using TypeScript (<code class="bg-muted px-1 rounded"
+            >"tsx": true</code
+          >
+          in components.json), ensure your
           <code class="bg-muted px-1 rounded">tsconfig.json</code> includes
           decorator support:
         </p>
@@ -201,6 +217,36 @@ import "./components/ui/button"</code></pre>
   "compilerOptions": {
     "experimentalDecorators": true,
     "useDefineForClassFields": false
+  }
+}</code></pre>
+      </section>
+
+      <!-- JavaScript -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">JavaScript Configuration</h2>
+        <p class="text-muted-foreground mb-4">
+          To use JavaScript instead of TypeScript, set
+          <code class="bg-muted px-1 rounded">"tsx": false</code> in your
+          <code class="bg-muted px-1 rounded">components.json</code>:
+        </p>
+        <pre><code>{
+  "tsx": false
+}</code></pre>
+        <p class="text-muted-foreground mt-4 mb-4">
+          The shadcn CLI automatically transforms TypeScript to JavaScript when
+          installing components. Decorators are preserved and type annotations
+          are stripped.
+        </p>
+        <p class="text-muted-foreground mb-4">
+          For import aliases, configure a
+          <code class="bg-muted px-1 rounded">jsconfig.json</code>:
+        </p>
+        <pre><code>{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }</code></pre>
       </section>
