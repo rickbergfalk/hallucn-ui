@@ -158,7 +158,7 @@ function buildRegistryIndex(items: RegistryItem[]): RegistryIndex {
   return {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "hallucn",
-    homepage: "https://hallucn-ui.github.io",
+    homepage: "https://rickbergfalk.github.io/hallucn-ui",
     items: items.map((item) => ({
       name: item.name,
       type: item.type,

@@ -4,7 +4,7 @@ set -e
 # Registry URL - use local if REGISTRY_URL env var is set
 # For local testing: REGISTRY_URL=http://localhost:5173/r ./test-install.sh
 # For production: ./test-install.sh (uses deployed registry)
-DEFAULT_REGISTRY_URL="https://hallucn-ui.github.io/hallucn-ui/r"
+DEFAULT_REGISTRY_URL="https://rickbergfalk.github.io/hallucn-ui/r"
 REGISTRY_URL="${REGISTRY_URL:-$DEFAULT_REGISTRY_URL}"
 
 echo "=== hallucn Installation Test ==="

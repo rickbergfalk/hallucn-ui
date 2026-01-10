@@ -18,6 +18,6 @@
   },
   "iconLibrary": "lucide",
   "registries": {
-    "@hallucn": "https://hallucn-ui.github.io/hallucn-ui/r/{name}.json"
+    "@hallucn": "https://rickbergfalk.github.io/hallucn-ui/r/{name}.json"
   }
 }
