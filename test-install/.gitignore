@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Installed components (test artifacts)
+src/components/
+src/lib/
+
+# shadcn cache
+.shadcn/

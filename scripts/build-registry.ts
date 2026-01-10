@@ -21,7 +21,6 @@ interface RegistryItem {
   files: {
     path: string
     type: string
-    target: string
     content: string
   }[]
 }
@@ -36,15 +35,6 @@ interface RegistryIndex {
     title: string
     description: string
   }[]
-}
-
-/**
- * Transform component source code for distribution:
- * - Replace @/lib/utils import with relative ./utils
- */
-function transformSource(source: string): string {
-  // Replace @/lib/utils with ./utils
-  return source.replace(/from ["']@\/lib\/utils["']/g, 'from "./utils"')
 }
 
 /**
@@ -104,12 +94,15 @@ function extractDescription(source: string, name: string): string {
 
 /**
  * Build registry item for a component
+ *
+ * Note: We don't specify `target` - the shadcn CLI will determine the
+ * installation path based on the user's components.json aliases configuration.
+ * This allows files to be placed according to the user's project structure.
  */
 function buildComponentItem(filename: string): RegistryItem {
   const filepath = resolve(WEB_COMPONENTS_DIR, filename)
   const source = readFileSync(filepath, "utf-8")
   const name = getComponentName(filename)
-  const transformedSource = transformSource(source)
   const deps = detectDependencies(source)
   const description = extractDescription(source, name)
 
@@ -125,8 +118,7 @@ function buildComponentItem(filename: string): RegistryItem {
       {
         path: `ui/${name}.ts`,
         type: "registry:ui",
-        target: `src/components/ui/${name}.ts`,
-        content: transformedSource,
+        content: source,
       },
     ],
   }
@@ -134,6 +126,9 @@ function buildComponentItem(filename: string): RegistryItem {
 
 /**
  * Build the utils registry item
+ *
+ * Note: We don't specify `target` - the shadcn CLI will determine the
+ * installation path based on the user's components.json aliases.utils configuration.
  */
 function buildUtilsItem(): RegistryItem {
   const source = readFileSync(UTILS_PATH, "utf-8")
@@ -150,7 +145,6 @@ function buildUtilsItem(): RegistryItem {
       {
         path: "lib/utils.ts",
         type: "registry:lib",
-        target: "src/lib/utils.ts",
         content: source,
       },
     ],
