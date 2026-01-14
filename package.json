@@ -44,10 +44,12 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "docs:dev": "npm --prefix docs run dev",
-    "docs:build": "npm --prefix docs run build",
+    "docs:build": "npm run bundle-size:generate && npm --prefix docs run build",
     "docs:preview": "npm --prefix docs run preview",
     "prepublishOnly": "npm run build && npm run build:analyze",
-    "registry:build": "tsx scripts/build-registry.ts"
+    "registry:build": "tsx scripts/build-registry.ts",
+    "bundle-size:generate": "tsx scripts/generate-bundle-size.ts",
+    "bundle-size:refresh": "npm run bundle-size:generate"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.4",

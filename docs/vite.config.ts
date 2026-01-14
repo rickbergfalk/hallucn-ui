@@ -1,7 +1,6 @@
 import { defineConfig } from "vite"
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
-import bundleSizePlugin from "./vite-plugin-bundle-size"
 import { resolve } from "path"
 import { readdirSync } from "fs"
 
@@ -20,8 +19,8 @@ const componentPages = readdirSync(resolve(__dirname, "components"))
 export default defineConfig({
   // Base path for GitHub Pages (repo name)
   base: process.env.CI ? "/hallucn-ui/" : "/",
-  plugins: [tailwindcss(), react(), bundleSizePlugin()],
   resolve: {
+  plugins: [tailwindcss(), react()],
     alias: {
       "@": resolve(__dirname, "../src"),
       // Use React from root node_modules to avoid duplicate instances

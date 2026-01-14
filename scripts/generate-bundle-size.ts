@@ -1,13 +1,14 @@
+#!/usr/bin/env tsx
+
 /**
- * Vite plugin that generates bundle size data at build time
- * Exposes data via virtual module: virtual:bundle-size-data
+ * Generates bundle size data for hallucn components vs React equivalents
+ * Outputs JSON artifact for documentation site consumption
  */
 import { build } from "esbuild"
 import { gzipSync } from "zlib"
-import { readdirSync, existsSync } from "fs"
+import { readdirSync, existsSync, writeFileSync } from "fs"
 import { resolve, basename, dirname } from "path"
 import { fileURLToPath } from "url"
-import type { Plugin } from "vite"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -296,39 +297,22 @@ async function generateBundleSizeData(): Promise<BundleSizeData> {
   }
 }
 
-const VIRTUAL_MODULE_ID = "virtual:bundle-size-data"
-const RESOLVED_VIRTUAL_MODULE_ID = "\0" + VIRTUAL_MODULE_ID
+async function main() {
+  console.log("\n📊 Generating bundle size data...")
+  const start = Date.now()
+  
+  const data = await generateBundleSizeData()
+  
+  const outputPath = resolve(__dirname, "../docs/public/bundle-size.json")
+  writeFileSync(outputPath, JSON.stringify(data, null, 2))
+  
+  console.log(`✅ Bundle size data generated in ${Date.now() - start}ms`)
+  console.log(`📁 Artifact saved to: ${outputPath}`)
+  console.log(
+    `📋 Analyzed ${data.hallucn.components.length} hallucn components vs ${data.react.components.length} React components`
+  )
+}
 
-export default function bundleSizePlugin(): Plugin {
-  let data: BundleSizeData | null = null
-
-  return {
-    name: "bundle-size-data",
-    // Only run during build, unless BUNDLE_SIZE_DEV is set
-    apply: (config, { command }) => {
-      if (command === "build") return true
-      if (command === "serve" && process.env.BUNDLE_SIZE_DEV === "true")
-        return true
-      return false
-    },
-
-    async buildStart() {
-      console.log("\n📊 Generating bundle size data...")
-      const start = Date.now()
-      data = await generateBundleSizeData()
-      console.log(`✅ Bundle size data generated in ${Date.now() - start}ms\n`)
-    },
-
-    resolveId(id) {
-      if (id === VIRTUAL_MODULE_ID) {
-        return RESOLVED_VIRTUAL_MODULE_ID
-      }
-    },
-
-    load(id) {
-      if (id === RESOLVED_VIRTUAL_MODULE_ID) {
-        return `export default ${JSON.stringify(data)}`
-      }
-    },
-  }
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch(console.error)
 }
