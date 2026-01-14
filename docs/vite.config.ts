@@ -19,8 +19,8 @@ const componentPages = readdirSync(resolve(__dirname, "components"))
 export default defineConfig({
   // Base path for GitHub Pages (repo name)
   base: process.env.CI ? "/hallucn-ui/" : "/",
-  resolve: {
   plugins: [tailwindcss(), react()],
+  resolve: {
     alias: {
       "@": resolve(__dirname, "../src"),
       // Use React from root node_modules to avoid duplicate instances
